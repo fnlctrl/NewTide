@@ -45,11 +45,11 @@ $(function(){
 		showingMenu: null,
 		userClickedMenu: false,
 		currentPage: 1,
+		numPages: 1,
 	};
 
 	var toggleMenu = {
 		hide: function(needReflow) {
-			status.showingMenu = false;
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(180deg)'});
 			$sidebarSections.css({display:'none'});
@@ -60,9 +60,12 @@ $(function(){
 			if (W>1200 && needReflow) {
 				book.reflow(book.getConfig(W));
 			}
+			if (W<1200 && $bookContainer.width() != W) {
+				book.reflow(book.getConfig(W));
+			}
+			status.showingMenu = false;
 		},
 		show: function(needReflow) {
-			status.showingMenu = true;
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(0deg)'});
 			$sidebarSections.css({display:''});
@@ -74,6 +77,7 @@ $(function(){
 				$bookContainer.css({width:W-200});
 				book.reflow(book.getConfig(W-200));
 			}
+			status.showingMenu = true;
 		},
 		toggle: function () {
 			if (status.showingMenu) {
@@ -132,9 +136,9 @@ $(function(){
 			timer = setTimeout(function() {
 				book.columnizer.reflow(cfg);
 				book.enableTurningPages(cfg.viewportWidth);
-				console.log('done');
 				$bookLoadingShade.css({opacity:0});
-			},500);
+				console.log('reflowed');
+			},300);
 		},
 		enableTurningPages: function(pageW) { // pageW is width of a single page
 			// group cf-pages by two and wrap them to a .bb-item
@@ -152,6 +156,7 @@ $(function(){
 			if (len % 2 != 0) {
 				$pages.last().wrap('<div class="bb-item"/>');
 			}
+			status.numPages = $('.bb-item').length;
 			// enable page flip
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
@@ -170,27 +175,20 @@ $(function(){
 				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
 					return;
 				}
-				if (e.pageX < offset.left+200) {
-					$renderArea.bookblock('prev');
-					status.currentPage ++;
-				} else if (e.pageX > offset.left+$bookContainer.width()-200) {
-					$renderArea.bookblock('next');
-					status.currentPage --;
+				if (e.pageX < offset.left+200 && status.currentPage>1) {
+					book.turn.call($renderArea,'left');
+				} else if (e.pageX > offset.left+$bookContainer.width()-200 && status.currentPage<status.numPages) {
+					book.turn.call($renderArea,'right');
 				}
 			})
-			$window.keydown( function(e) {
+			$window.keydown(function(e) {
 				var keyCode = e.keyCode || e.which;
 				switch (keyCode) {
 					case 37: //left
-						$renderArea.bookblock('prev');
-						status.currentPage ++;
-						console.log('turing left');
-
+						book.turn.call($renderArea,'left');
 						break;
 					case 39: //right
-						$renderArea.bookblock('next');
-						status.currentPage ++;
-						console.log('turing right');
+						book.turn.call($renderArea,'right');
 						break;
 				}
 			});
@@ -201,9 +199,9 @@ $(function(){
 					$bookNavPrev.css({opacity:0});
 					$bookNavNext.css({opacity:0});
 				} else {
-					if (e.pageX < offset.left+200) {
+					if (e.pageX < offset.left+200 && status.currentPage>1) {
 						$bookNavPrev.css({opacity:1});
-					} else if (e.pageX > offset.left+$bookContainer.width()-200) {
+					} else if (e.pageX > offset.left+$bookContainer.width()-200 && status.currentPage<status.numPages) {
 						$bookNavNext.css({opacity:1});
 					} else {
 						$bookNavPrev.css({opacity:0});
@@ -213,6 +211,19 @@ $(function(){
 			}).bind('mouseleave',function() {
 				$bookNavPrev.css({opacity:0});
 			})
+		},
+		turn: function(direction) {
+			if (direction=='left') {
+				this.bookblock('prev');
+				status.currentPage --;
+				console.log('turing left');
+			}
+			else if (direction=='right') {
+				this.bookblock('next');
+				status.currentPage ++;
+				console.log('turing right');
+			}
+			console.log(status.currentPage);
 		},
 	}
 
