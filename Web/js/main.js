@@ -120,10 +120,8 @@ $(function(){
 			$('.entry-content').find('img').unwrap().removeAttr('height').css({width:'100%'}).addClass('nowrap');
 			var flowedContent = $('.entry-content')[0];
 			var fixedContent = $('<div />');
-			// var txt = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
-			// fixedContent = fixedContent.html(txt).addClass('col-span-2')[0].outerHTML;
 			var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
-			fixedContent = fixedContent.html(txt).addClass('col-span-2')[0].outerHTML;
+			fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
 			fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
 			this.columnizer.flow(flowedContent, fixedContent);
 			console.log('initialized');
@@ -136,7 +134,7 @@ $(function(){
 				book.enableTurningPages(cfg.viewportWidth);
 				console.log('done');
 				$bookLoadingShade.css({opacity:0});
-			},250);
+			},500);
 		},
 		enableTurningPages: function(pageW) { // pageW is width of a single page
 			// group cf-pages by two and wrap them to a .bb-item
@@ -255,4 +253,10 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
+
+	$window.on({'mousewheel': function(e) {
+   		e.preventDefault();
+   		e.stopPropagation();
+    }
+})
 })
