@@ -1,0 +1,30 @@
+.wp-item {
+	width: 42%;
+	height: inherit;
+	position: relative;
+	margin: 0 0 20px 0;
+	float: left;
+	clear: both;
+	overflow: hidden;
+}
+.wp-item-excerpt {
+	font-size: 14px;
+}
+.attachment-post-thumbnail {
+	position: relative;
+	float: left;
+	width: 26%;
+	margin: 0 20px 0 0;
+}
+#wp-wrapper {
+	position: relative;
+	left: 55px;
+	top: 50px;
+}
+
+#book-loading-shade {
+	display: none;
+}
+#book-pages {
+	display: none;
+}

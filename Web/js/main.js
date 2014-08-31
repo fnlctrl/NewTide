@@ -265,9 +265,8 @@ $(function(){
 		}
 	}, 150));
 
-	$window.on({'mousewheel': function(e) {
-   		e.preventDefault();
-   		e.stopPropagation();
-    }
-})
+	// $window.on({'mousewheel': function(e) {
+	// 	e.preventDefault();
+	// 	e.stopPropagation();
+	// }})
 })

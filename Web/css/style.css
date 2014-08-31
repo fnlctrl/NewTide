@@ -22,10 +22,10 @@ body {
 	margin: 0;
 	overflow: hidden;
 }
-#wp-wrapper {
+/*#wp-wrapper {
 	display: none;
 }
-
+*/
 /*    book    */
 #menu-icon {
 	position: absolute;
