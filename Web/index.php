@@ -5,9 +5,14 @@
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/style.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
+	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.0.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
+
 	<?php wp_head(); ?>
 </head>
 <body>
@@ -27,16 +32,25 @@
 					while(have_posts()) {
 						the_post();
 			?>
-					<div class='wp-item'>
-						<?php 
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail();
-							}
-						?>
-						<h3><a href='<?php the_permalink(); ?>'><?php the_title(); ?></a></h3>
-						<span class='wp-item-metadata'><a href='<?php the_author_link(); ?>'><?php the_author(); ?></a></span>
-						<span class='wp-item-excerpt'><?php the_excerpt(); ?></span>
+			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
+				<?php 
+					if ( has_post_thumbnail() ) {
+						the_post_thumbnail();
+					}
+				?>
+				<div class='wp-item-text'>
+					<h3><?php the_title(); ?></h3>
+					<div class='wp-item-metadata'>
+						文/ <a href='<?php the_author_link(); ?>'><?php the_author(); ?></a>
+						@ <?php the_category(' &gt; '); ?>
+						, <?php the_date('Y-m-d');?>
 					</div>
+					<div class='wp-item-excerpt'><?php echo(get_the_excerpt()); ?></div>
+				</div>
+			</div>
+
+
+
 			<?php
 					}
 				}

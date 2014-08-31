@@ -101,14 +101,14 @@ $(function(){
 				W = $window.width();
 			}			
 			return {
-				columnCount:2,
+				columnCount:1,
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
 				standardiseLineHeight:true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img'],
+				noWrapOnTags: ['img','div'],
 			}
 		},
 		columnizer: null,
@@ -121,22 +121,24 @@ $(function(){
 			}
 			this.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			//preprocessing wordpress-generated content for FTColumnflow to render
-			$('.entry-content').find('img').unwrap().removeAttr('height').css({width:'100%'}).addClass('nowrap');
-			var flowedContent = $('.entry-content')[0];
-			var fixedContent = $('<div />');
-			var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
-			fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
-			fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
+			// $('.entry-content').find('img').unwrap().removeAttr('height').css({width:'100%'}).addClass('nowrap');
+			// var flowedContent = $('.entry-content')[0];
+			// var fixedContent = $('<div />');
+			// var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
+			// fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
+			// fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
+			flowedContent = $('#wp-wrapper').html();
+			fixedContent = ''
 			this.columnizer.flow(flowedContent, fixedContent);
 			console.log('initialized');
 		},
 		reflow: function(cfg) {  // set timer to prevent being called too frequently, avoiding lag 
-			$bookLoadingShade.css({opacity:1});
+			$bookLoadingShade.css({opacity:1,'z-index':'999'});
 			clearTimeout(timer);
 			timer = setTimeout(function() {
 				book.columnizer.reflow(cfg);
 				book.enableTurningPages(cfg.viewportWidth);
-				$bookLoadingShade.css({opacity:0});
+				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 				console.log('reflowed');
 			},300);
 		},
@@ -239,11 +241,11 @@ $(function(){
 		$bookContainer.width(W);
 		pageW = W/2;
 	}
-	$bookLoadingShade.css({opacity:1});
+	$bookLoadingShade.css({opacity:1,'z-index':'999'});
 	setTimeout(function() {
 		book.init();
 		book.enableTurningPages(pageW);
-		$bookLoadingShade.css({opacity:0});
+		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	},200)
 
 	
