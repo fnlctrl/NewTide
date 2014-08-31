@@ -34,3 +34,19 @@ function remove_width_attribute( $html ) {
    $html = preg_replace( '/(width|height)="\d*"\s/', "", $html );
    return $html;
 }
+
+
+//remove all <a>s wrapped around <img>s
+update_option('image_default_link_type','none');
+
+// remove all <p>s wrapped around <img>s
+function filter_ptags_on_images($content){
+   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+}
+
+add_filter('the_content', 'filter_ptags_on_images');
+
+
+
+
+?>

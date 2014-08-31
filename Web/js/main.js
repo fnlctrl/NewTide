@@ -46,6 +46,7 @@ $(function(){
 		userClickedMenu: false,
 		currentPage: 1,
 		numPages: 1,
+		prevNumColumns: 0,
 	};
 
 	var toggleMenu = {
@@ -95,42 +96,69 @@ $(function(){
 	}
 	var timer;
 	var book = {
-		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
+		getConfig: function(W,numColumns) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
-			if (W===undefined) {
-				W = $window.width();
-			}			
+			if (numColumns===undefined) {
+				numColumns = status.prevNumColumns;
+			} else {
+				status.prevNumColumns = numColumns;
+			}
 			return {
-				columnCount:1,
+				columnCount:numColumns,
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
 				standardiseLineHeight:true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img','div'],
+				noWrapOnTags: ['img'],
 			}
 		},
 		columnizer: null,
-		init: function() {
+		init: function() {			
+			//preprocessing wordpress-generated content for FTColumnflow to render
+			var flowedContent; 
+			var fixedContent;
+			var numColumns;
+			var $wpEntryContent = $('.wp-entry-content');
+			if ($wpEntryContent.length) {
+				var $wpEntryImgs = $wpEntryContent.find('img');
+				$wpEntryImgs.removeAttr('height').removeAttr('width').css({width:'100%'}).addClass('nowrap');
+				$wpEntryImgs.each(function() {
+					var $this = $(this);
+					if ($this.parents('p').length) {
+						$this.unwrap();
+					}
+				})
+				flowedContent = $wpEntryContent[0];
+				fixedContent = '';
+				numColumns = 2;
+			} else {
+				flowedContent = $('#wp-wrapper').html();
+				fixedContent = '';
+				numColumns = 1;
+			}
 			var cfg;
 			if (W>1200) {
-				cfg = book.getConfig($window.width()-200);
+				cfg = book.getConfig($window.width()-200,numColumns);
 			} else {
-				cfg = book.getConfig($window.width());
+				cfg = book.getConfig($window.width(),numColumns);
 			}
 			this.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
-			//preprocessing wordpress-generated content for FTColumnflow to render
-			// $('.entry-content').find('img').unwrap().removeAttr('height').css({width:'100%'}).addClass('nowrap');
-			// var flowedContent = $('.entry-content')[0];
-			// var fixedContent = $('<div />');
-			// var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
-			// fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
-			// fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
-			flowedContent = $('#wp-wrapper').html();
-			fixedContent = ''
 			this.columnizer.flow(flowedContent, fixedContent);
 			console.log('initialized');
+		},
+		getFixedContent: function() {
+			var $wpEntryContent = $('.wp-entry-content');
+			if ($wpEntryContent[0]) {
+				// var fixedContent = $('<div />');
+				// var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
+				// fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
+				// fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
+				return 'fixedContent'
+			} else {
+				return ''
+			}
 		},
 		reflow: function(cfg) {  // set timer to prevent being called too frequently, avoiding lag 
 			$bookLoadingShade.css({opacity:1,'z-index':'999'});
@@ -216,7 +244,7 @@ $(function(){
 		},
 		turn: function(direction) {
 			if (direction=='left') {
-				this.bookblock('prev');
+				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
 				status.currentPage --;
 				console.log('turing left');
 			}

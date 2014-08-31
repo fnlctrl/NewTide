@@ -30,8 +30,9 @@
 			<?php
 				if (have_posts()) {
 					while(have_posts()) {
-						the_post();
+						the_post();	
 			?>
+
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
@@ -42,10 +43,10 @@
 					<h3><?php the_title(); ?></h3>
 					<div class='wp-item-metadata'>
 						文/ <a href='<?php the_author_link(); ?>'><?php the_author(); ?></a>
-						@ <?php the_category(' &gt; '); ?>
+						@ <?php the_category(' &gt; ');?>
 						, <?php the_date('Y-m-d');?>
 					</div>
-					<div class='wp-item-excerpt'><?php echo(get_the_excerpt()); ?></div>
+					<div class='wp-item-excerpt'><?php echo(get_the_excerpt());?></div>
 				</div>
 			</div>
 
