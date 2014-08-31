@@ -46,7 +46,7 @@
 						@ <?php the_category(' &gt; ');?>
 						, <?php the_date('Y-m-d');?>
 					</div>
-					<div class='wp-item-excerpt'><?php echo(get_the_excerpt());?></div>
+					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
 			</div>
 

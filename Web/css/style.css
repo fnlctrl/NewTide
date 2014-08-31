@@ -22,10 +22,6 @@ body {
 	margin: 0;
 	overflow: hidden;
 }
-#wp-wrapper {
-	display: none;
-}
-
 /*    book    */
 #menu-icon {
 	position: absolute;
@@ -103,12 +99,7 @@ body {
 .bb-item {
 	background:none !important;
 }
-/*    wp-content    */
-.entry-thumbnail img {
-	left: 0 !important;
-	top: -50px !important;
-	width: 100% !important;
-}
+
 /*    sidebar    */
 #sidebar {
 	position: absolute;
@@ -133,6 +124,7 @@ body {
 	width: 60%;
 	left: 20%;
 	top: 70px;
+	float: left;
 }
 .sidebar-section {
 	margin: 0 0 3vh 0;

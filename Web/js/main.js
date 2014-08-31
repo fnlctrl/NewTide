@@ -111,7 +111,7 @@ $(function(){
 				standardiseLineHeight:true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img'],
+				noWrapOnTags: ['img','div']
 			}
 		},
 		columnizer: null,

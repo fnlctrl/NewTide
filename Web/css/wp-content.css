@@ -3,7 +3,9 @@
 	left: 45px;
 	top: 50px;
 	z-index: 999;
+	display: none;
 }
+/*    contents page    */
 a {
 	text-decoration: none;
 }
@@ -55,12 +57,31 @@ h3 {
 	margin: 0 0 1em 0;
 	color: #999;
 }
+/*    entry page    */
+.wp-entry-content {
+	font-size: 14px;
+	line-height: 14px;
+}
+.wp-entry-title {
+	font-size: 24px;
+	margin: 20px 0 20px 0;
+}
+h1 {
+	color: #4585B5;
+}
+.wp-entry-author {
+	font-size: 12px;
+}
+
 
 
 
 
 
 /*
+#wp-wrapper {
+	display: block;
+}
 #book-loading-shade {
 	display: none;
 }
