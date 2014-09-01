@@ -35,14 +35,22 @@ function remove_width_attribute( $html ) {
    return $html;
 }
 
-
 // remove all <a>s wrapped around <img>s
-function filter_ptags_on_images($content){
+function filter_ptags_on_images( $content ){
    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\2', $content);
 }
 add_filter('the_content', 'filter_ptags_on_images');
 
+// change the excerpt more string to '...'
+function custom_excerpt_more( $more ) {
+	return '  .....';
+}
+add_filter( 'excerpt_more', 'custom_excerpt_more' );
 
-
+// change the excerpt length
+function custom_excerpt_length( $length ) {
+	return 60;
+}
+add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 ?>

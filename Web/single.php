@@ -32,15 +32,15 @@
 					while(have_posts()) {
 						the_post();	
 			?>
-				<div class='wp-entry-thumbnail'>
-					<?php the_post_thumbnail(); ?>
-				</div>
-				<div class='wp-entry-metadata'>
+				<div class='wp-entry-meta'>
+					<?php the_post_thumbnail('full',array('class' => 'wp-entry-thumbnail')); ?>
 					<h1 class='wp-entry-title'>
 						<?php the_title(); ?>
 					</h1>
 					<div class='wp-entry-author'>
 						文/ <a href='<?php the_author_link(); ?>'><?php the_author(); ?></a>
+						@ <?php the_category(' &gt; ');?>
+						, <?php the_date('Y-m-d');?>
 					</div>
 				</div>
 				<div class='wp-entry-content'>

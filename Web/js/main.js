@@ -40,6 +40,7 @@ $(function(){
 	var $menuIcon = $('#menu-icon');
 	var $menuIconArrow = $('#menu-icon-arrow');
 	var $sidebarSections = $('#sidebar-sections');
+	var $wpEntryContent = $('.wp-entry-content');
 
 	var status = {
 		showingMenu: null,
@@ -120,10 +121,9 @@ $(function(){
 			var flowedContent; 
 			var fixedContent;
 			var numColumns;
-			var $wpEntryContent = $('.wp-entry-content');
-			if ($wpEntryContent.length) {
+			if ($wpEntryContent.length) { // means the page is showing a single entry
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.removeAttr('height').removeAttr('width').css({width:'100%'}).addClass('nowrap');
+				$wpEntryImgs.removeAttr('height width').css({width:'100%'}).addClass('nowrap');
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
 					if ($this.parents('p').length) {
@@ -131,9 +131,11 @@ $(function(){
 					}
 				})
 				flowedContent = $wpEntryContent[0];
-				fixedContent = '';
+				var $wpEntryMeta = $('.wp-entry-meta');
+				$wpEntryMeta.addClass('col-span-2');
+				fixedContent = $wpEntryMeta[0].outerHTML;
 				numColumns = 2;
-			} else {
+			} else { // means the page is showing list of entries
 				flowedContent = $('#wp-wrapper').html();
 				fixedContent = '';
 				numColumns = 1;
@@ -146,19 +148,10 @@ $(function(){
 			}
 			this.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			this.columnizer.flow(flowedContent, fixedContent);
-			console.log('initialized');
-		},
-		getFixedContent: function() {
-			var $wpEntryContent = $('.wp-entry-content');
-			if ($wpEntryContent[0]) {
-				// var fixedContent = $('<div />');
-				// var txt = $('.subpage-title')[0].outerHTML + $('.entry-meta').html();
-				// fixedContent = fixedContent.html(txt).css({padding:'0 0 30px 0'}).addClass('col-span-2')[0].outerHTML;
-				// fixedContent = $('.entry-thumbnail').find('img').addClass('title-image col-span-2')[0].outerHTML + fixedContent;
-				return 'fixedContent'
-			} else {
-				return ''
+			if ($wpEntryContent.length) {
+				$('.cf-page-1').append($('.cf-fixed .wp-entry-thumbnail')[0].outerHTML); // a nasty workaround to show title image with zero border
 			}
+			console.log('initialized');
 		},
 		reflow: function(cfg) {  // set timer to prevent being called too frequently, avoiding lag 
 			$bookLoadingShade.css({opacity:1,'z-index':'999'});
@@ -168,6 +161,9 @@ $(function(){
 				book.enableTurningPages(cfg.viewportWidth);
 				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 				console.log('reflowed');
+				if ($wpEntryContent.length) {
+					$('.cf-page-1').append($('.cf-fixed .wp-entry-thumbnail')[0].outerHTML); // a nasty workaround to show title image with zero border
+				}
 			},300);
 		},
 		enableTurningPages: function(pageW) { // pageW is width of a single page
