@@ -31,6 +31,7 @@
 				if (have_posts()) {
 					while(have_posts()) {
 						the_post();	
+
 			?>
 
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
