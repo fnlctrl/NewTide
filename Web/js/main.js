@@ -1,33 +1,4 @@
 $(function(){
-	//Replace all SVG images with inline SVG
-	jQuery('img.svg').each(function(){
-		var $img = jQuery(this);
-		var imgID = $img.attr('id');
-		var imgClass = $img.attr('class');
-		var imgStyle = $img.attr('style');
-		var imgURL = $img.attr('src');
-		jQuery.get(imgURL, function(data) {
-			// Get the SVG tag, ignore the rest
-			var $svg = jQuery(data).find('svg');
-			// Add replaced image's ID to the new SVG
-			if(typeof imgID !== 'undefined') {
-				$svg = $svg.attr('id', imgID);
-			}
-			// Add replaced image's classes to the new SVG
-			if(typeof imgClass !== 'undefined') {
-				$svg = $svg.attr('class', imgClass+' replaced-svg');
-			}
-			// Add replaced image's style to the new SVG
-			if(typeof imgStyle !== 'undefined') {
-				$svg = $svg.attr('style', imgStyle);
-			}
-			// Remove any invalid XML tags as per http://validator.w3.org
-			$svg = $svg.removeAttr('xmlns:a');
-			// Replace image with new SVG
-			$img.replaceWith($svg);
-		}, 'xml');
-	});
-
 	var $window = $(window);
 	var $sidebar = $('#sidebar');
 	var $sidebarLogo = $('#sidebar-logo');
@@ -47,7 +18,8 @@ $(function(){
 		userClickedMenu: false,
 		currentPage: 1,
 		numPages: 1,
-		prevNumColumns: 0,
+		numColumns: 1,
+		standardiseLineHeight: true,
 	};
 
 	var toggleMenu = {
@@ -58,7 +30,6 @@ $(function(){
 			$sidebarLogo.css({display:'none'});
 			$sidebar.css({width:0});
 			$bookContainer.css({width:W,left:0});
-
 			if (W>1200 && needReflow) {
 				book.reflow(book.getConfig(W));
 			}
@@ -74,7 +45,6 @@ $(function(){
 			$sidebarLogo.css({display:''});
 			$sidebar.css({width:200});
 			$bookContainer.css({left:200});
-
 			if (W>1200 && needReflow) {
 				$bookContainer.css({width:W-200});
 				book.reflow(book.getConfig(W-200));
@@ -97,19 +67,14 @@ $(function(){
 	}
 	var timer;
 	var book = {
-		getConfig: function(W,numColumns) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
+		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
-			if (numColumns===undefined) {
-				numColumns = status.prevNumColumns;
-			} else {
-				status.prevNumColumns = numColumns;
-			}
 			return {
-				columnCount:numColumns,
+				columnCount:status.numColumns,
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
-				standardiseLineHeight:true,
+				standardiseLineHeight:status.standardiseLineHeight,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
 				noWrapOnTags: ['img','div']
@@ -134,17 +99,19 @@ $(function(){
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
-				numColumns = 2;
+				status.numColumns = 2;
+				status.standardiseLineHeight = true;
 			} else { // means the page is showing list of entries
 				flowedContent = $('#wp-wrapper').html();
 				fixedContent = '';
-				numColumns = 1;
+				status.numColumns = 1;
+				status.standardiseLineHeight = false;
 			}
 			var cfg;
 			if (W>1200) {
-				cfg = book.getConfig($window.width()-200,numColumns);
+				cfg = book.getConfig($window.width()-200);
 			} else {
-				cfg = book.getConfig($window.width(),numColumns);
+				cfg = book.getConfig($window.width());
 			}
 			this.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			this.columnizer.flow(flowedContent, fixedContent);
@@ -187,14 +154,12 @@ $(function(){
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
 			$renderArea.bookblock( {
-				speed : 800,
+				speed : 650,
 					perspective : 2000,
 					shadowSides	: 0.8,
 					shadowFlip	: 0.4,
 			});
 			$renderArea.focus();
-			//get back to previous location
-			$renderArea.bookblock('jump',status.currentPage);
 			// initialize events
 			$bookContainer.click(function(e) {
 				var offset = $bookContainer.offset();
@@ -241,12 +206,16 @@ $(function(){
 		turn: function(direction) {
 			if (direction=='left') {
 				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
-				status.currentPage --;
+				if (status.currentPage > 1) {
+					status.currentPage --;
+				}
 				console.log('turing left');
 			}
 			else if (direction=='right') {
 				this.bookblock('next');
-				status.currentPage ++;
+				if (status.currentPage < status.numPages) {
+					status.currentPage ++;
+				}
 				console.log('turing right');
 			}
 			console.log(status.currentPage);
@@ -272,7 +241,6 @@ $(function(){
 		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	},200)
 
-	
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (!status.userClickedMenu) { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
@@ -291,8 +259,8 @@ $(function(){
 		}
 	}, 150));
 
-	$window.on({'mousewheel': function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-	}})
+	// $window.on({'mousewheel': function(e) {
+	// 	e.preventDefault();
+	// 	e.stopPropagation();
+	// }})
 })

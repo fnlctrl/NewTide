@@ -1,3 +1,9 @@
+/*
+Theme Name: NewTide
+Author: fnlCtrl
+Version: 1.0
+Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal supports, please contact fnlctrl@gmail.com.
+*/
 /*    global    */
 .unselectable {
 	user-select: none;
@@ -12,7 +18,7 @@
 	transition: all 0.15s ease;
 }
 body {
-	background-image: url(../img/texture.png);
+	background-image: url(img/texture.png);
 	background-repeat: repeat;
 	height: 100vh !important;
 	width: 100vw !important;
@@ -77,7 +83,6 @@ body {
 }
 .cf-page {
 	top: 50px !important;
-
 }
 .book-nav-icon {
 	position: absolute;
@@ -89,11 +94,11 @@ body {
 	transition: opacity 0.1s ease;
 }
 #book-nav-next {
-	background-image: url(../img/book-next-page.svg);
+	background-image: url(img/book-next-page.svg);
 	right: 10px;
 }
 #book-nav-prev {
-	background-image: url(../img/book-prev-page.svg);
+	background-image: url(img/book-prev-page.svg);
 	left: 10px;
 }
 .bb-item {
@@ -108,7 +113,7 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	width: 200px;
-	z-index: 999;
+	z-index: 1;
 }
 #sidebar-logo {
 	position: relative;
@@ -117,7 +122,7 @@ body {
 	top: 50px;
 }
 #sidebar hr {
-	margin: 2vh 0 2vh 0;
+	margin: 1.5vh 0 1.5vh 0;
 }
 #sidebar-sections {
 	position: relative;
