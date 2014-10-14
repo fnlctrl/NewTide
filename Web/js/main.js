@@ -153,11 +153,11 @@ $(function(){
 			// enable page flip
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
-			$renderArea.bookblock( {
+			$renderArea.bookblock({
 				speed : 650,
-					perspective : 2000,
-					shadowSides	: 0.8,
-					shadowFlip	: 0.4,
+				perspective : 10000,
+				shadowSides	: 0.8,
+				shadowFlip	: 0.4,
 			});
 			$renderArea.focus();
 			// initialize events

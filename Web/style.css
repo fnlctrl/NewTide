@@ -20,8 +20,8 @@ Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal
 body {
 	background-image: url(img/texture.png);
 	background-repeat: repeat;
-	height: 100vh !important;
-	width: 100vw !important;
+	height: 100%;
+	width: 100%;
 	min-height: 600px;
 	position: absolute;
 	padding: 0;
