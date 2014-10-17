@@ -11,11 +11,14 @@ Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal
 	-webkit-user-select: none; 
 	-ms-user-select: none;  
 }
+.ease {
+	transition: all 0.15s ease;
+}
 * {
 	font-family: "Microsoft YaHei"
 }
-.ease {
-	transition: all 0.15s ease;
+html {
+	overflow: hidden;
 }
 body {
 	background-image: url(img/texture.png);

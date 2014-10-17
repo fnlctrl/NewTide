@@ -76,9 +76,13 @@ h3 {
 }
 .wp-entry-thumbnail {
 	position: relative;
-	top: -50px !important;
 	width: 100% !important;
-	max-height: 500px;
+}
+.wp-fake-thumbnail {
+	position: relative;
+	width: 100% !important;
+	top: -50px !important;
+	overflow: hidden;
 }
 
 

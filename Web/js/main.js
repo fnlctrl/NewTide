@@ -1,17 +1,17 @@
 $(function(){
-	var $window = $(window);
-	var $sidebar = $('#sidebar');
-	var $sidebarLogo = $('#sidebar-logo');
-	var $items = $('.sidebar-item');
-	var $bookContainer = $('#book-container');
-	var $bookLoadingShade = $('#book-loading-shade');
-	var $bookPages = $('#book-pages');
-	var $bookNavNext = $('#book-nav-next');
-	var $bookNavPrev = $('#book-nav-prev');
-	var $menuIcon = $('#menu-icon');
-	var $menuIconArrow = $('#menu-icon-arrow');
-	var $sidebarSections = $('#sidebar-sections');
-	var $wpEntryContent = $('.wp-entry-content');
+	var $window = $(window),
+		$sidebar = $('#sidebar'),
+		$sidebarLogo = $('#sidebar-logo'),
+		$items = $('.sidebar-item'),
+		$bookContainer = $('#book-container'),
+		$bookLoadingShade = $('#book-loading-shade'),
+		$bookPages = $('#book-pages'),
+		$bookNavNext = $('#book-nav-next'),
+		$bookNavPrev = $('#book-nav-prev'),
+		$menuIcon = $('#menu-icon'),
+		$menuIconArrow = $('#menu-icon-arrow'),
+		$sidebarSections = $('#sidebar-sections'),
+		$wpEntryContent = $('.wp-entry-content');
 
 	var status = {
 		showingMenu: null,
@@ -65,8 +65,9 @@ $(function(){
 			})
 		})()
 	}
-	var timer;
+
 	var book = {
+		timer: null,
 		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
 			return {
@@ -113,25 +114,38 @@ $(function(){
 			} else {
 				cfg = book.getConfig($window.width());
 			}
-			this.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
-			this.columnizer.flow(flowedContent, fixedContent);
-			if ($('.wp-entry-thumbnail').length) {
-				$('.cf-page-1').append($('.cf-fixed .wp-entry-thumbnail')[0].outerHTML); // a nasty workaround to show title image with zero border
-			}
+			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
+			book.columnizer.flow(flowedContent, fixedContent);
+			book.copyEntryThumbnail();
 			console.log('initialized');
 		},
-		reflow: function(cfg) {  // set timer to prevent being called too frequently, avoiding lag 
+		reflow: function(cfg) {
 			$bookLoadingShade.css({opacity:1,'z-index':'999'});
-			clearTimeout(timer);
-			timer = setTimeout(function() {
-				book.columnizer.reflow(cfg);
-				book.enableTurningPages(cfg.viewportWidth);
-				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-				console.log('reflowed');
-				if ($('.wp-entry-thumbnail').length) {
-					$('.cf-page-1').append($('.cf-fixed .wp-entry-thumbnail')[0].outerHTML); // a nasty workaround to show title image with zero border
-				}
+			clearTimeout(book.timer);
+			book.timer = setTimeout(function(){
+				book.performReflow(cfg);
 			},300);
+		},
+		performReflow: function(cfg) {
+			book.columnizer.reflow(cfg);
+			book.enableTurningPages(cfg.viewportWidth);
+			console.log('reflowed');
+			book.copyEntryThumbnail();
+			$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+		},
+		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
+			if ($('.wp-entry-thumbnail').length) {
+				var $firstPage = $('.cf-page-1');
+				var $div = $('<div />');
+				var h = $firstPage.find('.wp-entry-title').offset().top - 24;
+				if (h > 500) {
+					h = 500;
+				}
+				console.log(h)
+				$div.addClass('wp-fake-thumbnail').css({height:h}).append($('.wp-entry-thumbnail')[0].outerHTML);
+				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
+				$('.cf-page-1').append($div); 
+			}
 		},
 		enableTurningPages: function(pageW) { // pageW is width of a single page
 			// group cf-pages by two and wrap them to a .bb-item
@@ -154,8 +168,7 @@ $(function(){
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
 			$renderArea.bookblock({
-				speed : 650,
-				perspective : 10000,
+				speed : 700,
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
 			});
@@ -202,6 +215,7 @@ $(function(){
 			}).bind('mouseleave',function() {
 				$bookNavPrev.css({opacity:0});
 			})
+			status.currentPage = 1;
 		},
 		turn: function(direction) {
 			if (direction=='left') {
