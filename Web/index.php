@@ -14,7 +14,6 @@
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
-
 	<?php wp_head(); ?>
 </head>
 <body>
@@ -66,7 +65,19 @@
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
-			<?php if (have_posts()) { while(have_posts()) { the_post();?>
+			<?php
+			$args = array(
+				'posts_per_page'   => 60,
+				'orderby' => 'post_date',
+				'order' => 'DESC',
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => 1,
+			);
+			$myposts = get_posts( $args );
+			foreach ( $myposts as $post ) : setup_postdata( $post );
+			?>
+			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
@@ -83,9 +94,12 @@
 					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
 			</div>
-			<?php }} ?>
+			<?php //End Loop  ?>	
+			<?php endforeach; wp_reset_postdata();?>
+			<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
+			<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
 		</div>
 	</div>
 </body>
-
 </html>
+
