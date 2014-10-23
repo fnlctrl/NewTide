@@ -154,7 +154,6 @@ $(function(){
 				if (h > 500) {
 					h = 500;
 				}
-				console.log(h)
 				$div.addClass('wp-fake-thumbnail').css({height:h}).append($('.wp-entry-thumbnail')[0].outerHTML);
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
 				$('.cf-page-1').append($div); 
@@ -212,6 +211,11 @@ $(function(){
 						book.turn.call($renderArea,'right');
 						break;
 				}
+			});
+			$bookContainer.on('swipeleft',function(event) {
+				book.turn.call($renderArea,'right');
+			}).on('swiperight',function(event) {
+				book.turn.call($renderArea,'left');
 			});
 			//show hints to turn pages
 			$bookContainer.bind('mousemove',function(e) {

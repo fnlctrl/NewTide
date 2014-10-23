@@ -10,12 +10,12 @@
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.0.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
-
 	<?php wp_head(); ?>
 </head>
 <body>
