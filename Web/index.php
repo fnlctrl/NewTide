@@ -66,17 +66,24 @@
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
 			<?php
+			global $paged;
+				if( get_query_var('paged') ) {
+					$paged = get_query_var('paged');
+				} else if ( get_query_var('page') ) {
+					$paged = get_query_var('page');
+				} else{
+					$paged = 1;
+				}
 			$args = array(
 				'posts_per_page'   => 60,
 				'orderby' => 'post_date',
 				'order' => 'DESC',
 				'post_type' => 'post',
 				'post_status' => 'publish',
-				'paged' => 1,
+				'paged' => $paged,
 			);
 			$myposts = get_posts( $args );
-			foreach ( $myposts as $post ) : setup_postdata( $post );
-			?>
+			foreach ( $myposts as $post ) : setup_postdata( $post );?>
 			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
@@ -96,8 +103,6 @@
 			</div>
 			<?php //End Loop  ?>	
 			<?php endforeach; wp_reset_postdata();?>
-			<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
-			<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
 		</div>
 	</div>
 </body>
