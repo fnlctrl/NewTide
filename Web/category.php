@@ -30,7 +30,29 @@
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
-			<?php if (have_posts()) { while(have_posts()) { the_post();?>
+			<?php
+			$categories = get_the_category();
+			$category_id = $categories[0]->cat_ID;
+			global $paged;
+				if( get_query_var('paged') ) {
+					$paged = get_query_var('paged');
+				} else if ( get_query_var('page') ) {
+					$paged = get_query_var('page');
+				} else{
+					$paged = 1;
+				}
+			$args = array(
+				'posts_per_page'   => 60,
+				'orderby' => 'post_date',
+				'category' => $category_id,
+				'order' => 'DESC',
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => $paged,
+			);
+			$myposts = get_posts( $args );
+			foreach ( $myposts as $post ) : setup_postdata( $post );?>
+			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
@@ -47,7 +69,10 @@
 					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
 			</div>
-			<?php }} ?>
+			<?php //End Loop  ?>	
+			<?php endforeach; wp_reset_postdata();?>
+			<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
+			<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
 		</div>
 	</div>
 </body>

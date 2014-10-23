@@ -11,12 +11,12 @@ $(function(){
 		$menuIcon = $('#menu-icon'),
 		$menuIconArrow = $('#menu-icon-arrow'),
 		$sidebarSections = $('#sidebar-sections'),
-		$wpEntryContent = $('.wp-entry-content');
-
+		$wpEntryContent = $('.wp-entry-content'),
+		$wpWrapper = $('#wp-wrapper');
 	var status = {
 		showingMenu: null,
 		userClickedMenu: false,
-		currentPage: 1,
+		currentPage: 0,
 		numPages: 1,
 		numColumns: 1,
 		standardiseLineHeight: true,
@@ -24,7 +24,7 @@ $(function(){
 
 	var util = {
 		isMobile: function() {
-			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				return true;
 			} else {
 				return false;
@@ -116,7 +116,7 @@ $(function(){
 				status.numColumns = 2;
 				status.standardiseLineHeight = true;
 			} else { // means the page is showing list of entries
-				flowedContent = $('#wp-wrapper').html();
+				flowedContent = $wpWrapper.html();
 				fixedContent = '';
 				status.numColumns = 1;
 				status.standardiseLineHeight = false;
@@ -184,6 +184,10 @@ $(function(){
 				speed : 700,
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
+				onEndFlip: function(old,page,isLimit) {
+					status.currentPage = page;
+					console.log(status.currentPage);
+				}
 			});
 			$renderArea.focus();
 			// initialize events
@@ -192,9 +196,9 @@ $(function(){
 				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
 					return;
 				}
-				if (e.pageX < offset.left+200 && status.currentPage>1) {
+				if (e.pageX < offset.left+200) {
 					book.turn.call($renderArea,'left');
-				} else if (e.pageX > offset.left+$bookContainer.width()-200 && status.currentPage<status.numPages) {
+				} else if (e.pageX > offset.left+$bookContainer.width()-200) {
 					book.turn.call($renderArea,'right');
 				}
 			})
@@ -216,9 +220,9 @@ $(function(){
 					$bookNavPrev.css({opacity:0});
 					$bookNavNext.css({opacity:0});
 				} else {
-					if (e.pageX < offset.left+400 && status.currentPage>1) {
+					if (e.pageX < offset.left+400) {
 						$bookNavPrev.css({opacity:1});
-					} else if (e.pageX > offset.left+$bookContainer.width()-400 && status.currentPage<status.numPages) {
+					} else if (e.pageX > offset.left+$bookContainer.width()-400) {
 						$bookNavNext.css({opacity:1});
 					} else {
 						$bookNavPrev.css({opacity:0});
@@ -228,24 +232,22 @@ $(function(){
 			}).bind('mouseleave',function() {
 				$bookNavPrev.css({opacity:0});
 			})
-			status.currentPage = 1;
 		},
 		turn: function(direction) {
 			if (direction=='left') {
 				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
-				if (status.currentPage > 1) {
-					status.currentPage --;
+				if (status.currentPage === 0 && /page/i.test(location.href) ) {
+					location.href = $('#wp-fake-nav-prev').html();
 				}
 				console.log('turing left');
 			}
 			else if (direction=='right') {
 				this.bookblock('next');
-				if (status.currentPage < status.numPages) {
-					status.currentPage ++;
+				if (status.currentPage === status.numPages-1 && $wpWrapper.children('.wp-item').length > 59) {
+					location.href = $('#wp-fake-nav-next').html();
 				}
 				console.log('turing right');
 			}
-			console.log(status.currentPage);
 		},
 	}
 
@@ -285,9 +287,4 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
-
-	// $window.on({'mousewheel': function(e) {
-	// 	e.preventDefault();
-	// 	e.stopPropagation();
-	// }})
 })

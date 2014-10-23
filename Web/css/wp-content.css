@@ -84,7 +84,13 @@ h3 {
 	top: -50px !important;
 	overflow: hidden;
 }
+#wp-fake-nav-prev {
+	display: none;
+}
 
+#wp-fake-nav-next {
+	display: none;
+}
 
 
 /*#wp-wrapper {
