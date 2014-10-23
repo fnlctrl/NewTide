@@ -22,6 +22,15 @@ $(function(){
 		standardiseLineHeight: true,
 	};
 
+	var util = {
+		isMobile: function() {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+	}
 	var toggleMenu = {
 		hide: function(needReflow) {
 			var W = $window.width();
@@ -43,8 +52,12 @@ $(function(){
 			$menuIconArrow.css({'transform':'rotateZ(0deg)'});
 			$sidebarSections.css({display:''});
 			$sidebarLogo.css({display:''});
-			$sidebar.css({width:200});
-			$bookContainer.css({left:200});
+			if (util.isMobile()) {
+				$sidebar.css({width:448});
+			} else {
+				$sidebar.css({width:200});
+				$bookContainer.css({left:200});
+			}
 			if (W>1200 && needReflow) {
 				$bookContainer.css({width:W-200});
 				book.reflow(book.getConfig(W-200));
