@@ -25,6 +25,7 @@ $(function(){
 		standardiseLineHeight: true,
 		prevPageURL:'',
 		nextPageURL:'',
+		isListPage: undefined,
 	};
 
 	var util = {
@@ -37,25 +38,21 @@ $(function(){
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
-				return true;
+				status.isListPage = true;
 			} else {
-				return false;
+				status.isListPage = false;
 			}
 		},
 		getNavURL: function() {
 			function parse() {
-				var url;
-				if (this.find('a').length) { 
-					url = this.find('a').attr('href');
-				} else {
+				var url = this.find('a').attr('href');
+				if (url === undefined) {
 					url = this.html();
 				}
 				return url;
 			}
 			status.prevPageURL = parse.call($prevPageLink);
 			status.nextPageURL = parse.call($nextPageLink);
-			console.log(status.prevPageURL);
-			console.log(status.nextPageURL);
 		},
 	};
 
@@ -159,6 +156,7 @@ $(function(){
 			book.columnizer.flow(flowedContent, fixedContent);
 			book.copyEntryThumbnail();
 			util.getNavURL();
+			util.isListPage();
 			console.log('initialized');
 		},
 		reflow: function(cfg) {
@@ -212,6 +210,9 @@ $(function(){
 			if (localStorage.returnedFromNextPage) {
 				startPage = status.numPages;
 			} else {
+				startPage = 1;
+			}
+			if (!status.isListPage) {
 				startPage = 1;
 			}
 			$renderArea.bookblock({
@@ -279,7 +280,7 @@ $(function(){
 			if (direction=='left') {
 				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
 				if (status.currentPage === 0) {
-					if (util.isListPage()) {
+					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
 							location.href = status.prevPageURL;
 						}
@@ -292,7 +293,7 @@ $(function(){
 			else if (direction=='right') {
 				this.bookblock('next');
 				if (status.currentPage === status.numPages) {
-					if (util.isListPage()) {
+					if (status.isListPage) {
 						if ($wpWrapper.find('.wp-item').length > 59) {
 							location.href = status.nextPageURL;
 						}
