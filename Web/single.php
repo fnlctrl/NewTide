@@ -44,8 +44,11 @@
 				</div>
 				<div class='wp-entry-content'>
 					<?php the_content(); ?>
+
 				</div>
 			<?php }} ?>
+			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
+			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>
 	</div>
 </body>

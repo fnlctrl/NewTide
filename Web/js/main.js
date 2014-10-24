@@ -12,7 +12,10 @@ $(function(){
 		$menuIconArrow = $('#menu-icon-arrow'),
 		$sidebarSections = $('#sidebar-sections'),
 		$wpEntryContent = $('.wp-entry-content'),
-		$wpWrapper = $('#wp-wrapper');
+		$wpWrapper = $('#wp-wrapper'),
+		$nextPageLink = $('#wp-fake-nav-next'),
+		$prevPageLink = $('#wp-fake-nav-prev');
+
 	var status = {
 		showingMenu: null,
 		userClickedMenu: false,
@@ -20,6 +23,8 @@ $(function(){
 		numPages: 1,
 		numColumns: 1,
 		standardiseLineHeight: true,
+		prevPageURL:'',
+		nextPageURL:'',
 	};
 
 	var util = {
@@ -30,7 +35,30 @@ $(function(){
 				return false;
 			}
 		},
-	}
+		isListPage: function() {
+			if ($wpWrapper.find('.wp-item').length) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		getNavURL: function() {
+			function parse() {
+				var url;
+				if (this.find('a').length) { 
+					url = this.find('a').attr('href');
+				} else {
+					url = this.html();
+				}
+				return url;
+			}
+			status.prevPageURL = parse.call($prevPageLink);
+			status.nextPageURL = parse.call($nextPageLink);
+			console.log(status.prevPageURL);
+			console.log(status.nextPageURL);
+		},
+	};
+
 	var toggleMenu = {
 		hide: function(needReflow) {
 			var W = $window.width();
@@ -77,7 +105,7 @@ $(function(){
 				status.userClickedMenu = true;
 			})
 		})()
-	}
+	};
 
 	var book = {
 		timer: null,
@@ -91,7 +119,7 @@ $(function(){
 				standardiseLineHeight:status.standardiseLineHeight,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img','div']
+				noWrapOnTags: ['img','div'],
 			}
 		},
 		columnizer: null,
@@ -130,6 +158,7 @@ $(function(){
 			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			book.columnizer.flow(flowedContent, fixedContent);
 			book.copyEntryThumbnail();
+			util.getNavURL();
 			console.log('initialized');
 		},
 		reflow: function(cfg) {
@@ -179,15 +208,24 @@ $(function(){
 			// enable page flip
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
+			var startPage;
+			if (localStorage.returnedFromNextPage) {
+				startPage = status.numPages;
+			} else {
+				startPage = 1;
+			}
 			$renderArea.bookblock({
+				startPage : startPage,
 				speed : 700,
+				shadows: true,
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
 				onEndFlip: function(old,page,isLimit) {
-					status.currentPage = page;
+					status.currentPage = page+1;
 					console.log(status.currentPage);
 				}
 			});
+			delete localStorage.returnedFromNextPage;
 			$renderArea.focus();
 			// initialize events
 			$bookContainer.click(function(e) {
@@ -240,17 +278,28 @@ $(function(){
 		turn: function(direction) {
 			if (direction=='left') {
 				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
-				if (status.currentPage === 0 && /page/i.test(location.href) ) {
-					location.href = $('#wp-fake-nav-prev').html();
+				if (status.currentPage === 0) {
+					if (util.isListPage()) {
+						if (/page/i.test(location.href)) {
+							location.href = status.prevPageURL;
+						}
+					} else {
+						location.href = status.prevPageURL;
+					}
+					localStorage.returnedFromNextPage = true;
 				}
-				console.log('turing left');
 			}
 			else if (direction=='right') {
 				this.bookblock('next');
-				if (status.currentPage === status.numPages-1 && $wpWrapper.children('.wp-item').length > 59) {
-					location.href = $('#wp-fake-nav-next').html();
+				if (status.currentPage === status.numPages) {
+					if (util.isListPage()) {
+						if ($wpWrapper.find('.wp-item').length > 59) {
+							location.href = status.nextPageURL;
+						}
+					} else {
+						location.href = status.nextPageURL;
+					}
 				}
-				console.log('turing right');
 			}
 		},
 	}
