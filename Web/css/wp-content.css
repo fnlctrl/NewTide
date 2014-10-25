@@ -35,7 +35,7 @@ h3 {
 .wp-item:active {
 	background: #BDE4FF;
 }
-.attachment-post-thumbnail {
+.attachment-wp-entrylist-thumbnail {
 	position: relative;
 	float: left;
 	width: 150px;

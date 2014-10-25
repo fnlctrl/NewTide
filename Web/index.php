@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div class='sidebar-section'><span>线下</span><hr>
-				<div id='sidebar-event' class='sidebar-item' onclick='location.href="<?php echo home_url().'/category/event/'; ?>"'>　活动
+				<div id='sidebar-event' class='sidebar-item' onclick='location.href="<?php echo home_url().'/events/'; ?>"'>　活动
 					<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-event.svg'/>
 				</div>
 				<div id='sidebar-onepage' class='sidebar-item' onclick='location.href="<?php echo home_url().'/category/onepage/'; ?>"'>　一张纸
@@ -67,6 +67,7 @@
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
+		<?php echo get_the_category_by_ID(2) ?>
 			<?php
 			global $paged;
 				if( get_query_var('paged') ) {
@@ -90,7 +91,7 @@
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
-						the_post_thumbnail();
+						the_post_thumbnail('wp-entrylist-thumbnail');
 					}
 				?>
 				<div class='wp-item-text'>

@@ -56,6 +56,21 @@ $(function(){
 			status.prevPageURL = parse.call($prevPageLink);
 			status.nextPageURL = parse.call($nextPageLink);
 		},
+		clearNotice: function($obj) {
+			return function() {
+				$obj.css({opacity:0});
+				setTimeout(function(){
+					$obj.remove()
+				},150);
+			};
+		},
+		showNotice: function(string) {
+			var $notice = $("<div id='message-" + Math.random() + "' class='message-block'></div>").append($("<div class='message-content'></div>").text(string));
+			$('body').append($notice);
+			setTimeout(function(){$notice.css({opacity:1});}, 100);
+			$notice.bind('click', util.clearNotice($notice));
+			setTimeout(util.clearNotice($notice), 1000);
+		},
 	};
 
 	var toggleMenu = {
@@ -163,7 +178,6 @@ $(function(){
 			book.enableTurningPages(pageW);
 			util.getNavURL();
 			util.isListPage();
-			console.log('initialized');
 		},
 		reflow: function(cfg) {
 			if (!status.needBook) {
@@ -171,16 +185,16 @@ $(function(){
 			}
 			$bookLoadingShade.css({opacity:1,'z-index':'999'});
 			clearTimeout(book.timer);
-			book.timer = setTimeout(function(){
-				book.performReflow(cfg);
-			},300);
+			book.timer = setTimeout(book.performReflow(cfg), 300);
 		},
 		performReflow: function(cfg) {
-			book.columnizer.reflow(cfg);
-			book.enableTurningPages(cfg.viewportWidth);
-			console.log('reflowed');
-			book.copyEntryThumbnail();
-			$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+			return function() {
+				book.columnizer.reflow(cfg);
+				book.enableTurningPages(cfg.viewportWidth);
+				console.log('reflowed');
+				book.copyEntryThumbnail();
+				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
 			if ($wpEntryThumbnail.length) {
@@ -236,6 +250,9 @@ $(function(){
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
 					console.log(status.currentPage);
+					if (old===-1) {
+						util.showNotice('这个分类下已经没有更新的文章了~')
+					}
 				}
 			});
 			delete localStorage.returnedFromNextPage;

@@ -12,8 +12,8 @@ update_option('image_default_link_type','none');
 
 add_theme_support( 'post-thumbnails' ); 
 
-
-remove_action('wp_head', '_admin_bar_bump_cb');
+add_image_size( 'wp-entrylist-thumbnail', 300, 300 );
+remove_action( 'wp_head', '_admin_bar_bump_cb');
 remove_action( 'wp_head', 'feed_links_extra', 3 ); // Display the links to the extra feeds such as category feeds
 remove_action( 'wp_head', 'feed_links', 2 ); // Display the links to the general feeds: Post and Comment Feed
 remove_action( 'wp_head', 'rsd_link' ); // Display the link to the Really Simple Discovery service endpoint, EditURI link

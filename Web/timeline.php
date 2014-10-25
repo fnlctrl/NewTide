@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: 线下活动
+*/
+?>
 <!DOCTYPE html>
 <html>
 <head>
