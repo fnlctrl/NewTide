@@ -22,7 +22,7 @@ $(function(){
 	var status = {
 		showingMenu: null,
 		userClickedMenu: false,
-		currentPage: 0,
+		currentPage: 1,
 		numPages: 1,
 		numColumns: 1,
 		standardiseLineHeight: true,
@@ -46,6 +46,7 @@ $(function(){
 			} else {
 				status.isListPage = false;
 			}
+			console.log('is list page: ' + status.isListPage);
 		},
 		getNavURL: function() {
 			function parse() {
@@ -56,7 +57,9 @@ $(function(){
 				return url;
 			}
 			status.prevPageURL = parse.call($prevPageLink);
+			console.log(status.prevPageURL);
 			status.nextPageURL = parse.call($nextPageLink);
+			console.log(status.nextPageURL);
 		},
 		clearNotice: function($obj) {
 			return function() {
@@ -249,9 +252,6 @@ $(function(){
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
 					console.log(status.currentPage);
-					if (old===-1) {
-						util.showNotice('这个分类下已经没有更新的文章了~')
-					}
 				}
 			});
 			delete localStorage.returnedFromNextPage;
@@ -307,10 +307,12 @@ $(function(){
 		turn: function(direction) {
 			if (direction=='left') {
 				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
-				if (status.currentPage === 0) {
+				if (status.currentPage === 1) {
 					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
 							location.href = status.prevPageURL;
+						} else {
+							util.showNotice('这个分类下已经没有更新的文章了~');
 						}
 					} else {
 						if (status.prevPageURL != '') {
@@ -324,7 +326,7 @@ $(function(){
 				this.bookblock('next');
 				if (status.currentPage === status.numPages) {
 					if (status.isListPage) {
-						if ($wpWrapper.find('.wp-item').length > 59) {
+						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages, and is configured in wordpress settings.
 							location.href = status.nextPageURL;
 						}
 					} else {
