@@ -8,7 +8,7 @@
 
 // add_action( 'wp_enqueue_scripts', 'theme_scripts_styles' );
 
-
+update_option('image_default_link_type','none');
 
 add_theme_support( 'post-thumbnails' ); 
 

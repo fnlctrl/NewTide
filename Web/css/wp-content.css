@@ -71,18 +71,20 @@ h3 {
 .wp-entry-author {
 	font-size: 12px;
 }
-.wp-entry-meta {
-	padding:'0 0 20px 0';
-}
 .wp-entry-thumbnail {
 	position: relative;
 	width: 100% !important;
+	max-height: 300px;
 }
-.wp-fake-thumbnail {
+.wp-fake-thumbnail-wrapper {
 	position: relative;
 	width: 100% !important;
 	top: -50px !important;
 	overflow: hidden;
+}
+.wp-fake-thumbnail {
+	position: relative;
+	width: 100%;
 }
 #wp-fake-nav-prev {
 	display: none;

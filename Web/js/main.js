@@ -13,6 +13,7 @@ $(function(){
 		$sidebarSections = $('#sidebar-sections'),
 		$wpEntryContent = $('.wp-entry-content'),
 		$wpWrapper = $('#wp-wrapper'),
+		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
 		$prevPageLink = $('#wp-fake-nav-prev');
 
@@ -26,6 +27,7 @@ $(function(){
 		prevPageURL:'',
 		nextPageURL:'',
 		isListPage: undefined,
+		needBook: true,
 	};
 
 	var util = {
@@ -106,6 +108,7 @@ $(function(){
 
 	var book = {
 		timer: null,
+		columnizer: null,
 		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
 			return {
@@ -119,9 +122,11 @@ $(function(){
 				noWrapOnTags: ['img','div'],
 			}
 		},
-		columnizer: null,
-		init: function() {			
+		init: function() {
 			//preprocessing wordpress-generated content for FTColumnflow to render
+			if (!status.needBook) {
+				return
+			}
 			var flowedContent; 
 			var fixedContent;
 			var numColumns;
@@ -155,11 +160,15 @@ $(function(){
 			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			book.columnizer.flow(flowedContent, fixedContent);
 			book.copyEntryThumbnail();
+			book.enableTurningPages(pageW);
 			util.getNavURL();
 			util.isListPage();
 			console.log('initialized');
 		},
 		reflow: function(cfg) {
+			if (!status.needBook) {
+				return
+			}
 			$bookLoadingShade.css({opacity:1,'z-index':'999'});
 			clearTimeout(book.timer);
 			book.timer = setTimeout(function(){
@@ -174,14 +183,17 @@ $(function(){
 			$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
-			if ($('.wp-entry-thumbnail').length) {
+			if ($wpEntryThumbnail.length) {
 				var $firstPage = $('.cf-page-1');
 				var $div = $('<div />');
+				var img = new Image();
+				img.src = $wpEntryThumbnail[0].src;
+				img.className = 'wp-fake-thumbnail';
 				var h = $firstPage.find('.wp-entry-title').offset().top - 24;
-				if (h > 500) {
-					h = 500;
+				if (h > 400) {
+					h = 400;
 				}
-				$div.addClass('wp-fake-thumbnail').css({height:h}).append($('.wp-entry-thumbnail')[0].outerHTML);
+				$div.addClass('wp-fake-thumbnail-wrapper').css({height:h}).append(img);
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
 				$('.cf-page-1').append($div); 
 			}
@@ -234,9 +246,9 @@ $(function(){
 				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
 					return;
 				}
-				if (e.pageX < offset.left+200) {
+				if (e.pageX < offset.left+100) {
 					book.turn.call($renderArea,'left');
-				} else if (e.pageX > offset.left+$bookContainer.width()-200) {
+				} else if (e.pageX > offset.left+$bookContainer.width()-100) {
 					book.turn.call($renderArea,'right');
 				}
 			})
@@ -285,7 +297,9 @@ $(function(){
 							location.href = status.prevPageURL;
 						}
 					} else {
-						location.href = status.prevPageURL;
+						if (status.prevPageURL != '') {
+							location.href = status.prevPageURL;
+						}
 					}
 					localStorage.returnedFromNextPage = true;
 				}
@@ -307,6 +321,11 @@ $(function(){
 
 	// initialize when page first loads
 	var W = $(window).width();
+	if ($('#wp-wrapper').length!=0) {
+		status.needBook = true;
+	} else {
+		status.needBook	= false;
+	}
 	var pageW;
 	if (W>1200) {
 		toggleMenu.show();
@@ -320,7 +339,6 @@ $(function(){
 	$bookLoadingShade.css({opacity:1,'z-index':'999'});
 	setTimeout(function() {
 		book.init();
-		book.enableTurningPages(pageW);
 		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	},200)
 
