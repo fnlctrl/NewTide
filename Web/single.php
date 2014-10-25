@@ -51,6 +51,7 @@
 			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>
 	</div>
+	<div id='sidebar-copyright'>© 2003-2014 </br> 浙江大学求是潮</div>
 </body>
 
 </html>

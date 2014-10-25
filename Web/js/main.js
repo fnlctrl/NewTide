@@ -15,7 +15,9 @@ $(function(){
 		$wpWrapper = $('#wp-wrapper'),
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
-		$prevPageLink = $('#wp-fake-nav-prev');
+		$prevPageLink = $('#wp-fake-nav-prev'),
+		$firstLoadHintWrapper = $('#first-load-hint-wrapper'),
+		$ignoreButton = $('#first-load-ignore-button');	
 
 	var status = {
 		showingMenu: null,
@@ -77,9 +79,7 @@ $(function(){
 		hide: function(needReflow) {
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(180deg)'});
-			$sidebarSections.css({display:'none'});
-			$sidebarLogo.css({display:'none'});
-			$sidebar.css({width:0});
+			$sidebar.css({left:'-200px'});
 			$bookContainer.css({width:W,left:0});
 			if (W>1200 && needReflow) {
 				book.reflow(book.getConfig(W));
@@ -92,8 +92,7 @@ $(function(){
 		show: function(needReflow) {
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(0deg)'});
-			$sidebarSections.css({display:''});
-			$sidebarLogo.css({display:''});
+			$sidebar.css({left:'0px'});
 			if (util.isMobile()) {
 				$sidebar.css({width:448});
 			} else {
@@ -233,7 +232,7 @@ $(function(){
 			var $renderArea = $('.cf-render-area');
 			$renderArea.addClass('bb-bookblock');
 			var startPage;
-			if (localStorage.returnedFromNextPage) {
+			if (localStorage.returnedFromNextPage==='true') {
 				startPage = status.numPages;
 			} else {
 				startPage = 1;
@@ -318,7 +317,7 @@ $(function(){
 							location.href = status.prevPageURL;
 						}
 					}
-					localStorage.returnedFromNextPage = true;
+					localStorage.returnedFromNextPage = 'true';
 				}
 			}
 			else if (direction=='right') {
@@ -376,4 +375,16 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
+
+	// operations about first load hint
+	if (localStorage.firstLoad === 'false') {
+		$firstLoadHintWrapper.remove()
+	}
+	$ignoreButton.click(function() {
+		$firstLoadHintWrapper.css({width:0});
+		setTimeout(function() {$firstLoadHintWrapper.remove()}, 500);
+		localStorage.firstLoad = 'false';
+	})
+	
+
 })

@@ -14,7 +14,7 @@
 			<div id='sidebar-music' class='sidebar-item <?php if(is_category('音乐')||in_category('音乐')) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/music/'; ?>"'>　音乐
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-music.svg'/>
 			</div>
-			<div id='sidebar-life' class='sidebar-item <?php if(is_category('生活')||in_category('生活')) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/life-2/'; ?>"'>　生活
+			<div id='sidebar-life' class='sidebar-item <?php if(is_category('生活')||in_category('生活')) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/life/'; ?>"'>　生活
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-life.svg'/>
 			</div>
 		</div>
@@ -35,4 +35,5 @@
 			</div>
 		</div>
 	</div>
+	<div id='sidebar-copyright'>© 2001 - 2014 </br> 浙江大学求是潮</div>
 </div>
