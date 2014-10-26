@@ -1,7 +1,7 @@
 <div id='sidebar' class='unselectable ease'>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-sections'>
-		<div class='sidebar-section'><span>文章</span><hr>
+		<div class='sidebar-section'><span onclick='location.href="<?php echo home_url().'/all'; ?>"'>文章</span><hr>
 			<div id='sidebar-featured' class='sidebar-item <?php if(is_category('专题')||in_category('专题')) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/featured/'; ?>"'>　专题 
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-featured.svg'/>
 			</div>

@@ -15,10 +15,8 @@ $(function(){
 		$wpWrapper = $('#wp-wrapper'),
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
-		$prevPageLink = $('#wp-fake-nav-prev'),
-		$firstLoadHintWrapper = $('#first-load-hint-wrapper'),
-		$ignoreButton = $('#first-load-ignore-button');	
-
+		$prevPageLink = $('#wp-fake-nav-prev');
+		
 	var status = {
 		showingMenu: null,
 		userClickedMenu: false,
@@ -377,16 +375,4 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
-
-	// operations about first load hint
-	if (localStorage.firstLoad === 'false') {
-		$firstLoadHintWrapper.remove()
-	}
-	$ignoreButton.click(function() {
-		$firstLoadHintWrapper.css({width:0});
-		setTimeout(function() {$firstLoadHintWrapper.remove()}, 500);
-		localStorage.firstLoad = 'false';
-	})
-	
-
 })

@@ -9,7 +9,7 @@
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.0.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
@@ -37,7 +37,7 @@
 						<?php the_title(); ?>
 					</h1>
 					<div class='wp-entry-author'>
-						文/ <a href='<?php the_author_link(); ?>'><?php the_author(); ?></a>
+						文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
 						@ <?php the_category(' &gt; ');?>
 						, <?php the_date('Y-m-d');?>
 					</div>
@@ -51,7 +51,6 @@
 			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>
 	</div>
-	<div id='sidebar-copyright'>© 2003-2014 </br> 浙江大学求是潮</div>
 </body>
 
 </html>

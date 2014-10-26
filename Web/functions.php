@@ -3,7 +3,7 @@
 // function theme_scripts_styles() {
 // 	wp_enqueue_style( 'sidebar',  get_template_directory_uri() . '/css/sidebar.css', array(), '1.0', 'all');
 // 	wp_enqueue_style( 'sidebar',  get_template_directory_uri() . '/css/global.css', array(), '1.0', 'all');
-// 	wp_enqueue_script( 'jQuery', get_template_directory_uri() . '/js/jquery-2.1.0.min.js', array(), '2.1.0', false );
+// 	wp_enqueue_script( 'jQuery', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', array(), '2.1.1', false );
 // }
 
 // add_action( 'wp_enqueue_scripts', 'theme_scripts_styles' );

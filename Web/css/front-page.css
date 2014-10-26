@@ -1,0 +1,152 @@
+/*#book-container:before {
+	z-index: 0;
+}*/
+iframe {
+	position: absolute;
+	height: calc(100% - 120px);
+	bottom: 20px;
+	width: 100%;
+}
+#events-wrapper {
+	position: absolute;
+	left: 50%;
+	height: 100%;
+	width: 50%;
+}
+#posts-wrapper {
+	position: absolute;
+	left: 210px;
+	z-index: 2;
+	width: calc(50% - 210px);
+	height: 100%;
+}
+h1 {
+	margin: 50px 0 0 50px;
+	color: #ed6d7f;
+	line-height: 28px;
+	font-size: 28px;
+}
+#more {
+	color: #ed6d7f;
+	font-size: 14px;
+}
+/*    Posts    */
+#posts {
+	position: relative;
+	left: 50px;
+	top: 20px;
+	width: calc( 100% - 70px );
+	height: calc( 100% - 170px);
+	overflow-y: scroll;
+}
+.wp-item {
+	height: 75px;
+}
+.wp-post-image {
+	height: 75px;
+	width: 75px;
+}
+.wp-item-text {
+	position: relative;
+	top: -10px;
+}
+/*    First Load Hint    */
+#first-load-hint-wrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 210px;
+	height: 100%;
+	background-color: #42a0de;
+	color: #fff;
+	transition: width 0.5s ease;
+	z-index: 999;
+}
+#first-load-hint {
+	position: absolute;
+	top: 50px;
+	width: 130px;
+	left: 40px;
+	height: 100%;
+}
+#first-load-title {
+	font-size: 18px;
+	line-height: 18px;
+	margin: 0 0 15px 0;
+}
+#first-load-logo:hover path {
+	fill: #d4eeff;
+}
+#first-load-text {
+	position: absolute;
+	top: 150px;
+	left: -10px;
+	white-space: nowrap;
+	font-size: 14px;
+}
+#first-load-wave-wrapper {
+	position: absolute;
+	top: 150px;
+	width: 210px;
+	height: 20px;
+	overflow: hidden;
+}
+.first-load-icon {
+	display: inline;
+	vertical-align: text-bottom;
+}
+.first-load-icon path {
+	fill: #fff;
+}
+#first-load-ignore-button {
+	position: absolute;
+	width: 100%;
+	height: 25px;
+	bottom: 100px;
+	text-align: center;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 25px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+#first-load-ignore-button:hover {
+	background: rgba(255,255,255,0.5);
+}
+#first-load-ignore-button:active {
+	background: #fff;
+	color: #42a0de;
+}
+#first-load-wave {
+	position: absolute;
+	left: 0;
+	animation-name: wave;
+	-webkit-animation-name: wave;
+	animation-duration: 4s;
+	-webkit-animation-duration: 4s;
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+	animation-timing-function:linear;
+	-webkit-animation-timing-function:linear;
+	transition: all 0.3s ease;
+}
+@keyframes wave {
+	from {
+		left: -210px;
+	}
+
+	to {
+		left: 0;
+	}
+}
+@-webkit-keyframes wave {
+	from {
+		left: -210px;
+	}
+
+	to {
+		left: 0;
+	}
+}
