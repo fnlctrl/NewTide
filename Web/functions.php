@@ -53,4 +53,31 @@ function custom_excerpt_length( $length ) {
 }
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
+function my_login_logo() { ?>
+	<style type="text/css">
+		#login h1 a {
+			width: 200px;
+			height: 65px;
+			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/sidebar-logo.svg);
+			background-size: 100%;
+		}
+	</style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+
+function my_login_logo_url() {
+    return home_url();
+}
+add_filter( 'login_headerurl', 'my_login_logo_url' );
+
+function my_login_logo_url_title() {
+    return '水朝夕而至，曰潮';
+}
+add_filter( 'login_headertitle', 'my_login_logo_url_title' );
+
+
+
+
+
 ?>

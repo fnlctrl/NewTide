@@ -22,7 +22,7 @@
 			<div id='sidebar-event' class='sidebar-item <?php if(is_category('活动')||in_category('活动')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/events/'; ?>"'>　活动
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-event.svg'/>
 			</div>
-			<div id='sidebar-onepage' class='sidebar-item <?php if(is_category('一张纸')||in_category('一张纸')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/onepage/'; ?>"'>　一张纸
+			<div id='sidebar-onepage' class='sidebar-item <?php if(is_category('印刷品')||in_category('印刷品')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/prints/'; ?>"'>　印刷品
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-onepage.svg'/>
 			</div>
 		</div>

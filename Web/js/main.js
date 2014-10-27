@@ -41,8 +41,10 @@ $(function(){
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
 				status.isListPage = true;
+				status.numColumns = 1;
 			} else {
 				status.isListPage = false;
+				status.numColumns = 2;
 			}
 			console.log('is list page: ' + status.isListPage);
 		},
@@ -72,7 +74,7 @@ $(function(){
 			$('body').append($notice);
 			setTimeout(function(){$notice.css({opacity:1});}, 100);
 			$notice.bind('click', util.clearNotice($notice));
-			setTimeout(util.clearNotice($notice), 1000);
+			setTimeout(util.clearNotice($notice), 1500);
 		},
 	};
 
@@ -144,26 +146,23 @@ $(function(){
 			}
 			var flowedContent; 
 			var fixedContent;
-			var numColumns;
-			if ($wpEntryContent.length) { // means the page is showing a single entry
+			if (!status.isListPage) {
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.removeAttr('height width').css({width:'100%'}).addClass('nowrap');
+				$wpEntryImgs.removeAttr('height width class').css({width:'100%'}).addClass('nowrap');
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
 					if ($this.parents('p').length) {
 						$this.unwrap();
 					}
 				})
-				flowedContent = $wpEntryContent[0];
+				flowedContent = $wpEntryContent.html();
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
-				status.numColumns = 2;
 				status.standardiseLineHeight = true;
-			} else { // means the page is showing list of entries
+			} else {
 				flowedContent = $wpWrapper.html();
 				fixedContent = '';
-				status.numColumns = 1;
 				status.standardiseLineHeight = false;
 			}
 			var cfg;
@@ -246,10 +245,11 @@ $(function(){
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
 				onBeforeFlip: function(page) {
-					status.currentPage = page+1;
+					status.currentPage = page+1; // bookblock has a bug that start counting pages from 0 in onBeforeFlip and onEndFlip, and from 1 in everywhere else
 				},
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
+					console.log(status.currentPage);
 				}
 			});
 			localStorage.removeItem('returnedFromNextPage');
@@ -309,15 +309,17 @@ $(function(){
 					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
 							location.href = status.prevPageURL;
+							localStorage.setItem('returnedFromNextPage','yes');
 						} else {
 							util.showNotice('这个分类下已经没有更新的文章了~');
 						}
 					} else {
 						if (status.prevPageURL != '') {
 							location.href = status.prevPageURL;
+						} else {
+							util.showNotice('这个分类下已经没有更新的文章了~');
 						}
 					}
-					localStorage.setItem('returnedFromNextPage','yes');
 				}
 			}
 			else if (direction=='right') {
@@ -326,6 +328,8 @@ $(function(){
 					if (status.isListPage) {
 						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages, and is configured in wordpress settings.
 							location.href = status.nextPageURL;
+						} else {
+							util.showNotice('这个分类下已经没有更多文章了~');
 						}
 					} else {
 						location.href = status.nextPageURL;
