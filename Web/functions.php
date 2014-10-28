@@ -26,20 +26,25 @@ remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that 
 
 show_admin_bar(false);
 
-add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
-add_filter( 'image_send_to_editor', 'remove_width_attribute', 10 );
 
 // remove all auto added width and height to imgs
-function remove_width_attribute( $html ) {
-   $html = preg_replace( '/(width|height)="\d*"\s/', "", $html );
-   return $html;
+function remove_width_attribute( $content ) {
+   $content = preg_replace( '/(width|height)="\d*"\s/', "", $content );
+   return $content;
 }
+add_filter('the_content', 'remove_width_attribute' );
 
 // remove all <a>s wrapped around <img>s
 function filter_ptags_on_images( $content ){
-   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\2', $content);
+   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '$2', $content);
 }
 add_filter('the_content', 'filter_ptags_on_images');
+
+// remove all attr of <img>s
+function filter_attr_on_images( $content ){
+   return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
+}
+add_filter('the_content', 'filter_attr_on_images');
 
 // change the excerpt more string to '...'
 function custom_excerpt_more( $more ) {

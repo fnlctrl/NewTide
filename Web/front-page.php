@@ -30,31 +30,33 @@ Template Name: 主页
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
 		<div id='book-loading-shade'></div>
-		<div id='first-load-hint-wrapper' class='unselectable'>
-			<div id='first-load-hint'>
-				<div id='first-load-title'>欢迎来到全新的</div>
-				<img id='first-load-logo' class='svg' src='<?php bloginfo('template_url');?>/img/first-load-logo.svg'/>
-				<div id='first-load-text'>
-					<p><b>· 开放投稿啦！</b></br>
-					　请点击左侧　<b>投稿</b> <img class='first-load-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/></br>
-					　有精美礼品相送！
+		<div id='hint-wrapper' class='unselectable'>
+			<div id='hint'>
+				<div id='hint-title'>欢迎来到全新的</div>
+				<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
+				<div id='text'>
+					<p>
+					　　你好。我们是水朝夕工作室，求是潮中一群有爱的人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br>
+					　　在这里，我们分享所爱的事物，也接受大家的投稿，分享你所欣赏的东西。<br>
 					</p>
-					<p><b>· 分页阅读</b></br>
-					　在文章页面</br>
-					　单击页面边缘翻页</br>
-					　或使用←→键</br>
-					　触屏上亦可滑动翻页
+					<hr>
+					<p><span class='title'>· 开放投稿啦！</span></br>
+						请点击左侧 <b>投稿</b> <img class='icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/></br>
 					</p>
-					<p><b>· 再写点啥？</b></br>
-					　暂时想不出来
+					<p><span class='title'>· 分页阅读</span></br>
+						在文章页面</br>
+						单击页面边缘翻页</br>
+						或使用←→键</br>
+						触屏上亦可滑动翻页
 					</p>
+					
 				</div>
-				<div id='first-load-ignore-button'>
+				<div id='ignore-button'>
 					我知道了
 				</div>
 			</div>
-			<div id='first-load-wave-wrapper'>
-				<img id='first-load-wave' src='<?php bloginfo('template_url');?>/img/first-load-wave.svg'/>
+			<div id='wave-wrapper'>
+				<img id='wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
 			</div>
 		</div>
 		<div id='posts-wrapper' class='ease'>

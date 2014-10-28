@@ -12,7 +12,7 @@ Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal
 	-ms-user-select: none;  
 }
 .ease {
-	transition: all 0.15s ease;
+	transition: all 0.2s ease;
 }
 * {
 	font-family: "Microsoft YaHei"

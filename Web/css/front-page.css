@@ -51,7 +51,7 @@ h1 {
 	top: -10px;
 }
 /*    First Load Hint    */
-#first-load-hint-wrapper {
+#hint-wrapper {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -62,43 +62,52 @@ h1 {
 	transition: width 0.5s ease;
 	z-index: 999;
 }
-#first-load-hint {
+#hint {
 	position: absolute;
 	top: 50px;
 	width: 130px;
 	left: 40px;
 	height: 100%;
 }
-#first-load-title {
+#hint hr {
+	border: 0;
+	height: 1px;
+	background: #fff;
+}
+#hint-title {
 	font-size: 18px;
 	line-height: 18px;
 	margin: 0 0 15px 0;
 }
-#first-load-logo:hover path {
+#logo:hover path {
 	fill: #d4eeff;
 }
-#first-load-text {
+#text {
 	position: absolute;
-	top: 150px;
-	left: -10px;
-	white-space: nowrap;
+	top: 130px;
 	font-size: 14px;
+	width: 100%;
 }
-#first-load-wave-wrapper {
+.title {
+	position: relative;	
+	font-weight: bold;
+	left: -10px;
+}
+#wave-wrapper {
 	position: absolute;
 	top: 150px;
 	width: 210px;
 	height: 20px;
 	overflow: hidden;
 }
-.first-load-icon {
+.icon {
 	display: inline;
 	vertical-align: text-bottom;
 }
-.first-load-icon path {
+.icon path {
 	fill: #fff;
 }
-#first-load-ignore-button {
+#ignore-button {
 	position: absolute;
 	width: 100%;
 	height: 25px;
@@ -112,14 +121,14 @@ h1 {
 	cursor: pointer;
 	transition: all 0.2s ease;
 }
-#first-load-ignore-button:hover {
+#ignore-button:hover {
 	background: rgba(255,255,255,0.5);
 }
-#first-load-ignore-button:active {
+#ignore-button:active {
 	background: #fff;
 	color: #42a0de;
 }
-#first-load-wave {
+#wave {
 	position: absolute;
 	left: 0;
 	animation-name: wave;

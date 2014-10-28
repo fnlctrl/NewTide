@@ -28,14 +28,15 @@ $(function(){
 		nextPageURL:'',
 		isListPage: undefined,
 		needBook: true,
+		isMobile: undefined,
 	};
 
 	var util = {
 		isMobile: function() {
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				return true;
+				status.isMobile = true;
 			} else {
-				return false;
+				status.isMobile = false;
 			}
 		},
 		isListPage: function() {
@@ -82,7 +83,11 @@ $(function(){
 		hide: function(needReflow) {
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(180deg)'});
-			$sidebar.css({left:'-200px'});
+			if (status.isMobile) {
+				$sidebar.css({left:'-448px'});
+			} else {
+				$sidebar.css({left:'-200px'});
+			}
 			$bookContainer.css({width:W,left:0});
 			if (W>1200 && needReflow) {
 				book.reflow(book.getConfig(W));
@@ -96,10 +101,7 @@ $(function(){
 			var W = $window.width();
 			$menuIconArrow.css({'transform':'rotateZ(0deg)'});
 			$sidebar.css({left:'0px'});
-			if (util.isMobile()) {
-				$sidebar.css({width:448});
-			} else {
-				$sidebar.css({width:200});
+			if (!status.isMobile) {
 				$bookContainer.css({left:200});
 			}
 			if (W>1200 && needReflow) {
@@ -148,7 +150,7 @@ $(function(){
 			var fixedContent;
 			if (!status.isListPage) {
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.removeAttr('height width class').css({width:'100%'}).addClass('nowrap');
+				$wpEntryImgs.css({width:'100%'}).addClass('nowrap'); //.removeAttr('height width class')
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
 					if ($this.parents('p').length) {
@@ -342,6 +344,7 @@ $(function(){
 	// initialize when page first loads
 	util.getNavURL();
 	util.isListPage();
+	util.isMobile();
 	var W = $(window).width();
 	if ($('#wp-wrapper').length!=0) {
 		status.needBook = true;
