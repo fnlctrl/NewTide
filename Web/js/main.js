@@ -1,16 +1,12 @@
 $(function(){
 	var $window = $(window),
 		$sidebar = $('#sidebar'),
-		$sidebarLogo = $('#sidebar-logo'),
-		$items = $('.sidebar-item'),
 		$bookContainer = $('#book-container'),
 		$bookLoadingShade = $('#book-loading-shade'),
-		$bookPages = $('#book-pages'),
 		$bookNavNext = $('#book-nav-next'),
 		$bookNavPrev = $('#book-nav-prev'),
 		$menuIcon = $('#menu-icon'),
 		$menuIconArrow = $('#menu-icon-arrow'),
-		$sidebarSections = $('#sidebar-sections'),
 		$wpEntryContent = $('.wp-entry-content'),
 		$wpWrapper = $('#wp-wrapper'),
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
@@ -210,7 +206,7 @@ $(function(){
 				}
 				$div.addClass('wp-fake-thumbnail-wrapper').css({height:h}).append(img);
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
-				$('.cf-page-1').append($div); 
+                $firstPage.append($div);
 			}
 		},
 		enableTurningPages: function(pageW) { // pageW is width of a single page
@@ -281,8 +277,8 @@ $(function(){
 						break;
 				}	
 			});
-			$window.on('mousewheel', function(e) {
-				if (e.deltaY< 0){
+			$window.on('mousewheel', function(event) {
+    			if (event.deltaY < 0){
 					book.turn.call(book.renderArea,'right');
 				} else {
 					book.turn.call(book.renderArea,'left');
