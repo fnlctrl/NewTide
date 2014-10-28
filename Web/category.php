@@ -11,6 +11,7 @@
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
@@ -56,7 +57,7 @@
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
-						the_post_thumbnail('wp-entrylist-thumbnail');
+                        the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 					}
 				?>
 				<div class='wp-item-text'>

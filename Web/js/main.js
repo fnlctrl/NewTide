@@ -19,7 +19,6 @@ $(function(){
 		
 	var status = {
 		showingMenu: null,
-		userClickedMenu: false,
 		currentPage: 1,
 		numPages: 1,
 		numColumns: 1,
@@ -120,7 +119,7 @@ $(function(){
 		bind: (function() {
 			$menuIcon.click(function() {
 				toggleMenu.toggle();
-				status.userClickedMenu = true;
+				localStorage.setItem('userClickedMenu','true');
 			})
 		})()
 	};
@@ -128,6 +127,7 @@ $(function(){
 	var book = {
 		timer: null,
 		columnizer: null,
+		renderArea: null,
 		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
 			return {
@@ -175,8 +175,10 @@ $(function(){
 			}
 			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			book.columnizer.flow(flowedContent, fixedContent);
+			book.renderArea = $('.cf-render-area');
 			book.copyEntryThumbnail();
 			book.enableTurningPages(pageW);
+			book.setUpEvents();
 		},
 		reflow: function(cfg) {
 			if (!status.needBook) {
@@ -229,10 +231,9 @@ $(function(){
 			}
 			status.numPages = $('.bb-item').length;
 			// enable page flip
-			var $renderArea = $('.cf-render-area');
-			$renderArea.addClass('bb-bookblock');
+			book.renderArea.addClass('bb-bookblock');
 			var startPage;
-			if (localStorage.returnedFromNextPage==='yes') {
+			if (localStorage.returnedFromNextPage === 'true') {
 				startPage = status.numPages;
 			} else {
 				startPage = 1;
@@ -240,7 +241,7 @@ $(function(){
 			if (!status.isListPage) {
 				startPage = 1;
 			}
-			$renderArea.bookblock({
+			book.renderArea.bookblock({
 				startPage : startPage,
 				speed : 700,
 				shadows: true,
@@ -255,34 +256,42 @@ $(function(){
 				}
 			});
 			localStorage.removeItem('returnedFromNextPage');
-			$renderArea.focus();
-			// initialize events
+			book.renderArea.focus();
+		},
+		setUpEvents: function() {
 			$bookContainer.click(function(e) {
 				var offset = $bookContainer.offset();
 				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
 					return;
 				}
 				if (e.pageX < offset.left+100) {
-					book.turn.call($renderArea,'left');
+					book.turn.call(book.renderArea,'left');
 				} else if (e.pageX > offset.left+$bookContainer.width()-100) {
-					book.turn.call($renderArea,'right');
+					book.turn.call(book.renderArea,'right');
 				}
 			})
 			$window.keydown(function(e) {
 				var keyCode = e.keyCode || e.which;
 				switch (keyCode) {
 					case 37: //left
-						book.turn.call($renderArea,'left');
+						book.turn.call(book.renderArea,'left');
 						break;
 					case 39: //right
-						book.turn.call($renderArea,'right');
+						book.turn.call(book.renderArea,'right');
 						break;
+				}	
+			});
+			$window.on('mousewheel', function(e) {
+				if (e.deltaY< 0){
+					book.turn.call(book.renderArea,'right');
+				} else {
+					book.turn.call(book.renderArea,'left');
 				}
 			});
-			$bookContainer.on('swipeleft',function(event) {
-				book.turn.call($renderArea,'right');
-			}).on('swiperight',function(event) {
-				book.turn.call($renderArea,'left');
+			$bookContainer.on('swipeleft',function(e) {
+				book.turn.call(book.renderArea,'right');
+			}).on('swiperight',function(e) {
+				book.turn.call(book.renderArea,'left');
 			});
 			//show hints to turn pages
 			$bookContainer.bind('mousemove',function(e) {
@@ -306,12 +315,12 @@ $(function(){
 		},
 		turn: function(direction) {
 			if (direction=='left') {
-				this.bookblock('prev'); // 'this' is $renderArea passed in by Function.prototype.call()
+				this.bookblock('prev'); // 'this' is book.renderArea passed in by Function.prototype.call()
 				if (status.currentPage === 1) {
 					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
 							location.href = status.prevPageURL;
-							localStorage.setItem('returnedFromNextPage','yes');
+							localStorage.setItem('returnedFromNextPage','true');
 						} else {
 							util.showNotice('这个分类下已经没有更新的文章了~');
 						}
@@ -369,14 +378,14 @@ $(function(){
 
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
-		if (!status.userClickedMenu) { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
+		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
 			if (W>1200) {
 				toggleMenu.show(true);
 			} else {
 				toggleMenu.hide(true);
 			}
 		}
-		if (status.showingMenu) {
+		if (status.showingMenu) {	
 			$bookContainer.width(W-200);
 			book.reflow(book.getConfig(W-200));
 		} else {

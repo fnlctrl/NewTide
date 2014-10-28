@@ -16,6 +16,7 @@ Template Name: 主页
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
@@ -36,27 +37,24 @@ Template Name: 主页
 				<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
 				<div id='text'>
 					<p>
-					　　你好。我们是水朝夕工作室，求是潮中一群有爱的人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br>
-					　　在这里，我们分享所爱的事物，也接受大家的投稿，分享你所欣赏的东西。<br>
+					　　你好。我们是水朝夕工作室，求是潮中一群有爱的人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
+					　　在这里，我们分享所爱的事物，也接受大家的投稿，分享你所欣赏的东西。<br/>
 					</p>
 					<hr>
-					<p><span class='title'>· 开放投稿啦！</span></br>
-						请点击左侧 <b>投稿</b> <img class='icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/></br>
+					<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>
+						请点击左侧 <b>投稿</b> <img class='hint-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/><br/>
 					</p>
-					<p><span class='title'>· 分页阅读</span></br>
-						在文章页面</br>
-						单击页面边缘翻页</br>
-						或使用←→键</br>
-						触屏上亦可滑动翻页
+					<p><span class='hint-subtitle'>· 分页阅读</span><br/>
+						在文章页面可以通过单击页面边缘、使用←→键、鼠标滚轮、滑动屏幕来翻页
 					</p>
 					
 				</div>
-				<div id='ignore-button'>
+				<div id='hint-ignore-button'>
 					我知道了
 				</div>
 			</div>
-			<div id='wave-wrapper'>
-				<img id='wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
+			<div id='hint-wave-wrapper'>
+				<img id='hint-wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
 			</div>
 		</div>
 		<div id='posts-wrapper' class='ease'>
@@ -76,7 +74,7 @@ Template Name: 主页
 					<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 						<?php 
 							if ( has_post_thumbnail() ) {
-								the_post_thumbnail('wp-entrylist-thumbnail');
+                                the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 							}
 						?>
 						<div class='wp-item-text'>

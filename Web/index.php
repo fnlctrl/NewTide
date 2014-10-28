@@ -53,7 +53,7 @@
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
-						the_post_thumbnail('wp-entrylist-thumbnail');
+                        the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 					}
 				?>
 				<div class='wp-item-text'>

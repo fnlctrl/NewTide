@@ -1,7 +1,7 @@
 $(function(){
 	localStorage.clear();
-	var $firstLoadHintWrapper = $('#first-load-hint-wrapper'),
-		$ignoreButton = $('#first-load-ignore-button'),
+	var $firstLoadHintWrapper = $('#hint-wrapper'),
+		$ignoreButton = $('#hint-ignore-button'),
 		$postsWrapper = $('#posts-wrapper');
 
 	if (localStorage.firstLoad === 'false') {

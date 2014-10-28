@@ -88,26 +88,18 @@ h1 {
 	font-size: 14px;
 	width: 100%;
 }
-.title {
+.hint-subtitle {
 	position: relative;	
 	font-weight: bold;
 	left: -10px;
 }
-#wave-wrapper {
-	position: absolute;
-	top: 150px;
-	width: 210px;
-	height: 20px;
-	overflow: hidden;
-}
-.icon {
-	display: inline;
+.hint-icon {
 	vertical-align: text-bottom;
 }
-.icon path {
+.hint-icon path {
 	fill: #fff;
 }
-#ignore-button {
+#hint-ignore-button {
 	position: absolute;
 	width: 100%;
 	height: 25px;
@@ -121,14 +113,21 @@ h1 {
 	cursor: pointer;
 	transition: all 0.2s ease;
 }
-#ignore-button:hover {
+#hint-ignore-button:hover {
 	background: rgba(255,255,255,0.5);
 }
-#ignore-button:active {
+#hint-ignore-button:active {
 	background: #fff;
 	color: #42a0de;
 }
-#wave {
+#hint-wave-wrapper {
+	position: absolute;
+	top: 150px;
+	width: 210px;
+	height: 20px;
+	overflow: hidden;
+}
+#hint-wave {
 	position: absolute;
 	left: 0;
 	animation-name: wave;
