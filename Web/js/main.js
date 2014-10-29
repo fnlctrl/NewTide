@@ -12,7 +12,7 @@ $(function(){
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
 		$prevPageLink = $('#wp-fake-nav-prev');
-		
+
 	var status = {
 		showingMenu: null,
 		currentPage: 1,
@@ -22,16 +22,14 @@ $(function(){
 		prevPageURL:'',
 		nextPageURL:'',
 		isListPage: undefined,
-		needBook: true,
-		isMobile: undefined,
+		needBook: false,
+		isMobile: false
 	};
 
 	var util = {
 		isMobile: function() {
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				status.isMobile = true;
-			} else {
-				status.isMobile = false;
 			}
 		},
 		isListPage: function() {
@@ -159,7 +157,7 @@ $(function(){
 				fixedContent = $wpEntryMeta[0].outerHTML;
 				status.standardiseLineHeight = true;
 			} else {
-				flowedContent = $wpWrapper.html();
+				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
 				status.standardiseLineHeight = false;
 			}
@@ -265,7 +263,7 @@ $(function(){
 				} else if (e.pageX > offset.left+$bookContainer.width()-100) {
 					book.turn.call(book.renderArea,'right');
 				}
-			})
+			});
 			$window.keydown(function(e) {
 				var keyCode = e.keyCode || e.which;
 				switch (keyCode) {
@@ -307,10 +305,10 @@ $(function(){
 				}
 			}).bind('mouseleave',function() {
 				$bookNavPrev.css({opacity:0});
-			})
+			});
 		},
 		turn: function(direction) {
-			if (direction=='left') {
+			if (direction==='left') {
 				this.bookblock('prev'); // 'this' is book.renderArea passed in by Function.prototype.call()
 				if (status.currentPage === 1) {
 					if (status.isListPage) {
@@ -329,7 +327,7 @@ $(function(){
 					}
 				}
 			}
-			else if (direction=='right') {
+			else if (direction==='right') {
 				this.bookblock('next');
 				if (status.currentPage === status.numPages) {
 					if (status.isListPage) {
@@ -343,19 +341,20 @@ $(function(){
 					}
 				}
 			}
-		},
-	}
+		}
+	};
 
 	// initialize when page first loads
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
 	var W = $(window).width();
-	if ($('#wp-wrapper').length!=0) {
+	if ($wpWrapper.length!=0) {
 		status.needBook = true;
-	} else {
-		status.needBook	= false;
 	}
+    if (status.isMobile) {
+        status.needBook = false;
+    }
 	var pageW;
 	if (W>1200) {
 		toggleMenu.show();

@@ -27,12 +27,6 @@ remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that 
 show_admin_bar(false);
 
 
-// remove all auto added width and height to imgs
-function remove_width_attribute( $content ) {
-   $content = preg_replace( '/(width|height)="\d*"\s/', "", $content );
-   return $content;
-}
-add_filter('the_content', 'remove_width_attribute' );
 
 // remove all <a>s wrapped around <img>s
 function filter_ptags_on_images( $content ){
@@ -45,6 +39,13 @@ function filter_attr_on_images( $content ){
    return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
 }
 add_filter('the_content', 'filter_attr_on_images');
+
+//
+function remove_thumbnail_dimensions( $content ) {
+    return preg_replace( '/(width|height)=\"\d*\"\s/', "", $content );
+}
+add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions');
+add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions');
 
 // change the excerpt more string to '...'
 function custom_excerpt_more( $more ) {
@@ -80,9 +81,6 @@ function my_login_logo_url_title() {
     return '水朝夕而至，曰潮';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
-
-
-
 
 
 ?>
