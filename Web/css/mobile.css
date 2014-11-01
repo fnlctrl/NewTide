@@ -1,4 +1,4 @@
-
+@media (max-width : 720px) {
 /*
 Theme Name: NewTide for Mobile
 */
@@ -12,7 +12,6 @@ Theme Name: NewTide for Mobile
 	display	: none;
 }
 
-@media (max-width : 720px) {
 
 #sidebar-logo {
 	display	: none;
@@ -57,13 +56,13 @@ body {
 }
 #topbar-logo {
 	width			: 156px;
-	height			: 48px;
-	padding			: 8px 16px;
+	height			: 96px;
+	margin			: 8px 24px;
 	display			: inline-block;
-	vertical-align	: top;
 	font-size		: 36px;
 	line-height		: 112px;
 	color			: #FFF;
+	cursor			: pointer;
 }
 #topbar-title {
 	padding			: 0 36px;
@@ -220,18 +219,6 @@ body {
 
 
 /* Catagory */
-.cf-page {
-	width	: 648px !important;
-	left	: 35px !important;
-}
-.cf-page-2 {
-	top	: 464px !important;
-}
-.cf-column {
-	width	: 648px !important;
-	left	: 0 !important;
-}
-
 .wp-item {
 	width				: 644px;
 	height				: 192px;
@@ -259,6 +246,28 @@ body {
 }
 .wp-item-text h3 {
 	font-size	: 18px;
+}
+
+.cf-page {
+	width	: 648px !important;
+	left	: 46px !important;
+}
+.cf-page-2 {
+	top	: 464px !important;
+}
+.cf-fixed {
+	width		: 648px !important;
+	position	: static !important;
+	margin-top	: 280px;
+}
+.cf-column {
+	width		: 648px !important;
+	left		: 0 !important;
+	position	: static !important;
+}
+.wp-fake-thumbnail-wrapper {
+	position	: absolute;
+	top			: 0 !important;
 }
 
 }

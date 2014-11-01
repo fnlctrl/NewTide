@@ -1,6 +1,6 @@
 <div id='topbar'>
 	<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
-	<div id='topbar-logo'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></div>
+	<div id='topbar-logo' onclick='location.href="<?php echo home_url();?>"'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></div>
 	<div id='topbar-title'>标题</div>
 	<div id='topbar-search'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 </div>

@@ -1,0 +1,19 @@
+@media (max-width : 720px) {
+
+.cf-page {
+	display	: none !important;
+}
+.cf-page:nth-child(1) {
+	display	: block !important;
+	height	: auto !important;
+}
+.cf-column {
+	display		: none !important;
+	margin-top	: 20px;
+}
+.cf-column:nth-child(2) {
+	display	: block !important;
+	height	: auto !important;
+}
+
+}
