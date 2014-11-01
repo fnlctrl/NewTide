@@ -1,5 +1,15 @@
+<div id='topbar'>
+	<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
+	<div id='topbar-logo'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></div>
+	<div id='topbar-title'>标题</div>
+	<div id='topbar-search'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
+</div>
 <div id='sidebar' class='unselectable ease'>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
+	<div id='sidebar-top'>
+		<div id='user-head'></div>
+		<div id='user-id'>登录</div>
+	</div>
 	<div id='sidebar-sections'>
 		<div class='sidebar-section'><span onclick='location.href="<?php echo home_url().'/all'; ?>"'>文章</span><hr>
 			<div id='sidebar-featured' class='sidebar-item <?php if(is_category('专题')||in_category('专题')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/category/featured/'; ?>"'>　专题 
@@ -22,7 +32,7 @@
 			<div id='sidebar-event' class='sidebar-item <?php if(is_category('活动')||in_category('活动')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/events/'; ?>"'>　活动
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-event.svg'/>
 			</div>
-			<div id='sidebar-onepage' class='sidebar-item <?php if(is_category('设计品')||in_category('设计品')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/designs/'; ?>"'>　设计品
+			<div id='sidebar-onepage' class='sidebar-item <?php if(is_category('设计品')||in_category('设计品')&&!is_home()) echo 'sidebar-item-current';?>' onclick='location.href="<?php echo home_url().'/prints/'; ?>"'>　印刷品
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-onepage.svg'/>
 			</div>
 		</div>
@@ -35,5 +45,6 @@
 			</div>
 		</div>
 	</div>
-	<div id='sidebar-copyright'>© 2001 - 2014 </br> 浙江大学求是潮</div>
+	<div id='sidebar-copyright' class='ease'>© 2001 - 2014 </br> 浙江大学求是潮</div>
 </div>
+<div id='cover'></div>

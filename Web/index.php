@@ -54,7 +54,7 @@
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 				<?php 
 					if ( has_post_thumbnail() ) {
-                        the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+						the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 					}
 				?>
 				<div class='wp-item-text'>
@@ -67,7 +67,7 @@
 					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
 			</div>
-			<?php //End Loop  ?>	
+			<?php //End Loop  ?>
 			<?php endforeach; wp_reset_postdata();?>
 			<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 			<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
@@ -75,4 +75,3 @@
 	</div>
 </body>
 </html>
-
