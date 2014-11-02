@@ -129,10 +129,11 @@ $(function(){
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
-				standardiseLineHeight:status.standardiseLineHeight,
+				lineHeight: 18,
+				//showGrid: true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img','div'],
+				noWrapOnTags: ['img','div']
 			}
 		},
 		init: function() {
@@ -150,7 +151,7 @@ $(function(){
 					if ($this.parents('p').length) {
 						$this.unwrap();
 					}
-				})
+				});
 				flowedContent = $wpEntryContent.html();
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
@@ -170,8 +171,8 @@ $(function(){
 			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			book.columnizer.flow(flowedContent, fixedContent);
 			book.renderArea = $('.cf-render-area');
-			book.copyEntryThumbnail();
 			book.enableTurningPages(pageW);
+			book.copyEntryThumbnail();
 			book.setUpEvents();
 		},
 		reflow: function(cfg) {
@@ -219,7 +220,7 @@ $(function(){
 					$this.css({left:pageW});
 					$pages.slice(index-1,index+1).wrapAll('<div class="bb-item"/>');
 				}
-			})
+			});
 			if (len % 2 != 0) {
 				$pages.last().wrap('<div class="bb-item"/>');
 			}
@@ -237,7 +238,7 @@ $(function(){
 			}
 			book.renderArea.bookblock({
 				startPage : startPage,
-				speed : 700,
+				speed : 600,
 				shadows: true,
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
@@ -255,7 +256,7 @@ $(function(){
 		setUpEvents: function() {
 			$bookContainer.click(function(e) {
 				var offset = $bookContainer.offset();
-				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
+				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) { // prevent fireing when clicked on menu icon
 					return;
 				}
 				if (e.pageX < offset.left+100) {
@@ -273,20 +274,27 @@ $(function(){
 					case 39: //right
 						book.turn.call(book.renderArea,'right');
 						break;
+					default:
+						break;
 				}	
 			});
-			$window.on('mousewheel', function(event) {
-    			if (event.deltaY < 0){
-					book.turn.call(book.renderArea,'right');
-				} else {
-					book.turn.call(book.renderArea,'left');
-				}
-			});
-			$bookContainer.on('swipeleft',function(e) {
-				book.turn.call(book.renderArea,'right');
-			}).on('swiperight',function(e) {
-				book.turn.call(book.renderArea,'left');
-			});
+			if (!status.isMobile) {
+				$window.on('mousewheel', function(event) {
+					if (event.deltaY < 0){
+						book.turn.call(book.renderArea,'right');
+					} else {
+						book.turn.call(book.renderArea,'left');
+					}
+				});
+			}
+            if (status.isMobile || /iPad/i.test(navigator.userAgent)) {
+                var hammertime = new Hammer($bookContainer[0]);
+                hammertime.on('swipeleft', function(e) {
+                    book.turn.call(book.renderArea,'right');
+                }).on('swiperight',function(){
+                    book.turn.call(book.renderArea,'left');
+                });
+            }
 			//show hints to turn pages
 			$bookContainer.bind('mousemove',function(e) {
 				var offset = $bookContainer.offset();
@@ -369,7 +377,7 @@ $(function(){
 	setTimeout(function() {
 		book.init();
 		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-	},200)
+	},200);
 
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();

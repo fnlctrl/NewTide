@@ -10,7 +10,7 @@
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/hammer-2.0.4.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
@@ -45,9 +45,11 @@
 				</div>
 				<div class='wp-entry-content'>
 					<?php the_content(); ?>
-
+					<?php comments_template(); ?>
 				</div>
+
 			<?php }} ?>
+
 			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
 			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>

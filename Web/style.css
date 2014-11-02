@@ -129,6 +129,9 @@ body {
 }
 #sidebar hr {
 	margin: 1vh 0 1vh 0;
+    height: 1px;
+    background: #aaa;
+    border: none;
 }
 #sidebar-sections {
 	position: relative;

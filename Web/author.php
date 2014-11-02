@@ -10,7 +10,7 @@
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/hammer-2.0.4.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
@@ -41,7 +41,7 @@
 					$paged = 1;
 				}
 			$args = array(
-				'posts_per_page'   => 60,
+				'posts_per_page' => 60,
 				'orderby' => 'post_date',
 				'author' => get_the_author_meta( 'ID' ),
 				'order' => 'DESC',

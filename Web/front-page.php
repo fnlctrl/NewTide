@@ -13,9 +13,8 @@ Template Name: 主页
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
-	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.mobile.custom.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/hammer-2.0.4.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
@@ -87,6 +86,37 @@ Template Name: 主页
 						</div>
 					</div>
 					<?php //End Loop  ?>	
+				<?php endforeach; wp_reset_postdata();?>
+			</div>
+            <h1>编辑精选　<a id='more' href="<?php echo home_url().'/all'?>">更多...</a></h1>
+			<div id='posts'>
+				<?php
+				$args = array(
+					'posts_per_page'   => 10,
+					'orderby' => 'post_date',
+					'order' => 'DESC',
+					'post_type' => 'post',
+					'post_status' => 'publish',
+				);
+				$myposts = get_posts( $args );
+				foreach ( $myposts as $post ) : setup_postdata( $post );?>
+					<?php //Begin Loop ?>
+					<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
+						<?php
+							if ( has_post_thumbnail() ) {
+                                the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+							}
+						?>
+						<div class='wp-item-text'>
+							<h3><?php the_title(); ?></h3>
+							<div class='wp-item-metadata'>
+								文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
+								@ <?php the_category(' &gt; ');?>
+								, <?php the_date('Y-m-d');?>
+							</div>
+						</div>
+					</div>
+					<?php //End Loop  ?>
 				<?php endforeach; wp_reset_postdata();?>
 			</div>
 		</div>

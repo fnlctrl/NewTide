@@ -39,7 +39,11 @@ function filter_attr_on_images( $content ){
    return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
 }
 add_filter('the_content', 'filter_attr_on_images');
-
+//
+function get_avatar_url($get_avatar) {
+	preg_match("/src='(.*?)'/i", $get_avatar, $matches);
+	return $matches[1];
+}
 //
 function remove_thumbnail_dimensions( $content ) {
     return preg_replace( '/(width|height)=\"\d*\"\s/', "", $content );
