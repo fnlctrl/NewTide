@@ -65,6 +65,7 @@ p {
 	font-size: 14px;
 	line-height: 18px;
     margin:0 0 18px 0;
+    text-indent: 2em;
 }
 .wp-entry-title {
 	margin: 20px 0 20px 0;

@@ -34,6 +34,12 @@
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/>
 			</a>
 		</div>
+		<div class='sidebar-section'>
+			<a target='_blank' class='sidebar-link' href='http://site.douban.com/125914/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-douban.svg'/></a>
+			<a target='_blank' class='sidebar-link' href='http://site.douban.com/125914/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weibo.svg'/></a>
+			<a target='_blank' class='sidebar-link' href='http://weibo.com/qscszx'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-renren.svg'/></a>
+
+		</div>
 	</div>
 	<div id='sidebar-copyright'>© 2001 - 2014 <br/> 浙江大学求是潮</div>
 </div>

@@ -228,6 +228,18 @@ body {
 .sidebar-item:hover path {
 	fill: #eee;
 }
+.sidebar-link {
+    margin: 0 5px 0 0;
+}
+.sidebar-link:nth-child(1):hover path{
+    fill: #008B1A;
+}
+.sidebar-link:nth-child(2):hover path{
+    fill: #F7931E;
+}
+.sidebar-link:nth-child(3):hover path{
+    fill: #004EA2;
+}
 /*    Message Block    */
 .message-block {
 	width:500px;

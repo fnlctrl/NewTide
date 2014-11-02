@@ -187,10 +187,11 @@ $(function(){
 		performReflow: function(cfg) {
 			return function() {
 				book.columnizer.reflow(cfg);
+				book.renderArea.bookblock('destroy');
 				book.enableTurningPages(cfg.viewportWidth);
-				console.log('reflowed');
 				book.copyEntryThumbnail();
 				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+				console.log('reflowed');
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
@@ -242,7 +243,6 @@ $(function(){
 			if (!status.isListPage) {
 				startPage = 1;
 			}
-			$menuIcon = $('#menu-icon');
 			book.renderArea.bookblock({
 				startPage : startPage,
 				speed : 600,
@@ -311,9 +311,9 @@ $(function(){
 					$bookNavPrev.css({opacity:0});
 					$bookNavNext.css({opacity:0});
 				} else {
-					if (e.pageX < offset.left+400) {
+					if (e.pageX < offset.left+450) {
 						$bookNavPrev.css({opacity:1});
-					} else if (e.pageX > offset.left+$bookContainer.width()-400) {
+					} else if (e.pageX > offset.left+$bookContainer.width()-450) {
 						$bookNavNext.css({opacity:1});
 					} else {
 						$bookNavPrev.css({opacity:0});
