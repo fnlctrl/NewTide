@@ -34,7 +34,7 @@ $(function(){
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				status.isMobile = true;
 			}
-			status.isMobile = true; // Debug
+			//status.isMobile = true; // Debug
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
@@ -301,6 +301,9 @@ $(function(){
 				}	
 			});
 			$window.on('mousewheel', function(event) {
+				if (status.isMobile) {
+					return;
+				}
     			if (event.deltaY < 0){
 					book.turn.call(book.renderArea,'right');
 				} else {
@@ -376,6 +379,9 @@ $(function(){
 	var W = $(window).width();
 	if ($wpWrapper.length!=0) {
 		status.needBook = true;
+	}
+	if (status.isMobile) {
+		status.needBook = false;
 	}
 	var pageW;
 	if (W>1200) {

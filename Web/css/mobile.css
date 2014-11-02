@@ -11,7 +11,7 @@ Theme Name: NewTide for Mobile
 	display	: none;
 }
 
-@media (max-width : 720px) {
+@media (max-width : 960px) {
 
 #sidebar-logo {
 	display	: none;
@@ -25,7 +25,7 @@ Theme Name: NewTide for Mobile
 #menu-icon {
 	display	: none;
 }
-#more {
+#book-pages {
 	display	: none;
 }
 #book-container:before {
@@ -33,14 +33,16 @@ Theme Name: NewTide for Mobile
 }
 * {
 	font-family	: Droid Sans Fallback;
+	font-size	: 18px;
 	font-weight	: 100;
 }
 body {
-	overflow-y	: scroll;
+	overflow	: scroll;
 }
 #topbar {
 	display				: block;
-	width				: 720px;
+	width				: 100%;
+	min-width			: 648px;
 	height				: 112px;
 	position			: relative;
 	z-index				: 1000;
@@ -57,9 +59,8 @@ body {
 #topbar-logo {
 	width			: 156px;
 	height			: 96px;
-	margin			: 8px 24px;
+	margin			: 16px 24px 0 24px;
 	display			: inline-block;
-	font-size		: 36px;
 	line-height		: 112px;
 	color			: #FFF;
 	cursor			: pointer;
@@ -68,7 +69,7 @@ body {
 	padding			: 0 36px;
 	display			: inline-block;
 	vertical-align	: top;
-	font-size		: 36px;
+	font-size		: 28px;
 	line-height		: 112px;
 	color			: #FFF;
 }
@@ -196,13 +197,14 @@ body {
 /* Front Page */
 #events-wrapper {
 	top		: 0;
-	left	: 36px;
+	left	: calc(50% - 324px);
 	width	: 648px;
 	z-index	: 500;
 }
 #posts-wrapper {
-	top		: 720px;
-	left	: 36px;
+	top		: 1280px;
+	left	: calc(50% - 324px);
+	right	: auto;
 	width	: 648px;
 }
 #events-wrapper h1, #posts-wrapper h1 {
@@ -216,9 +218,16 @@ body {
 	left		: 0;
 	overflow	: hidden;
 }
+#more {
+	color		: #000;
+}
 
-
-/* Catagory */
+/* Wordpress  wrapper */
+#wp-wrapper {
+	position	: static;
+	width		: 648px;
+	margin		: 30px auto;
+}
 .wp-item {
 	width				: 644px;
 	height				: 192px;
@@ -245,29 +254,43 @@ body {
 	padding			: 0;
 }
 .wp-item-text h3 {
+	margin		: 8px;
+	font-size	: 24px;
+}
+.wp-item-metadata {
+	margin		: 8px;
 	font-size	: 18px;
 }
-
-.cf-page {
-	width	: 648px !important;
-	left	: 46px !important;
+.wp-item-excerpt {
+	margin		: 8px;
+	font-size	: 18px;
+	line-height	: 24px;
 }
-.cf-page-2 {
-	top	: 464px !important;
+.wp-entry-thumbnail {
+	max-height	: none;
+	height		: 400px;
+	z-index		: -1;
 }
-.cf-fixed {
-	width		: 648px !important;
-	position	: static !important;
-	margin-top	: 280px;
+.wp-entry-title {
+	margin-top	: -100px;
+	font-size	: 32px;
+	color		: #FFF;
 }
-.cf-column {
-	width		: 648px !important;
-	left		: 0 !important;
-	position	: static !important;
+.wp-entry-author {
+	font-size	: 18px;
+	color		: #FFF;
 }
-.wp-fake-thumbnail-wrapper {
-	position	: absolute;
-	top			: 0 !important;
+.wp-entry-content {
+	line-height	: 36px;
+}
+.wp-entry-content p {
+	display	: block;
+	width	: 648px;
+}
+.wp-entry-content img {
+	width	: 50%;
+	height	: auto;
+	margin	: 20px 25%;
 }
 
 }
