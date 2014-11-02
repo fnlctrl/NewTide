@@ -26,17 +26,17 @@ h1 {
 	line-height: 28px;
 	font-size: 28px;
 }
-#more {
+.more {
 	color: #ed6d7f;
 	font-size: 14px;
 }
 /*    Posts    */
-#posts {
+.posts-container {
 	position: relative;
 	left: 50px;
 	top: 20px;
 	width: calc( 100% - 70px );
-	height: calc( 100% - 170px);
+	height: calc( 50% - 120px);
 	overflow-y: scroll;
 }
 .wp-item {

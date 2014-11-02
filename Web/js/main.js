@@ -129,6 +129,7 @@ $(function(){
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
+				standardiseLineHeight: status.standardiseLineHeight,
 				lineHeight: 18,
 				//showGrid: true,
 				columnFragmentMinHeight:40,
@@ -152,7 +153,7 @@ $(function(){
 						$this.unwrap();
 					}
 				});
-				flowedContent = $wpEntryContent.html();
+				flowedContent = $wpEntryContent[0].innerHTML;
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
@@ -224,7 +225,12 @@ $(function(){
 			if (len % 2 != 0) {
 				$pages.last().wrap('<div class="bb-item"/>');
 			}
-			status.numPages = $('.bb-item').length;
+			var $bbItem = $('.bb-item');
+			status.numPages = $bbItem.length;
+			// add fake menu icon
+			$bbItem.each(function(){
+				$(this).append($('<div class="menu-icon-fake" />'));//
+			});
 			// enable page flip
 			book.renderArea.addClass('bb-bookblock');
 			var startPage;
@@ -236,6 +242,7 @@ $(function(){
 			if (!status.isListPage) {
 				startPage = 1;
 			}
+			$menuIcon = $('#menu-icon');
 			book.renderArea.bookblock({
 				startPage : startPage,
 				speed : 600,
@@ -244,9 +251,11 @@ $(function(){
 				shadowFlip	: 0.4,
 				onBeforeFlip: function(page) {
 					status.currentPage = page+1; // bookblock has a bug that start counting pages from 0 in onBeforeFlip and onEndFlip, and from 1 in everywhere else
+					$menuIcon.css({'display':'none'});
 				},
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
+					$menuIcon.css({'display':'block'});
 					console.log(status.currentPage);
 				}
 			});
@@ -345,7 +354,9 @@ $(function(){
 							util.showNotice('这个分类下已经没有更多文章了~');
 						}
 					} else {
-						location.href = status.nextPageURL;
+						if (status.nextPageURL!=='') {
+							location.href = status.nextPageURL;
+						}
 					}
 				}
 			}
@@ -396,4 +407,4 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
-})
+});

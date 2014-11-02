@@ -53,6 +53,14 @@ body {
 	margin: 0px 0 0 -8px;
 	transform-origin: 50% 50%;
 }
+.menu-icon-fake {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 25px;
+    height: 40px;
+    background-image: url(img/menu-icon-fake.svg);
+}
 #book-container {
 	position: absolute !important;
 	height: 100% !important;
@@ -146,8 +154,8 @@ body {
 	clear: both;
 	width: 100%;
 }
-.sidebar-section span{
-	color: #999;
+.sidebar-section-title {
+	color: #999 !important;
 }
 .sidebar-item {
 	height: 28px;
@@ -157,6 +165,7 @@ body {
 	vertical-align: text-bottom;
 	transition: background-color 0.15s ease;
 	cursor: pointer;
+    display: block;
 }
 .sidebar-icon {
 	display: block;
@@ -206,6 +215,9 @@ body {
 .sidebar-section:nth-child(3) .sidebar-item-current{
 	background-color: #27ae60;
 	color: #fff;
+}
+.sidebar-section a {
+    color: inherit;
 }
 .sidebar-section span {
 	cursor: pointer;

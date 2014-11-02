@@ -14,7 +14,6 @@ Template Name: 主页
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/hammer-2.0.4.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
@@ -57,18 +56,19 @@ Template Name: 主页
 			</div>
 		</div>
 		<div id='posts-wrapper' class='ease'>
-			<h1>最新投稿　<a id='more' href="<?php echo home_url().'/all'?>">更多...</a></h1>
-			<div id='posts'>
+			<h1>编辑精选　<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a></h1>
+			<div class='posts-container'>
 				<?php
-				$args = array(
-					'posts_per_page'   => 10,
+				$args1 = array(
+					'posts_per_page'   => 8,
 					'orderby' => 'post_date',
 					'order' => 'DESC',
 					'post_type' => 'post',
+					'cat' => get_cat_ID('编辑精选'),
 					'post_status' => 'publish',
 				);
-				$myposts = get_posts( $args );
-				foreach ( $myposts as $post ) : setup_postdata( $post );?>
+				$query_editors_picks = new WP_Query( $args1 );
+				foreach ( $query_editors_picks->get_posts() as $post ) : setup_postdata( $post );?>
 					<?php //Begin Loop ?>
 					<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 						<?php 
@@ -88,18 +88,19 @@ Template Name: 主页
 					<?php //End Loop  ?>	
 				<?php endforeach; wp_reset_postdata();?>
 			</div>
-            <h1>编辑精选　<a id='more' href="<?php echo home_url().'/all'?>">更多...</a></h1>
-			<div id='posts'>
+			<h1>最新投稿　<a class='more' href="<?php echo home_url().'/all'?>">更多...</a></h1>
+			<div class='posts-container'>
 				<?php
-				$args = array(
-					'posts_per_page'   => 10,
+				$args2 = array(
+					'posts_per_page'   => 8,
 					'orderby' => 'post_date',
 					'order' => 'DESC',
 					'post_type' => 'post',
+					'category__not_in'=> array(get_cat_ID('设计品'),-get_cat_ID('编辑精选')),
 					'post_status' => 'publish',
 				);
-				$myposts = get_posts( $args );
-				foreach ( $myposts as $post ) : setup_postdata( $post );?>
+				$query_latest = new WP_Query( $args2 );
+				foreach ( $query_latest->get_posts() as $post ) : setup_postdata( $post );?>
 					<?php //Begin Loop ?>
 					<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
 						<?php
