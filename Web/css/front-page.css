@@ -69,6 +69,9 @@ h1 {
 	left: 40px;
 	height: 100%;
 }
+#hint p {
+    text-indent: 0px;
+}
 #hint hr {
 	border: 0;
 	height: 1px;
