@@ -43,6 +43,7 @@ body {
 	height: 40px;
 	cursor: pointer;
 	z-index: 9999;
+    transition: all 0.2s ease;
 }
 #menu-icon-arrow {
 	position: absolute;

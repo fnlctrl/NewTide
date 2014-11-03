@@ -17,13 +17,13 @@ $(function(){
 		showingMenu: null,
 		currentPage: 1,
 		numPages: 1,
-		numColumns: 1,
-		standardiseLineHeight: true,
 		prevPageURL:'',
 		nextPageURL:'',
-		isListPage: undefined,
 		needBook: false,
-		isMobile: false
+		isMobile: false,
+		isListPage: undefined,
+		numColumns: 1,
+		LineHeight: 18
 	};
 
 	var util = {
@@ -36,9 +36,11 @@ $(function(){
 			if ($wpWrapper.find('.wp-item').length) {
 				status.isListPage = true;
 				status.numColumns = 1;
+				status.LineHeight = 15;
 			} else {
 				status.isListPage = false;
 				status.numColumns = 2;
+				status.LineHeight = 18;
 			}
 			console.log('is list page: ' + status.isListPage);
 		},
@@ -129,8 +131,8 @@ $(function(){
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
-				standardiseLineHeight: status.standardiseLineHeight,
-				lineHeight: 18,
+				standardiseLineHeight: true,
+				lineHeight: status.LineHeight,
 				//showGrid: true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
@@ -157,11 +159,10 @@ $(function(){
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
-				status.standardiseLineHeight = true;
+
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
-				status.standardiseLineHeight = false;
 			}
 			var cfg;
 			if (W>1200) {
@@ -251,12 +252,12 @@ $(function(){
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
 				onBeforeFlip: function(page) {
-					status.currentPage = page+1; // bookblock has a bug that start counting pages from 0 in onBeforeFlip and onEndFlip, and from 1 in everywhere else
-					$menuIcon.css({'display':'none'});
+					status.currentPage = page+1;
+					$menuIcon.css({'opacity':'0'});
 				},
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
-					$menuIcon.css({'display':'block'});
+					$menuIcon.css({'opacity':'1'});
 					console.log(status.currentPage);
 				}
 			});
@@ -269,9 +270,9 @@ $(function(){
 				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) { // prevent fireing when clicked on menu icon
 					return;
 				}
-				if (e.pageX < offset.left+100) {
+				if (e.pageX < offset.left+65) {
 					book.turn.call(book.renderArea,'left');
-				} else if (e.pageX > offset.left+$bookContainer.width()-100) {
+				} else if (e.pageX > offset.left+$bookContainer.width()-65) {
 					book.turn.call(book.renderArea,'right');
 				}
 			});
