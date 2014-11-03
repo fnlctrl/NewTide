@@ -1,7 +1,6 @@
 <?php
 update_option('image_default_link_type','none');
-
-add_theme_support( 'post-thumbnails' ); 
+add_theme_support( 'post-thumbnails' );
 
 add_image_size( 'wp-entrylist-thumbnail', 300, 300 );
 remove_action( 'wp_head', '_admin_bar_bump_cb');

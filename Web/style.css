@@ -2,14 +2,14 @@
 Theme Name: NewTide
 Author: fnlCtrl
 Version: 1.0
-Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal supports, please contact fnlctrl@gmail.com.
+Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. Mobile version developed by NinthStar @ QSC Tech. For techincal supports, please contact fnlctrl@gmail.com.
 */
 /*    global    */
 .unselectable {
 	user-select: none;
 	-moz-user-select: none;  
-	-webkit-user-select: none; 
-	-ms-user-select: none;  
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 .ease {
 	transition: all 0.2s ease;

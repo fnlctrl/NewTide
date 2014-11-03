@@ -243,7 +243,8 @@ $(function(){
 			if (!status.isListPage) {
 				startPage = 1;
 			}
-			book.renderArea.bookblock({
+			book.renderArea.bookblock();
+			book.renderArea.data('bookblock')._init({
 				startPage : startPage,
 				speed : 600,
 				shadows: true,
@@ -326,7 +327,7 @@ $(function(){
 		},
 		turn: function(direction) {
 			if (direction==='left') {
-				this.bookblock('prev'); // 'this' is book.renderArea passed in by Function.prototype.call()
+				this.data('bookblock').prev(); // 'this' is book.renderArea passed in by Function.prototype.call()
 				if (status.currentPage === 1) {
 					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
@@ -345,10 +346,10 @@ $(function(){
 				}
 			}
 			else if (direction==='right') {
-				this.bookblock('next');
+				this.data('bookblock').next();
 				if (status.currentPage === status.numPages) {
 					if (status.isListPage) {
-						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages, and is configured in wordpress settings.
+						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages
 							location.href = status.nextPageURL;
 						} else {
 							util.showNotice('这个分类下已经没有更多文章了~');

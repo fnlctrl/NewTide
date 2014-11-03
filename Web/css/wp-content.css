@@ -123,7 +123,7 @@ input {
 textarea {
     height: 80px;
     float: left;
-    width: 77%;
+    width: calc(100% - 60px);
 }
 button[name='submit'] {
     display: inline-block;
@@ -132,7 +132,7 @@ button[name='submit'] {
     border: none;
     outline: none;
     height: 100px;
-    width: 15%;
+    width: 35px;
     margin: 5px 0 0 0;
     transition: all 0.2s ease;
     background: #ffb0bc;
@@ -152,7 +152,7 @@ button[name='submit']:active {
 }
 .wp-comment-text {
     position: relative;
-    left: 85px;
+    left: 75px;
     top: 5px;
     width: calc(100% - 85px);
     float: left;
