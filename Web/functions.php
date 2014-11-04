@@ -1,16 +1,6 @@
 <?php
-
-// function theme_scripts_styles() {
-// 	wp_enqueue_style( 'sidebar',  get_template_directory_uri() . '/css/sidebar.css', array(), '1.0', 'all');
-// 	wp_enqueue_style( 'sidebar',  get_template_directory_uri() . '/css/global.css', array(), '1.0', 'all');
-// 	wp_enqueue_script( 'jQuery', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', array(), '2.1.1', false );
-// }
-
-// add_action( 'wp_enqueue_scripts', 'theme_scripts_styles' );
-
 update_option('image_default_link_type','none');
-
-add_theme_support( 'post-thumbnails' ); 
+add_theme_support( 'post-thumbnails' );
 
 add_image_size( 'wp-entrylist-thumbnail', 300, 300 );
 remove_action( 'wp_head', '_admin_bar_bump_cb');
@@ -39,13 +29,18 @@ function filter_attr_on_images( $content ){
    return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
 }
 add_filter('the_content', 'filter_attr_on_images');
-
+//
+function get_avatar_url($get_avatar) {
+	preg_match("/src='(.*?)'/i", $get_avatar, $matches);
+	return $matches[1];
+}
 //
 function remove_thumbnail_dimensions( $content ) {
     return preg_replace( '/(width|height)=\"\d*\"\s/', "", $content );
 }
 add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions');
 add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions');
+add_filter( 'the_content', 'remove_thumbnail_dimensions');
 
 // change the excerpt more string to '...'
 function custom_excerpt_more( $more ) {
@@ -71,7 +66,7 @@ function my_login_logo() { ?>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
 
-
+// change login form style
 function my_login_logo_url() {
     return home_url();
 }
@@ -82,5 +77,12 @@ function my_login_logo_url_title() {
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
 
-
+// enable contributors to upload file
+function allow_contributor_uploads() {
+	$contributor = get_role('contributor');
+	$contributor->add_cap('upload_files');
+}
+if ( current_user_can('contributor') && !current_user_can('upload_files') ) {
+	add_action('admin_init', 'allow_contributor_uploads');
+}
 ?>

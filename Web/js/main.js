@@ -20,13 +20,13 @@ $(function(){
 		showingMenu: null,
 		currentPage: 1,
 		numPages: 1,
-		numColumns: 1,
-		standardiseLineHeight: true,
 		prevPageURL:'',
 		nextPageURL:'',
-		isListPage: undefined,
 		needBook: false,
 		isMobile: false,
+		isListPage: undefined,
+		numColumns: 1,
+		LineHeight: 18
 	};
 
 	var util = {
@@ -40,9 +40,11 @@ $(function(){
 			if ($wpWrapper.find('.wp-item').length) {
 				status.isListPage = true;
 				status.numColumns = 1;
+				status.LineHeight = 15;
 			} else {
 				status.isListPage = false;
 				status.numColumns = 2;
+				status.LineHeight = 18;
 			}
 			console.log('is list page: ' + status.isListPage);
 		},
@@ -154,10 +156,12 @@ $(function(){
 				viewportHeight:Math.max($window.height()-100,500),
 				viewportWidth:W/2,
 				columnGap:W*0.02,
-				standardiseLineHeight:status.standardiseLineHeight,
+				standardiseLineHeight: true,
+				lineHeight: status.LineHeight,
+				//showGrid: true,
 				columnFragmentMinHeight:40,
 				pagePadding:W*0.04,
-				noWrapOnTags: ['img','div'],
+				noWrapOnTags: ['img','div']
 			}
 		},
 		init: function() {
@@ -175,16 +179,15 @@ $(function(){
 					if ($this.parents('p').length) {
 						$this.unwrap();
 					}
-				})
-				flowedContent = $wpEntryContent.html();
+				});
+				flowedContent = $wpEntryContent[0].innerHTML;
 				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
-				status.standardiseLineHeight = true;
+
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
-				status.standardiseLineHeight = false;
 			}
 			var cfg;
 			if (W>1200) {
@@ -195,8 +198,8 @@ $(function(){
 			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
 			book.columnizer.flow(flowedContent, fixedContent);
 			book.renderArea = $('.cf-render-area');
-			book.copyEntryThumbnail();
 			book.enableTurningPages(pageW);
+			book.copyEntryThumbnail();
 			book.setUpEvents();
 		},
 		reflow: function(cfg) {
@@ -210,10 +213,11 @@ $(function(){
 		performReflow: function(cfg) {
 			return function() {
 				book.columnizer.reflow(cfg);
+				book.renderArea.bookblock('destroy');
 				book.enableTurningPages(cfg.viewportWidth);
-				console.log('reflowed');
 				book.copyEntryThumbnail();
 				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+				console.log('reflowed');
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
@@ -244,11 +248,16 @@ $(function(){
 					$this.css({left:pageW});
 					$pages.slice(index-1,index+1).wrapAll('<div class="bb-item"/>');
 				}
-			})
+			});
 			if (len % 2 != 0) {
 				$pages.last().wrap('<div class="bb-item"/>');
 			}
-			status.numPages = $('.bb-item').length;
+			var $bbItem = $('.bb-item');
+			status.numPages = $bbItem.length;
+			// add fake menu icon
+			$bbItem.each(function(){
+				$(this).append($('<div class="menu-icon-fake" />'));//
+			});
 			// enable page flip
 			book.renderArea.addClass('bb-bookblock');
 			var startPage;
@@ -260,17 +269,20 @@ $(function(){
 			if (!status.isListPage) {
 				startPage = 1;
 			}
-			book.renderArea.bookblock({
+			book.renderArea.bookblock();
+			book.renderArea.data('bookblock')._init({
 				startPage : startPage,
-				speed : 700,
+				speed : 600,
 				shadows: true,
 				shadowSides	: 0.8,
 				shadowFlip	: 0.4,
 				onBeforeFlip: function(page) {
-					status.currentPage = page+1; // bookblock has a bug that start counting pages from 0 in onBeforeFlip and onEndFlip, and from 1 in everywhere else
+					status.currentPage = page+1;
+					$menuIcon.css({'opacity':'0'});
 				},
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
+					$menuIcon.css({'opacity':'1'});
 					console.log(status.currentPage);
 				}
 			});
@@ -280,12 +292,12 @@ $(function(){
 		setUpEvents: function() {
 			$bookContainer.click(function(e) {
 				var offset = $bookContainer.offset();
-				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) {
+				if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) { // prevent fireing when clicked on menu icon
 					return;
 				}
-				if (e.pageX < offset.left+100) {
+				if (e.pageX < offset.left+65) {
 					book.turn.call(book.renderArea,'left');
-				} else if (e.pageX > offset.left+$bookContainer.width()-100) {
+				} else if (e.pageX > offset.left+$bookContainer.width()-65) {
 					book.turn.call(book.renderArea,'right');
 				}
 			})
@@ -298,23 +310,27 @@ $(function(){
 					case 39: //right
 						book.turn.call(book.renderArea,'right');
 						break;
+					default:
+						break;
 				}	
 			});
-			$window.on('mousewheel', function(event) {
-				if (status.isMobile) {
-					return;
-				}
-    			if (event.deltaY < 0){
-					book.turn.call(book.renderArea,'right');
-				} else {
-					book.turn.call(book.renderArea,'left');
-				}
-			});
-			$bookContainer.on('swipeleft',function(e) {
-				book.turn.call(book.renderArea,'right');
-			}).on('swiperight',function(e) {
-				book.turn.call(book.renderArea,'left');
-			});
+			if (!status.isMobile) {
+				$window.on('mousewheel', function(event) {
+					if (event.deltaY < 0){
+						book.turn.call(book.renderArea,'right');
+					} else {
+						book.turn.call(book.renderArea,'left');
+					}
+				});
+			}
+            if (status.isMobile || /iPad/i.test(navigator.userAgent)) {
+                var hammertime = new Hammer($bookContainer[0]);
+                hammertime.on('swipeleft', function(e) {
+                    book.turn.call(book.renderArea,'right');
+                }).on('swiperight',function(){
+                    book.turn.call(book.renderArea,'left');
+                });
+            }
 			//show hints to turn pages
 			$bookContainer.bind('mousemove',function(e) {
 				var offset = $bookContainer.offset();
@@ -322,9 +338,9 @@ $(function(){
 					$bookNavPrev.css({opacity:0});
 					$bookNavNext.css({opacity:0});
 				} else {
-					if (e.pageX < offset.left+400) {
+					if (e.pageX < offset.left+450) {
 						$bookNavPrev.css({opacity:1});
-					} else if (e.pageX > offset.left+$bookContainer.width()-400) {
+					} else if (e.pageX > offset.left+$bookContainer.width()-450) {
 						$bookNavNext.css({opacity:1});
 					} else {
 						$bookNavPrev.css({opacity:0});
@@ -337,7 +353,7 @@ $(function(){
 		},
 		turn: function(direction) {
 			if (direction==='left') {
-				this.bookblock('prev'); // 'this' is book.renderArea passed in by Function.prototype.call()
+				this.data('bookblock').prev(); // 'this' is book.renderArea passed in by Function.prototype.call()
 				if (status.currentPage === 1) {
 					if (status.isListPage) {
 						if (/page/i.test(location.href)) {
@@ -356,16 +372,18 @@ $(function(){
 				}
 			}
 			else if (direction==='right') {
-				this.bookblock('next');
+				this.data('bookblock').next();
 				if (status.currentPage === status.numPages) {
 					if (status.isListPage) {
-						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages, and is configured in wordpress settings.
+						if ($wpWrapper.find('.wp-item').length >= 60) { // 60 is 3*4*5 that allow entry list to be separated into full pages
 							location.href = status.nextPageURL;
 						} else {
 							util.showNotice('这个分类下已经没有更多文章了~');
 						}
 					} else {
-						location.href = status.nextPageURL;
+						if (status.nextPageURL!=='') {
+							location.href = status.nextPageURL;
+						}
 					}
 				}
 			}
@@ -397,7 +415,7 @@ $(function(){
 	setTimeout(function() {
 		book.init();
 		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-	},200)
+	},200);
 
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
@@ -419,4 +437,4 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 150));
-})
+});

@@ -60,9 +60,11 @@ h3 {
 	color: #999;
 }
 /*    single entry page    */
-.wp-entry-content {
+p {
 	font-size: 14px;
-	line-height: 14px;
+	line-height: 18px;
+    margin:0 0 18px 0;
+    text-indent: 2em;
 }
 .wp-entry-title {
 	margin: 20px 0 20px 0;
@@ -89,18 +91,111 @@ h3 {
 #wp-fake-nav-prev {
 	display: none;
 }
-
 #wp-fake-nav-next {
 	display: none;
 }
-/*
-#wp-wrapper {
-	display: block;
+/*    Comments    */
+h2 {
+    color: #4585b5;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    line-height: 32px;
 }
-#book-loading-shade {
-	display: none;
+input, textarea {
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    background: #eee;
+    transition: all 0.3s ease;
+    margin: 5px 0 0 0;
+    padding: 10px;
 }
-#book-pages {
-	display: none;
+input:focus, textarea:focus {
+    background: #bde4ff;
 }
-*/
+input {
+    height: 15px;
+    line-height: 25px;
+    width: 100%;
+}
+textarea {
+    height: 80px;
+    float: left;
+    width: calc(100% - 60px);
+}
+button[name='submit'] {
+    display: inline-block;
+    float: right;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    height: 100px;
+    width: 35px;
+    margin: 5px 0 0 0;
+    transition: all 0.2s ease;
+    background: #ffb0bc;
+    color: #8C404B;
+}
+button[name='submit']:hover {
+    background: #ffd9df ;
+}
+button[name='submit']:active {
+    background: #ed6d7f;
+}
+.wp-comment-item {
+    height: auto;
+    float: left;
+    clear: both;
+    width: 100%;
+    padding: 0 0 25px 0 !important;
+}
+.wp-comment-text {
+    position: relative;
+    left: 75px;
+    top: 5px;
+    width: calc(100% - 85px);
+    float: left;
+}
+.wp-comment-avatar {
+    position: absolute;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    background: #fefefe;
+}
+.wp-comment-avatar img{
+    border-radius: 999px;
+    /*border: 3px solid #aaa;*/
+}
+.wp-comment-author {
+    font-weight: bold;
+    font-size: 14px;
+}
+.wp-comment-date {
+    font-size: 12px;
+    color: #999;
+    margin: 0 0 5px 0;
+}
+#wp-reply-form {
+    margin: 0 0 20px 0;
+    float: left;
+    width: 100%;
+}
+
+/*#wp-wrapper {*/
+	/*display: block;*/
+/*}*/
+/*.wp-entry-content {*/
+    /*display: none;*/
+/*}*/
+/*#book-loading-shade {*/
+	/*display: none;*/
+/*}*/
+/*#book-pages {*/
+	/*display: none;*/
+/*}*/
+/*.wp-entry-meta {*/
+    /*display: none;*/
+/*}*/

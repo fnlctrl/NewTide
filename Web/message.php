@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: 留言板
+*/
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +12,6 @@
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
@@ -27,56 +31,23 @@
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
-		<div id='book-nav-next' class='book-nav-icon'></div>
-		<div id='book-nav-prev' class='book-nav-icon'></div>
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
-			<?php
-			$categories = get_the_category();
-			$category_id = $categories[0]->cat_ID;
-			global $paged;
-				if( get_query_var('paged') ) {
-					$paged = get_query_var('paged');
-				} else if ( get_query_var('page') ) {
-					$paged = get_query_var('page');
-				} else{
-					$paged = 1;
-				}
-			$args = array(
-				'posts_per_page'   => 60,
-				'orderby' => 'post_date',
-				'category' => $category_id,
-				'order' => 'DESC',
-				'post_type' => 'post',
-				'post_status' => 'publish',
-				'paged' => $paged,
-			);
-			$myposts = get_posts( $args );
-			foreach ( $myposts as $post ) : setup_postdata( $post );?>
-			<?php //Begin Loop ?>
-			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-				<div class='wp-thumbnail'>
-					<?php 
-						if ( has_post_thumbnail() ) {
-							the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
-						}
-					?>
+			<?php if (have_posts()) { while(have_posts()) { the_post();?>
+				<div class='wp-entry-meta'>
+					<?php the_post_thumbnail('full',array('class' => 'wp-entry-thumbnail')); ?>
+					<h1 class='wp-entry-title'>
+						<?php the_title(); ?>
+					</h1>
 				</div>
-				<div class='wp-item-text'>
-					<h3><?php the_title(); ?></h3>
-					<div class='wp-item-metadata'>
-						文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
-						@ <?php the_category(' &gt; ');?>
-						, <?php the_date('Y-m-d');?>
-					</div>
-					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
+				<div class='wp-entry-content'>
+					<?php the_content(); ?>
+					<?php comments_template(); ?>
 				</div>
-			</div>
-			<?php //End Loop  ?>	
-			<?php endforeach; wp_reset_postdata();?>
-			<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
-			<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
+			<?php }} ?>
+			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
+			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>
 	</div>
 </body>

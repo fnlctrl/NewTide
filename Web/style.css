@@ -2,14 +2,14 @@
 Theme Name: NewTide
 Author: fnlCtrl
 Version: 1.0
-Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. For techincal supports, please contact fnlctrl@gmail.com.
+Description: Designed and developed by fnlCtrl @ QSC Tide in 2014. Mobile version developed by NinthStar @ QSC Tech. For techincal supports, please contact fnlctrl@gmail.com.
 */
 /*    global    */
 .unselectable {
 	user-select: none;
 	-moz-user-select: none;  
-	-webkit-user-select: none; 
-	-ms-user-select: none;  
+	-webkit-user-select: none;
+	-ms-user-select: none;
 }
 .ease {
 	transition: all 0.2s ease;
@@ -43,6 +43,7 @@ body {
 	height: 40px;
 	cursor: pointer;
 	z-index: 9999;
+    transition: all 0.2s ease;
 }
 #menu-icon-arrow {
 	position: absolute;
@@ -52,6 +53,14 @@ body {
 	height: 40px;
 	margin: 0px 0 0 -8px;
 	transform-origin: 50% 50%;
+}
+.menu-icon-fake {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 25px;
+    height: 40px;
+    background-image: url(img/menu-icon-fake.svg);
 }
 #book-container {
 	position: absolute !important;
@@ -129,6 +138,9 @@ body {
 }
 #sidebar hr {
 	margin: 1vh 0 1vh 0;
+    height: 1px;
+    background: #aaa;
+    border: none;
 }
 #sidebar-sections {
 	position: relative;
@@ -143,8 +155,8 @@ body {
 	clear: both;
 	width: 100%;
 }
-.sidebar-section span{
-	color: #999;
+.sidebar-section-title {
+	color: #999 !important;
 }
 .sidebar-item {
 	height: 28px;
@@ -154,6 +166,7 @@ body {
 	vertical-align: text-bottom;
 	transition: background-color 0.15s ease;
 	cursor: pointer;
+    display: block;
 }
 .sidebar-icon {
 	display: block;
@@ -204,6 +217,9 @@ body {
 	background-color: #27ae60;
 	color: #fff;
 }
+.sidebar-section a {
+    color: inherit;
+}
 .sidebar-section span {
 	cursor: pointer;
 }
@@ -212,6 +228,18 @@ body {
 }
 .sidebar-item:hover path {
 	fill: #eee;
+}
+.sidebar-link {
+    margin: 0 5px 0 0;
+}
+.sidebar-link:nth-child(1):hover path{
+    fill: #008B1A;
+}
+.sidebar-link:nth-child(2):hover path{
+    fill: #F7931E;
+}
+.sidebar-link:nth-child(3):hover path{
+    fill: #004EA2;
 }
 /*    Message Block    */
 .message-block {
