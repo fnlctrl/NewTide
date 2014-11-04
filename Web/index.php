@@ -7,6 +7,7 @@
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
@@ -53,11 +54,13 @@
 			foreach ( $myposts as $post ) : setup_postdata( $post );?>
 			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-				<?php 
-					if ( has_post_thumbnail() ) {
-                        the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
-					}
-				?>
+				<div class='wp-thumbnail'>
+					<?php 
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+						}
+					?>
+				</div>
 				<div class='wp-item-text'>
 					<h3><?php the_title(); ?></h3>
 					<div class='wp-item-metadata'>
@@ -68,7 +71,7 @@
 					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
 			</div>
-			<?php //End Loop  ?>	
+			<?php //End Loop  ?>
 			<?php endforeach; wp_reset_postdata();?>
 			<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 			<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
@@ -76,4 +79,3 @@
 	</div>
 </body>
 </html>
-
