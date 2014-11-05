@@ -166,16 +166,17 @@ $(function(){
 		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
 			H = $window.height();
 			return {
-				columnCount:status.numColumns,
-				viewportHeight:Math.max($window.height()-100,500),
-				viewportWidth:W/2,
-				columnGap:W*0.02,
+				columnCount: status.numColumns,
+				viewportHeight: Math.max($window.height()-100,500),
+				viewportWidth: W/2,
+				columnGap: W*0.02,
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
-				//showGrid: true,
-				columnFragmentMinHeight:40,
-				pagePadding:W*0.04,
-				noWrapOnTags: ['img','div']
+				showGrid: true,
+				//debug: true,
+				columnFragmentMinHeight: 180,
+				pagePadding: W*0.04,
+				noWrapOnTags: ['div','img']
 			}
 		},
 		init: function() {
@@ -187,7 +188,7 @@ $(function(){
 			var fixedContent;
 			if (!status.isListPage) {
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.css({width:'100%'}).addClass('nowrap'); //.removeAttr('height width class')
+				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
 					if ($this.parents('p').length) {
@@ -197,7 +198,6 @@ $(function(){
 				flowedContent = $wpEntryContent[0].innerHTML;
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
-
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
@@ -234,24 +234,33 @@ $(function(){
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
+			//return
 			if ($wpEntryThumbnail.length) {
 				var $firstPage = $('.cf-page-1');
 				var $div = $('<div />');
 				var img = new Image();
 				img.src = $wpEntryThumbnail[0].src;
 				img.className = 'wp-fake-thumbnail';
-				var h = $firstPage.find('.wp-entry-title').offset().top - 24;
-				if (h > 400) {
-					h = 400;
+				var h = $firstPage.find('.wp-entry-thumbnail').height() + 50;
+				if (h > 500) {
+					h = 500; // 500 is the max-width of .wp-entry-thumbnail + 50(top page padding)
 				}
-				$div.addClass('wp-fake-thumbnail-wrapper').css({height:h}).append(img);
+				$div.addClass('wp-fake-thumbnail-wrapper').height(h).append(img);
 				// add sharing buttons
-				var $shareWrapper = $('<div id="share-wrapper"></div>');
+				var $shareWrapper = $('<div id="share-wrapper" class="toolbar-wrapper"/>');
 				var href = util.getShareLink();
-				$shareWrapper.append('<a class="share-icon weibo" target="_blank" href="'+href.weibo+'"></a>');
-				$shareWrapper.append('<a class="share-icon renren" target="_blank" href="'+href.renren+'"></a>');
-				$shareWrapper.append('<a class="share-icon douban" target="_blank" href="'+href.douban+'"></a>');
+				$shareWrapper.append('<a class="toolbar-icon weibo" target="_blank" href="'+href.weibo+'"></a>')
+							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>')
+							.append('<a class="toolbar-icon douban" target="_blank" href="'+href.douban+'"></a>');
 				$div.append($shareWrapper);
+				// add edit button
+				var $postEditLink = $('.post-edit-link');
+				if ($postEditLink.length) {
+					var $adminToolsWrapper = $('<div id="admin-tools-wrapper" class="toolbar-wrapper"/>');
+					var editLink = $postEditLink[0].href;
+					$adminToolsWrapper.append('<a class="toolbar-icon edit" target="_blank" href="'+editLink+'"></a>');
+					$div.append($adminToolsWrapper);
+				}
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
                 $firstPage.append($div);
 			}
@@ -456,5 +465,5 @@ $(function(){
 			$bookContainer.width(W);
 			book.reflow(book.getConfig(W));
 		}
-	}, 150));
+	}, 100));
 });

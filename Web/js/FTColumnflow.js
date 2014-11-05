@@ -905,8 +905,8 @@ var FTColumnflow = (function () {
 			// Check if it's necessary to sanitize elements to conform to the baseline grid
 			if (config.standardiseLineHeight) {
 
-				originalPadding = parseInt(element.getAttribute('data-cf-original-padding'), 10) || null;
-				existingPadding = parseInt(window.getComputedStyle(element).getPropertyValue('padding-bottom'), 10);
+				originalPadding = parseFloat(element.getAttribute('data-cf-original-padding'), 10) || null;
+				existingPadding = parseFloat(window.getComputedStyle(element).getPropertyValue('padding-bottom'), 10);
 
 				if (null === originalPadding) {
 					originalPadding = existingPadding;
@@ -920,7 +920,7 @@ var FTColumnflow = (function () {
 					element.style.paddingBottom = originalPadding + 'px';
 				}
 
-				totalElementHeight   = nextElement ? (nextElement.offsetTop - element.offsetTop) : element.offsetHeight;
+				totalElementHeight   = _getElementHeight(element, nextElement);
 				desiredElementHeight = _roundUpToGrid(totalElementHeight);
 
 				newPadding = desiredElementHeight - totalElementHeight + existingPadding;
@@ -942,6 +942,13 @@ var FTColumnflow = (function () {
 
 			// TODO:GC: Remove this loop-protection check
 			if (loopCount >= 30) console.error('FTColumnflow: Caught and destroyed a loop when wrapping columns for element', element.outerHTML.substr(0, 200) + '...');
+		}
+
+		function _getElementHeight(element, nextElement) {
+			if (!element.getBoundingClientRect) {
+				return nextElement ? (nextElement.offsetTop - element.offsetTop) : element.offsetHeight;
+			}
+			return nextElement ? nextElement.getBoundingClientRect().top - element.getBoundingClientRect().top : element.getBoundingClientRect().height;
 		}
 
 		function _wrapColumn(currentElementIndex, overflow) {

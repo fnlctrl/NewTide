@@ -28,7 +28,7 @@ body {
 	background-repeat: repeat;
 	height: 100%;
 	width: 100%;
-	min-height: 600px;
+	min-height: 630px;
 	position: absolute;
 	padding: 0;
 	margin: 0;
@@ -267,20 +267,27 @@ body {
 	margin: -13px 0 0 0;
 }
 /*    Share Wrapper    */
-#share-wrapper {
+.toolbar-wrapper {
     position: absolute;
-    color: #fff;
-    left: 6%;
     bottom: 0;
-    width: 115px;
-    padding: 10px 0 10px 3%;
     background: rgba(69,133,181,0.7);
     transition: all 0.2s ease;
 }
-#share-wrapper:hover {
+.toolbar-wrapper:hover {
     background: rgba(69,133,181,0.9);
 }
-.share-icon {
+#share-wrapper {
+    left: 6%;
+    width: 115px;
+    padding: 10px 0 10px 3%;
+}
+#admin-tools-wrapper {
+    right: 6%;
+    width: 40px;
+    padding: 10px 0 10px 20px;
+
+}
+.toolbar-icon {
     display: inline-block;
     height: 20px;
     transition: all 0.2s ease;
@@ -288,18 +295,22 @@ body {
     vertical-align: text-bottom;
     opacity: 0.7;
 }
-.share-icon:hover {
+.toolbar-icon:hover {
     opacity: 1;
 }
 .weibo {
-    background: url(img/share-weibo.svg);
+    background: url(img/icon-weibo.svg);
     width: 25px;
 }
 .renren {
-    background: url(img/share-renren.svg);
+    background: url(img/icon-renren.svg);
     width: 21px;
 }
 .douban {
-    background: url(img/share-douban.svg);
+    background: url(img/icon-douban.svg);
     width: 22px;
+}
+.edit {
+    background: url(img/icon-edit.svg);
+    width: 20px;
 }

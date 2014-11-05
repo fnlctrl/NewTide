@@ -53,6 +53,10 @@
 
 			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
 			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
+			<?php if(current_user_can('edit_others_pages')||current_user_can('edit_published_posts')) {  ?>
+				<?php edit_post_link('Edit');?>
+			<?php } ?>
+
 		</div>
 	</div>
 </body>

@@ -34,7 +34,7 @@
 		<div id='wp-wrapper'>
 			<?php
 			$categories = get_the_category();
-			$category_id = $categories[0]->cat_ID;
+			$category_id = $categories[count($categories)-1]->cat_ID;
 			global $paged;
 				if( get_query_var('paged') ) {
 					$paged = get_query_var('paged');
