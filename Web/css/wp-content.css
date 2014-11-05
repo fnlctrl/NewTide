@@ -5,6 +5,7 @@
 	z-index: 999;
 	width: 50%;
 	height: 100%;
+    visibility: hidden;
 }
 /*    entry list page    */
 a {

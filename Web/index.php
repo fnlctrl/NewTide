@@ -54,13 +54,13 @@
 			foreach ( $myposts as $post ) : setup_postdata( $post );?>
 			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-				<div class='wp-thumbnail'>
+
 					<?php 
 						if ( has_post_thumbnail() ) {
 							the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 						}
 					?>
-				</div>
+
 				<div class='wp-item-text'>
 					<h3><?php the_title(); ?></h3>
 					<div class='wp-item-metadata'>

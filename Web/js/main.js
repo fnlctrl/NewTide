@@ -14,7 +14,8 @@ $(function(){
 		$wpWrapper = $('#wp-wrapper'),
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
-		$prevPageLink = $('#wp-fake-nav-prev');
+		$prevPageLink = $('#wp-fake-nav-prev'),
+		$wpEntryMeta = $('.wp-entry-meta');
 		
 	var status = {
 		showingMenu: null,
@@ -76,6 +77,19 @@ $(function(){
 			$notice.bind('click', util.clearNotice($notice));
 			setTimeout(util.clearNotice($notice), 1500);
 		},
+		getShareLink: function(){
+			var shareInfo = {
+				title: encodeURI($('.wp-entry-title').html().trim()+' | 水朝夕'),
+				text: encodeURI($wpEntryContent.text().trim().substring(0,110)+'……'),
+				image: encodeURI($wpEntryThumbnail[0].src),
+				href: encodeURI(location.href)
+			};
+			return {
+				weibo:'http://service.weibo.com/share/share.php?title='+shareInfo.title+encodeURI('　|　')+shareInfo.text+'&pic='+shareInfo.image+'&url='+shareInfo.href,
+				renren:'http://widget.renren.com/dialog/share?title='+shareInfo.title+'&description='+shareInfo.text+'&pic='+shareInfo.image+'&resourceUrl='+shareInfo.href,
+				douban:'http://www.douban.com/share/service?name='+shareInfo.title+'&text='+shareInfo.text+'&image='+shareInfo.image+'&href='+shareInfo.href
+			};
+		}
 	};
 
 	var toggleMenu = {
@@ -181,7 +195,6 @@ $(function(){
 					}
 				});
 				flowedContent = $wpEntryContent[0].innerHTML;
-				var $wpEntryMeta = $('.wp-entry-meta');
 				$wpEntryMeta.addClass('col-span-2');
 				fixedContent = $wpEntryMeta[0].outerHTML;
 
@@ -232,6 +245,13 @@ $(function(){
 					h = 400;
 				}
 				$div.addClass('wp-fake-thumbnail-wrapper').css({height:h}).append(img);
+				// add sharing buttons
+				var $shareWrapper = $('<div id="share-wrapper"></div>');
+				var href = util.getShareLink();
+				$shareWrapper.append('<a class="share-icon weibo" target="_blank" href="'+href.weibo+'"></a>');
+				$shareWrapper.append('<a class="share-icon renren" target="_blank" href="'+href.renren+'"></a>');
+				$shareWrapper.append('<a class="share-icon douban" target="_blank" href="'+href.douban+'"></a>');
+				$div.append($shareWrapper);
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
                 $firstPage.append($div);
 			}
@@ -300,7 +320,7 @@ $(function(){
 				} else if (e.pageX > offset.left+$bookContainer.width()-65) {
 					book.turn.call(book.renderArea,'right');
 				}
-			})
+			});
 			$window.keydown(function(e) {
 				var keyCode = e.keyCode || e.which;
 				switch (keyCode) {
@@ -426,7 +446,7 @@ $(function(){
 				toggleMenu.hide(true);
 			}
 		}
-		if (stauts.isMobile) {
+		if (status.isMobile) {
 			return;
 		}
 		if (status.showingMenu) {
