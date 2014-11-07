@@ -16,7 +16,6 @@
 				<?php endif; ?>
 				<button name='submit' type='submit'>发表评论</button>
 				<textarea name='comment' placeholder='说点什么?'></textarea>
-
 				<?php comment_id_fields(); ?>
 				<?php do_action('comment_form', $post->ID); ?>
 			</form>
