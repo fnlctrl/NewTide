@@ -33,8 +33,7 @@
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
 			<?php
-			$categories = get_the_category();
-			$category_id = $categories[count($categories)-1]->cat_ID;
+			preg_match('/.*category\/(.*)\//',$_SERVER["REQUEST_URI"],$result);
 			global $paged;
 				if( get_query_var('paged') ) {
 					$paged = get_query_var('paged');
@@ -46,7 +45,7 @@
 			$args = array(
 				'posts_per_page'   => 60,
 				'orderby' => 'post_date',
-				'category' => $category_id,
+				'category' => get_category_by_slug($result[1])->cat_ID,
 				'order' => 'DESC',
 				'post_type' => 'post',
 				'post_status' => 'publish',

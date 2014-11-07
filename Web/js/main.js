@@ -172,7 +172,7 @@ $(function(){
 				columnGap: W*0.02,
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
-				showGrid: true,
+				//showGrid: true,
 				//debug: true,
 				columnFragmentMinHeight: 180,
 				pagePadding: W*0.04,
@@ -219,7 +219,7 @@ $(function(){
 			if (!status.needBook) {
 				return
 			}
-			$bookLoadingShade.css({opacity:1,'z-index':'999'});
+			$bookLoadingShade.css({opacity:1,'z-index':'500'});
 			clearTimeout(book.timer);
 			book.timer = setTimeout(book.performReflow(cfg), 300);
 		},
@@ -245,13 +245,15 @@ $(function(){
 				if (h > 500) {
 					h = 500; // 500 is the max-width of .wp-entry-thumbnail + 50(top page padding)
 				}
+
 				$div.addClass('wp-fake-thumbnail-wrapper').height(h).append(img);
+				console.log($('.wp-fake-thumbnail'));
 				// add sharing buttons
 				var $shareWrapper = $('<div id="share-wrapper" class="toolbar-wrapper"/>');
 				var href = util.getShareLink();
-				$shareWrapper.append('<a class="toolbar-icon weibo" target="_blank" href="'+href.weibo+'"></a>')
-							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>')
-							.append('<a class="toolbar-icon douban" target="_blank" href="'+href.douban+'"></a>');
+				$shareWrapper.append('<a class="toolbar-icon douban" target="_blank" href="'+href.douban+'"></a>')
+							.append('<a class="toolbar-icon weibo" target="_blank" href="'+href.weibo+'"></a>')
+							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>');
 				$div.append($shareWrapper);
 				// add edit button
 				var $postEditLink = $('.post-edit-link');

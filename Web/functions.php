@@ -85,4 +85,132 @@ function allow_contributor_uploads() {
 if ( current_user_can('contributor') && !current_user_can('upload_files') ) {
 	add_action('admin_init', 'allow_contributor_uploads');
 }
+
+// Ajax login, register and reset password
+function ajax_form_init(){
+	wp_register_script('ajax-login-script', get_template_directory_uri() . '/js/ajax-login.js', array('jquery') );
+	wp_enqueue_script('ajax-login-script');
+	wp_localize_script('ajax-login-script', 'ajaxLoginObject', array(
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		'redirecturl' => urlencode(get_permalink()),
+	));
+}
+add_action('init','ajax_form_init');
+// Ajax login
+function ajax_login(){
+	// First check the nonce, if it fails the function will break
+	check_ajax_referer( 'ajax-login-nonce', 'security' );
+	$userinfo = array(
+		'user_login' => $_POST['username'],
+		'user_password' => $_POST['password'],
+		'remember' => true,
+	);
+	$user_signon = wp_signon( $userinfo, false );
+	if ( is_wp_error($user_signon) ){
+		echo json_encode(array(
+			'loggedin' => false,
+			'message'=> '用户名或密码错误'
+		));
+	} else {
+		echo json_encode(array(
+			'loggedin' => true,
+			'message'=> '登录成功'
+		));
+	}
+	die();
+}
+add_action('wp_ajax_nopriv_ajaxlogin', 'ajax_login');
+// Ajax registration
+function ajax_register() {
+	// First check the nonce, if it fails the function will break
+	check_ajax_referer( 'ajax-login-nonce', 'security' );
+	$user_register = register_new_user($_POST['username'], $_POST['email']);
+	if (!is_wp_error($user_register)) {
+		echo json_encode(array('message'=>'注册完成。请查收我们给您发的邮件。'));
+	} else {
+		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_register->get_error_message());
+		echo json_encode(array('message'=>$message));
+	}
+	die();
+}
+add_action('wp_ajax_nopriv_register_user', 'ajax_register');
+// Ajax reset password
+function ajax_reset_password() {
+	// First check the nonce, if it fails the function will break
+	check_ajax_referer( 'ajax-login-nonce', 'security' );
+	$user_reset_password = _retrieve_password();
+	if ( !is_wp_error($user_reset_password) ) {
+		echo json_encode(array('message'=>'发送完成。您会收到一封包含创建新密码链接的电子邮件。'));
+	} else {
+		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_reset_password->get_error_messages());
+		echo json_encode(array('message'=>$message));
+	}
+	die();
+	function _retrieve_password() { // this is retrieve_password() found in wp-login.php
+		global $wpdb, $wp_hasher;
+		$errors = new WP_Error();
+		if ( empty( $_POST['user_login'] ) ) {
+			$errors->add('empty_username', __('<strong>ERROR</strong>: Enter a username or e-mail address.'));
+		} else if ( strpos( $_POST['user_login'], '@' ) ) {
+			$user_data = get_user_by( 'email', trim( $_POST['user_login'] ) );
+			if ( empty( $user_data ) )
+				$errors->add('invalid_email', __('<strong>ERROR</strong>: There is no user registered with that email address.'));
+		} else {
+			$login = trim($_POST['user_login']);
+			$user_data = get_user_by('login', $login);
+		}
+		do_action( 'lostpassword_post' );
+		if ( $errors->get_error_code() )
+			return $errors;
+		if ( !$user_data ) {
+			$errors->add('invalidcombo', __('<strong>ERROR</strong>: Invalid username or e-mail.'));
+			return $errors;
+		}
+		$user_login = $user_data->user_login;
+		$user_email = $user_data->user_email;
+		$allow = apply_filters( 'allow_password_reset', true, $user_data->ID );
+		if ( ! $allow )
+			return new WP_Error('no_password_reset', __('Password reset is not allowed for this user'));
+		else if ( is_wp_error($allow) )
+			return $allow;
+		$key = wp_generate_password( 20, false );
+		do_action( 'retrieve_password_key', $user_login, $key );
+		if ( empty( $wp_hasher ) ) {
+			require_once ABSPATH . WPINC . '/class-phpass.php';
+			$wp_hasher = new PasswordHash( 8, true );
+		}
+		$hashed = $wp_hasher->HashPassword( $key );
+		$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user_login ) );
+		$message = __('Someone requested that the password be reset for the following account:') . "\r\n\r\n";
+		$message .= network_home_url( '/' ) . "\r\n\r\n";
+		$message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
+		$message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
+		$message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
+		$message .= '<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
+		if ( is_multisite() )
+			$blogname = $GLOBALS['current_site']->site_name;
+		else
+			$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+		$title = sprintf( __('[%s] Password Reset'), $blogname );
+		$title = apply_filters( 'retrieve_password_title', $title );
+		$message = apply_filters( 'retrieve_password_message', $message, $key );
+		if ( $message && !wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) )
+			wp_die( __('The e-mail could not be sent.') . "<br />\n" . __('Possible reason: your host may have disabled the mail() function.') );
+		return true;
+	}
+
+}
+add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
 ?>
+
+
+
+
+
+
+
+
+
+
+
+

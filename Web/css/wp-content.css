@@ -86,6 +86,7 @@ p {
 .wp-entry-thumbnail {
 	position: relative;
 	max-height: 450px;
+    width: 100% !important;
 }
 .wp-fake-thumbnail-wrapper {
 	position: absolute;
@@ -113,7 +114,7 @@ p {
     line-height: 32px;
     margin: 12px 0 18px 0;
 }
-input, textarea {
+#wp-reply-form input, #wp-reply-form textarea {
     border: none;
     background: none;
     outline: none;
@@ -123,20 +124,20 @@ input, textarea {
     margin: 5px 0 0 0;
     padding: 10px;
 }
-input:focus, textarea:focus {
+#wp-reply-form input:focus, #wp-reply-form textarea:focus {
     background: #bde4ff;
 }
-input {
+#wp-reply-form input {
     height: 15px;
     line-height: 25px;
     width: 100%;
 }
-textarea {
+#wp-reply-form textarea {
     height: 80px;
     float: left;
     width: calc(100% - 60px);
 }
-button[name='submit'] {
+#wp-reply-form button[name='submit'] {
     display: inline-block;
     float: right;
     border-radius: 4px;
@@ -149,10 +150,10 @@ button[name='submit'] {
     background: #ffb0bc;
     color: #8C404B;
 }
-button[name='submit']:hover {
+#wp-reply-form button[name='submit']:hover {
     background: #ffd9df ;
 }
-button[name='submit']:active {
+#wp-reply-form button[name='submit']:active {
     background: #ed6d7f;
 }
 .wp-comment-item {
