@@ -22,6 +22,7 @@
 </div>
 <div id='sidebar' class='unselectable ease'>
 	<div id='sidebar-external-links'>
+		<a target='_blank' class='sidebar-link' href='http://www.qsc.zju.edu.cn'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-qsc.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://site.douban.com/125914/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-douban.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://weibo.com/zjuqsc'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weibo.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://page.renren.com/601378976/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-renren.svg'/></a>

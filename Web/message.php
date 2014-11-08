@@ -36,21 +36,20 @@ Template Name: 留言板
 		<div id='book-pages'></div>
 		<div id='wp-wrapper'>
 			<?php if (have_posts()) { while(have_posts()) { the_post();?>
-				<div class='wp-entry-meta'>
-					<?php the_post_thumbnail('full',array('class' => 'wp-entry-thumbnail')); ?>
+				<div class='wp-entry-content'>
 					<h1 class='wp-entry-title'>
 						<?php the_title(); ?>
 					</h1>
-				</div>
-				<div class='wp-entry-content'>
 					<?php the_content(); ?>
 					<?php comments_template(); ?>
 				</div>
 			<?php }} ?>
-			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
-			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		</div>
 	</div>
 </body>
-
+<script>
+	window._config = {
+		numColumns : 1
+	}
+</script>
 </html>

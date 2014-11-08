@@ -16,7 +16,7 @@ $(function(){
 		$nextPageLink = $('#wp-fake-nav-next'),
 		$prevPageLink = $('#wp-fake-nav-prev'),
 		$wpEntryMeta = $('.wp-entry-meta');
-		
+
 	var status = {
 		showingMenu: null,
 		currentPage: 1,
@@ -57,9 +57,13 @@ $(function(){
 				}
 				return url;
 			}
-			status.prevPageURL = parse.call($prevPageLink);
+			if ($prevPageLink.length) {
+				status.prevPageURL = parse.call($prevPageLink);
+			}
+			if ($nextPageLink.length) {
+				status.nextPageURL = parse.call($nextPageLink);
+			}
 			console.log(status.prevPageURL);
-			status.nextPageURL = parse.call($nextPageLink);
 			console.log(status.nextPageURL);
 		},
 		clearNotice: function($obj) {
@@ -197,7 +201,12 @@ $(function(){
 				});
 				flowedContent = $wpEntryContent[0].innerHTML;
 				$wpEntryMeta.addClass('col-span-2');
-				fixedContent = $wpEntryMeta[0].outerHTML;
+				if ($wpEntryMeta.length) {
+					fixedContent = $wpEntryMeta[0].outerHTML;
+				} else {
+					fixedContent ='';
+				}
+
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
@@ -247,7 +256,6 @@ $(function(){
 				}
 
 				$div.addClass('wp-fake-thumbnail-wrapper').height(h).append(img);
-				console.log($('.wp-fake-thumbnail'));
 				// add sharing buttons
 				var $shareWrapper = $('<div id="share-wrapper" class="toolbar-wrapper"/>');
 				var href = util.getShareLink();
@@ -442,6 +450,11 @@ $(function(){
 		$bookContainer.width(W);
 		pageW = W/2;
 	}
+	if (window._config) {
+		if (window._config.numColumns) {
+			status.numColumns= window._config.numColumns;
+		}
+	}
 	$bookLoadingShade.css({opacity:1,'z-index':'999'});
 	setTimeout(function() {
 		book.init();
@@ -468,4 +481,5 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 100));
+
 });

@@ -139,7 +139,7 @@ body {
     font-size: 12px;
     color: #777
 }
-#sidebar button {
+#sidebar-login-btn {
     display: inline-block;
     border-radius: 4px;
     border: 1px solid #42a0de;
@@ -153,10 +153,10 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
-#sidebar button:hover {
-    background: #d4eeff;
+#sidebar-login-btn:hover {
+    background: rgba(189,228,255,0.5);
 }
-#sidebar button:active {
+#sidebar-login-btn:active {
     background: #42a0de;
     color: #fff;
 }
@@ -270,12 +270,15 @@ body {
     float: left;
 }
 .sidebar-link:nth-child(1):hover path{
-    fill: #008B1A;
+    fill: #008cce;
 }
 .sidebar-link:nth-child(2):hover path{
-    fill: #F7931E;
+    fill: #008B1A;
 }
 .sidebar-link:nth-child(3):hover path{
+    fill: #F7931E;
+}
+.sidebar-link:nth-child(4):hover path{
     fill: #004EA2;
 }
 /*    Message Block    */
@@ -361,7 +364,7 @@ body {
     top: 1%;
     z-index: 999;
     left: 50%;
-    margin: 100px 0 0 -240px;
+    margin: 100px 0 0 -180px;
     color: #444;
     font-size: 13px;
     line-height: 1.4em;
