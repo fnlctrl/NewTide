@@ -1,7 +1,8 @@
 $(function(){
 	var $window = $(window),
-		$topbarMenu = $('#topbar-menu');
-		$topbarMenuIcon = $('#topbar-menu-icon');
+		$body = $('body'),
+		$topbarMenu = $('#topbar-menu'),
+		$topbarMenuIcon = $('#topbar-menu-icon'),
 		$sidebar = $('#sidebar'),
 		$cover = $('#cover'),
 		$bookContainer = $('#book-container'),
@@ -76,7 +77,7 @@ $(function(){
 		},
 		showNotice: function(string) {
 			var $notice = $("<div id='message-" + Math.random() + "' class='message-block'></div>").append($("<div class='message-content'></div>").text(string));
-			$('body').append($notice);
+			$body.append($notice);
 			setTimeout(function(){$notice.css({opacity:1});}, 100);
 			$notice.bind('click', util.clearNotice($notice));
 			setTimeout(util.clearNotice($notice), 1500);
@@ -151,14 +152,17 @@ $(function(){
 			$menuIcon.click(function() {
 				toggleMenu.toggle();
 				localStorage.setItem('userClickedMenu','true');
+				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
 			$topbarMenu.click(function() {
 				toggleMenu.toggle();
 				localStorage.setItem('userClickedMenu','true');
+				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
 			$cover.click(function() {
 				toggleMenu.toggle();
 				localStorage.setItem('userClickedMenu','true');
+				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
 		})()
 	};
@@ -178,7 +182,7 @@ $(function(){
 				lineHeight: status.LineHeight,
 				//showGrid: true,
 				//debug: true,
-				columnFragmentMinHeight: 180,
+				columnFragmentMinHeight: 90,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img']
 			}
@@ -254,7 +258,6 @@ $(function(){
 				if (h > 500) {
 					h = 500; // 500 is the max-width of .wp-entry-thumbnail + 50(top page padding)
 				}
-
 				$div.addClass('wp-fake-thumbnail-wrapper').height(h).append(img);
 				// add sharing buttons
 				var $shareWrapper = $('<div id="share-wrapper" class="toolbar-wrapper"/>');
@@ -275,7 +278,7 @@ $(function(){
                 $firstPage.append($div);
 			}
 		},
-		enableTurningPages: function(pageW) { // pageW is width of a single page
+		enableTurningPages: function(pageW) { // pageW is half the width of book-container
 			// group cf-pages by two and wrap them to a .bb-item
 			var $pages = $('.cf-page:not(.cf-preload)');
 			var len = $pages.length;
@@ -433,22 +436,34 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
-	var W = $(window).width();
-	if ($wpWrapper.length!=0) {
+	if ($wpWrapper.length) {
 		status.needBook = true;
 	}
 	if (status.isMobile) {
 		status.needBook = false;
 	}
+	var W = $window.width();
 	var pageW;
-	if (W>1200) {
-		toggleMenu.show();
-		$bookContainer.width(W-200);
-		pageW = (W-200)/2;
+	if (localStorage.userMenuStatus) {
+		if (localStorage.userMenuStatus === 'true') {
+			toggleMenu.show();
+			$bookContainer.width(W-200);
+			pageW = (W-200)/2;
+		} else if (localStorage.userMenuStatus === 'false'){
+			toggleMenu.hide();
+			$bookContainer.width(W);
+			pageW = W/2;
+		}
 	} else {
-		toggleMenu.hide();
-		$bookContainer.width(W);
-		pageW = W/2;
+		if (W>1200) {
+			toggleMenu.show();
+			$bookContainer.width(W-200);
+			pageW = (W-200)/2;
+		} else {
+			toggleMenu.hide();
+			$bookContainer.width(W);
+			pageW = W/2;
+		}
 	}
 	if (window._config) {
 		if (window._config.numColumns) {

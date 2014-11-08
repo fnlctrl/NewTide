@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset='UTF-8'/>	
-	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
+	<title>水朝夕 | 404 Not Found</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'/>
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
@@ -17,6 +17,12 @@
 	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
 	<?php wp_head(); ?>
 	<style>
+		* {
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+		}
 		#book-container {
 			background: #efdae1;
 		}
@@ -34,7 +40,6 @@
 			left: 14%;
 			color: #c1848c;
 			top: 25%;
-			color: #c1848c;
 		}
 		#title {
 			font-size: 80px;
