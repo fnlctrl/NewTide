@@ -15,8 +15,39 @@
 	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
-	<style>#book-container:before{content:none}</style>
 	<?php wp_head(); ?>
+	<style>
+		#book-container {
+			background: #efdae1;
+		}
+		#book-container:before {
+			content:none
+		}
+		#akarin {
+			position: absolute;
+			right: 10%;
+			bottom: 0;
+			height: 95%;
+		}
+		#message {
+			position: absolute;
+			left: 14%;
+			color: #c1848c;
+			top: 25%;
+			color: #c1848c;
+		}
+		#title {
+			font-size: 80px;
+		}
+		#subtitle {
+			font-size: 48px;
+			line-height: 48px;
+		}
+		#goback {
+			font-weight: bold;
+			font-size: 24px;
+		}
+	</style>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -26,8 +57,18 @@
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
 		<div id='book-loading-shade'></div>
-		<img src='<?php bloginfo('template_url');?>/img/404.png'/>
+		<div id='message'>
+			<div id='subtitle'>
+				404 NOT FOUND
+			</div>
+			<div id='title'>
+				找不到了噜
+			</div>
+			<a id='goback' href="<?php bloginfo('url'); ?>">回到主页</a>
+		</div>
+		<img id='akarin' src='<?php bloginfo('template_url');?>/img/akarin.png'/>
 	</div>
 </body>
+
 </html>
 
