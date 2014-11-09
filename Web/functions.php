@@ -28,7 +28,7 @@ function theme_scripts() {
 	wp_enqueue_script('ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
 	wp_localize_script('ajax-login', 'ajaxLoginObject', array(
 		'ajaxurl' => admin_url('admin-ajax.php'),
-		'redirecturl' => urlencode(get_permalink()),
+		'redirecturl' => get_permalink(),
 	));
 }
 add_action( 'wp_enqueue_scripts', 'theme_scripts',3);
@@ -116,7 +116,7 @@ function ajax_login(){
 			'message'=> '登录成功'
 		));
 	}
-	die();
+	exit();
 }
 add_action('wp_ajax_nopriv_ajaxlogin', 'ajax_login');
 // Ajax registration
@@ -130,7 +130,7 @@ function ajax_register() {
 		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_register->get_error_message());
 		echo json_encode(array('message'=>$message));
 	}
-	die();
+	exit();
 }
 add_action('wp_ajax_nopriv_register_user', 'ajax_register');
 // Ajax reset password
@@ -144,7 +144,7 @@ function ajax_reset_password() {
 		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_reset_password->get_error_messages());
 		echo json_encode(array('message'=>$message));
 	}
-	die();
+	exit();
 	function _retrieve_password() { // this is retrieve_password() found in wp-login.php
 		global $wpdb, $wp_hasher;
 		$errors = new WP_Error();

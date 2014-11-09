@@ -508,5 +508,5 @@ $(function(){
 		}).mouseleave(function(){
 			$('#sidebar-qrcode-wrapper').css({opacity:0,visibility:'hidden'});
 		})
-	},100);
+	},1000);
 });
