@@ -26,6 +26,11 @@
 		<a target='_blank' class='sidebar-link' href='http://site.douban.com/125914/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-douban.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://weibo.com/zjuqsc'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weibo.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://page.renren.com/601378976/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-renren.svg'/></a>
+		<a target='_blank' class='sidebar-link' id='sidebar-weixin'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weixin.svg'/></a>
+	</div>
+	<div id='sidebar-qrcode-wrapper'>
+		分享到微信
+		<div id='sidebar-qrcode'></div>
 	</div>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>
@@ -60,7 +65,7 @@
 			</a>
 		</div>
 		<div class='sidebar-section'><a class='sidebar-section-title'>线下</a><hr>
-			<a class='sidebar-item <?php if(is_category('活动')||in_category('活动')&&!is_home()&&!is_category('编辑精选')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/events/'; ?>">　活动
+			<a class='sidebar-item <?php if(is_page('线下活动')&&!is_home()&&!is_category('编辑精选')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/events/'; ?>">　活动
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-event.svg'/>
 			</a>
 			<a class='sidebar-item <?php if(is_category('设计品')||in_category('设计品')&&!is_home()&&!is_category('编辑精选')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/designs/'; ?>">　设计品

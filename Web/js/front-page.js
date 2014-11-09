@@ -1,13 +1,12 @@
 $(function(){
-	localStorage.clear();
 	var $firstLoadHintWrapper = $('#hint-wrapper'),
 		$ignoreButton = $('#hint-ignore-button'),
 		$postsWrapper = $('#posts-wrapper');
 
 	if (localStorage.firstLoad === 'false') {
-		$firstLoadHintWrapper.remove()
+		$firstLoadHintWrapper.remove();
+		$postsWrapper.css({left:0,width:'50%'});
 	}
-
 	$ignoreButton.click(function() {
 		$firstLoadHintWrapper.css({width:0});
 		$firstLoadHintWrapper.children().css({display:'none'});
@@ -15,4 +14,4 @@ $(function(){
 		localStorage.firstLoad = 'false';
 		$postsWrapper.css({left:0,width:'50%'});
 	})
-})
+});
