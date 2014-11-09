@@ -91,3 +91,9 @@ iframe {
     height: 100%;
     transition: all 0.8s ease;
 }
+.intro-photo:nth-child(1) {
+    z-index:2
+}
+.intro-photo:nth-child(2) {
+    z-index:1
+}
