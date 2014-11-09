@@ -3,6 +3,7 @@ $(function(){
 		$body = $('body'),
 		$topbarMenu = $('#topbar-menu'),
 		$topbarMenuIcon = $('#topbar-menu-icon'),
+		$topbarTitle = $('#topbar-title'),
 		$sidebar = $('#sidebar'),
 		$cover = $('#cover'),
 		$bookContainer = $('#book-container'),
@@ -447,8 +448,10 @@ $(function(){
 	if (localStorage.userMenuStatus) {
 		if (localStorage.userMenuStatus === 'true') {
 			toggleMenu.show();
-			$bookContainer.width(W-200);
-			pageW = (W-200)/2;
+			if (!status.isMobile) {
+				$bookContainer.width(W-200);
+				pageW = (W-200)/2;
+			}
 		} else if (localStorage.userMenuStatus === 'false'){
 			toggleMenu.hide();
 			$bookContainer.width(W);
@@ -457,8 +460,10 @@ $(function(){
 	} else {
 		if (W>1200) {
 			toggleMenu.show();
-			$bookContainer.width(W-200);
-			pageW = (W-200)/2;
+			if (!status.isMobile) {
+				$bookContainer.width(W-200);
+				pageW = (W-200)/2;
+			}
 		} else {
 			toggleMenu.hide();
 			$bookContainer.width(W);
@@ -475,6 +480,8 @@ $(function(){
 		book.init();
 		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	},200);
+
+	$topbarTitle.html($('.sidebar-item-current').html());
 
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
