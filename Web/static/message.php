@@ -25,17 +25,17 @@ Template Name: 留言板
 		</div>
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
-		<div id='wp-wrapper'>
-			<?php if (have_posts()) { while(have_posts()) { the_post();?>
-				<div class='wp-entry-content'>
-					<h1 class='wp-entry-title'>
-						<?php the_title(); ?>
-					</h1>
-					<?php the_content(); ?>
-					<?php comments_template(); ?>
-				</div>
-			<?php }} ?>
-		</div>
+	</div>
+	<div id='wp-wrapper'>
+		<?php if (have_posts()) { while(have_posts()) { the_post();?>
+			<div class='wp-entry-content'>
+				<h1 class='wp-entry-title'>
+					<?php the_title(); ?>
+				</h1>
+				<?php the_content(); ?>
+				<?php comments_template(); ?>
+			</div>
+		<?php }} ?>
 	</div>
 </body>
 <script>
