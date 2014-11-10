@@ -54,37 +54,41 @@ Template Name: Search Page
 			$search = new WP_Query($args);
 			$results = $search->get_posts();
 			$pagename = get_query_var('pagename');
-
 			if ( !$pagename && $id > 0 ) {
-
 				// If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
-
 				$post = $wp_query->get_queried_object();
-
 				$pagename = $post->post_name;
-
 			}
 			echo $pagename;
+
+			if (have_posts()):
 				foreach ($results as $post ) : setup_postdata( $post );?>
-			<?php //Begin Loop ?>
-			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-				<?php
-					if ( has_post_thumbnail() ) {
-						the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
-					}
-				?>
-				<div class='wp-item-text'>
-					<h3><?php the_title(); ?></h3>
-					<div class='wp-item-metadata'>
-						文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
-						@ <?php the_category(' &gt; ');?>
-						, <?php the_date('Y-m-d');?>
+				<?php //Begin Loop ?>
+				<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
+					<?php
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+						}
+					?>
+					<div class='wp-item-text'>
+						<h3><?php the_title(); ?></h3>
+						<div class='wp-item-metadata'>
+							文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
+							@ <?php the_category(' &gt; ');?>
+							, <?php the_date('Y-m-d');?>
+						</div>
+						<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 					</div>
-					<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 				</div>
-			</div>
-			<?php //End Loop  ?>
-			<?php endforeach; wp_reset_postdata();?>
+				<?php //End Loop  ?>
+			<?php
+				endforeach; wp_reset_postdata();
+				else : ?>
+					<div class='wp-entry-content'><h3>没有找到相关内容，试试别的关键词？</h3></div>
+			<?php
+				endif;
+			?>
+
 			<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 			<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
 		</div>

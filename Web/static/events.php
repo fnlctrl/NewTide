@@ -107,15 +107,16 @@ Template Name: 线下活动
 						<img src='<?php bloginfo('template_url');?>/img/events/event-logo-zjuff.svg'/>
 					</div>
 					<div class='intro-event-text'>
-						电影节介绍
+						时代诞生艺术，光影印证梦想。2013年浙江大学第一届青年电影节在浙江大学紫金港校区成功举办。2014年，青年电影节在首届基础上扩大规模，增添活动环节，成为浙大乃至长三角地区高校中最权威、最具影响力的电影节。通过这个平台，求是学子与校外人士接触了多元化的电影作品，从而获得更深层次的观影体验。
 					</div>
 				</div>
 				<div class='intro-event-info'>
 					<div id='intro-event-logo' class='unselectable'>
-						音乐节
+						<img src='<?php bloginfo('template_url');?>/img/events/event-logo-yinyuejie.svg'/>
 					</div>
 					<div class='intro-event-text'>
-						音乐节介绍
+						联合杭州各大高校乐团的音乐盛典，就在潮汐音乐节！历经半年缜密策划，凝聚众人心血，推广与水朝夕工作室合办，为有才华的年轻人提供实现梦想的舞台。<br/>
+						潮汐音乐节分为“原创音乐征集大赛”、“音乐节创意市集”和“现场音乐会”三个子活动。
 					</div>
 				</div>
 				<div id='intro-photo-container'>

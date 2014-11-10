@@ -38,7 +38,7 @@
 		<div id='user-id'>登录</div>
 	</div>
 	<form id='sidebar-search-wrapper'>
-		<input class='ease' type='text' name='s' onblur="this.value=''"/>
+		<input id='sidebar-search-input' class='ease' type='text' name='s' onblur="this.value=''"/>
 		<img id='sidebar-search-icon' class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/>
 	</form>
 	<div id='sidebar-login-status'>
@@ -52,19 +52,19 @@
 	</div>
 	<div id='sidebar-sections'>
 		<div class='sidebar-section'><a href="<?php echo home_url().'/all'; ?>" class='sidebar-section-title'>文章</a><hr>
-			<a class='sidebar-item <?php if(is_category('专题')||in_category('专题')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/featured/'; ?>">　专题
+			<a class='sidebar-item <?php if(is_category('专题')||in_category('专题')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')&!(is_category('设计品')||in_category('设计品'))) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/featured/'; ?>">　专题
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-featured.svg'/>
 			</a>
-			<a class='sidebar-item <?php if(is_category('电影')||in_category('电影')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/movie/'; ?>">　电影
+			<a class='sidebar-item <?php if(is_category('电影')||in_category('电影')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')&!(is_category('设计品')||in_category('设计品'))) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/movie/'; ?>">　电影
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-movie.svg'/>
 			</a>
-			<a class='sidebar-item <?php if(is_category('文学')||in_category('文学')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/literature/'; ?>">　文学
+			<a class='sidebar-item <?php if(is_category('文学')||in_category('文学')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')&!(is_category('设计品')||in_category('设计品'))) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/literature/'; ?>">　文学
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-literature.svg'/>
 			</a>
-			<a class='sidebar-item <?php if(is_category('音乐')||in_category('音乐')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/music/'; ?>">　音乐
+			<a class='sidebar-item <?php if(is_category('音乐')||in_category('音乐')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')&!(is_category('设计品')||in_category('设计品'))) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/music/'; ?>">　音乐
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-music.svg'/>
 			</a>
-			<a class='sidebar-item <?php if(is_category('生活')||in_category('生活')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/life/'; ?>">　生活
+			<a class='sidebar-item <?php if(is_category('生活')||in_category('生活')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')&!(is_category('设计品')||in_category('设计品'))) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/life/'; ?>">　生活
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-life.svg'/>
 			</a>
 		</div>

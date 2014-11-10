@@ -16,7 +16,9 @@ $(function(){
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
 		$prevPageLink = $('#wp-fake-nav-prev'),
-		$wpEntryMeta = $('.wp-entry-meta');
+		$wpEntryMeta = $('.wp-entry-meta'),
+		$searchWrapper = $('#sidebar-search-wrapper');
+		$searchInput = $('#sidebar-search-input');
 
 	var status = {
 		showingMenu: null,
@@ -94,7 +96,26 @@ $(function(){
 				renren:'http://widget.renren.com/dialog/share?title='+shareInfo.title+'&description='+shareInfo.text+'&pic='+shareInfo.image+'&resourceUrl='+shareInfo.href,
 				douban:'http://www.douban.com/share/service?name='+shareInfo.title+'&text='+shareInfo.text+'&image='+shareInfo.image+'&href='+shareInfo.href
 			};
-		}
+		},
+		search: (function() {
+			$searchWrapper.submit(function(e) {
+				var str = $searchInput.val();
+				sessionStorage.setItem('searchstr',str);
+				e.preventDefault();
+				e.stopPropagation();
+				if (str.length) {
+					location.href=location.origin+'/wordpress/?s='+str;
+				} else {
+					location.href=location.origin+'/wordpress';
+				}
+			});
+			if (/\?s=/.test(location.href)) { // on a search result page
+				if (sessionStorage.searchstr) {
+					$searchInput[0].onblur='';
+					$searchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
+				}
+			}
+		})(),
 	};
 
 	var toggleMenu = {
@@ -196,32 +217,46 @@ $(function(){
 			var fixedContent;
 			if (!status.isListPage) {
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
-					if ($this.parents('p').length) {
+					if ($this.parent('p').length) {
 						$this.unwrap();
 					}
-				});
-				flowedContent = $wpEntryContent[0].innerHTML;
-				$wpEntryMeta.addClass('col-span-2');
+				})
+				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
+				if ($wpEntryContent.length) {
+					flowedContent = $wpEntryContent[0].innerHTML;
+				} else {
+					flowedContent = '';
+				}
 				if ($wpEntryMeta.length) {
-					fixedContent = $wpEntryMeta[0].outerHTML;
+					if ($wpEntryThumbnail[0].complete) {
+						handler();
+					} else {
+						$wpEntryThumbnail.load(handler);
+					}
+					function handler() {
+						$wpEntryMeta.addClass('col-span-2');
+						fixedContent = $wpEntryMeta[0].outerHTML;
+						render(fixedContent);
+					}
 				} else {
 					fixedContent ='';
+					render(fixedContent);
 				}
-
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
 			}
-			var cfg = book.getConfig(pageW*2);
-			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
-			book.columnizer.flow(flowedContent, fixedContent);
-			book.renderArea = $('.cf-render-area');
-			book.enableTurningPages(pageW);
-			book.copyEntryThumbnail();
-			book.setUpEvents();
+			function render(fixedContent) {
+				var cfg = book.getConfig(pageW*2);
+				book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
+				book.columnizer.flow(flowedContent, fixedContent);
+				book.renderArea = $('.cf-render-area');
+				book.enableTurningPages(pageW);
+				book.copyEntryThumbnail();
+				book.setUpEvents();
+			}
 		},
 		reflow: function(cfg) {
 			if (!status.needBook) {
@@ -242,7 +277,6 @@ $(function(){
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
-			//return
 			if ($wpEntryThumbnail.length) {
 				var $firstPage = $('.cf-page-1');
 				var $div = $('<div />');
@@ -291,6 +325,9 @@ $(function(){
 			}
 			var $bbItem = $('.bb-item');
 			status.numPages = $bbItem.length;
+			if (status.numPages === 0) {
+				return
+			}
 			// add fake menu icon
 			$bbItem.each(function(){
 				$(this).append($('<div class="menu-icon-fake" />'));//
@@ -298,8 +335,10 @@ $(function(){
 			// enable page flip
 			book.renderArea.addClass('bb-bookblock');
 			var startPage;
-			if (localStorage.returnedFromNextPage === 'true') {
-				startPage = status.numPages;
+			if (localStorage.returnedFromNextPage) {
+				if (localStorage.returnedFromNextPage === 'true') {
+					startPage = status.numPages;
+				}
 			} else {
 				startPage = 1;
 			}
@@ -469,11 +508,11 @@ $(function(){
 		}
 	}
 	$bookLoadingShade.css({opacity:1,'z-index':'999'});
-	setTimeout(function() {
+	window.book=book;
+	$window.load(function() {
 		book.init(pageW);
-		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-	},100);
-
+	});
+	$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
