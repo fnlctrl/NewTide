@@ -315,7 +315,7 @@ $(function(){
 				var img = new Image();
 				img.src = $wpEntryThumbnail[0].src;
 				img.className = 'wp-fake-thumbnail';
-				var h = $firstPage.find('.wp-entry-thumbnail').height() + 50;
+				var h = $firstPage.find('.wp-entry-thumbnail').height() + 35;
 				if (h > 500) {
 					h = 500; // 500 is the max-width of .wp-entry-thumbnail + 50(top page padding)
 				}
