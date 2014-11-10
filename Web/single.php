@@ -22,10 +22,12 @@
 		<div id='book-nav-prev' class='book-nav-icon'></div>
 		<div id='book-loading-shade'></div>
 		<div id='book-pages'></div>
-		<div id='wp-wrapper'>
-			<?php if (have_posts()) { while(have_posts()) { the_post();?>
-				<div class='wp-entry-meta'>
-					<?php the_post_thumbnail('full',array('class' => 'wp-entry-thumbnail')); ?>
+	</div>
+	<div id='wp-wrapper'>
+		<?php if (have_posts()) { while(have_posts()) { the_post();?>
+			<div class='wp-entry-meta'>
+				<?php the_post_thumbnail('full',array('class' => 'wp-entry-thumbnail')); ?>
+				<div id='wp-entry-meta-text'>
 					<h1 class='wp-entry-title'>
 						<?php the_title(); ?>
 					</h1>
@@ -35,20 +37,18 @@
 						, <?php the_date('Y-m-d');?>
 					</div>
 				</div>
-				<div class='wp-entry-content'>
-					<?php the_content(); ?>
-					<?php comments_template(); ?>
-				</div>
+			</div>
+			<div class='wp-entry-content'>
+				<?php the_content(); ?>
+				<?php comments_template(); ?>
+			</div>
+		<?php }} ?>
 
-			<?php }} ?>
-
-			<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
-			<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
-			<?php if(current_user_can('edit_others_pages')||current_user_can('edit_published_posts')) {  ?>
-				<?php edit_post_link('Edit');?>
-			<?php } ?>
-
-		</div>
+		<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
+		<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
+		<?php if(current_user_can('edit_others_pages')||current_user_can('edit_published_posts')) {  ?>
+			<?php edit_post_link('Edit');?>
+		<?php } ?>
 	</div>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>

@@ -60,11 +60,11 @@ body {
 	top: 50px;
 	width: 25px;
 	height: 40px;
-	background-image: url(img/menu-icon-fake.svg);
+	background: url(img/menu-icon-fake.svg) no-repeat;
 }
 #book-container {
 	position: absolute !important;
-	height: 100% !important;
+	height: 100% !important;;
 	background: #fff;
 	box-shadow: 0 0 1em rgba(0,0,0,0.5);
 }
@@ -325,28 +325,65 @@ body {
 	fill: #69d100;
 }
 #sidebar-qrcode-wrapper {
-	position: absolute;
-	width: 100px;
-	height: 130px;
-	top: 170px;
-	left: 35px;
-	border-radius: 5px;
-	background: #fff;
-	z-index: 99;
-	padding: 10px 15px 15px 15px;
-	color: #1767a3;
-	text-align: center;
-	transition: all 0.5s ease;
-	opacity: 0;
-	visibility: hidden;
+    position: absolute;
+    width: 100px;
+    height: 130px;
+    top: 30px;
+    left: 0;
+    border-radius: 5px;
+    background: #fff;
+    z-index: 99;
+    padding: 10px 15px 15px 15px;
+    color: #1767a3;
+    text-align: center;
+    transition: all 0.5s ease;
+    opacity: 0;
+    pointer-events:none;
 }
 #sidebar-qrcode {
-	height: 100px;
-	width: 100px;
-	position: absolute;
-	background: #fff;
-	top: 40px;
-	left: 15px;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    background: #fff;
+    top: 40px;
+    left: 15px;
+}
+#sidebar-weixin:hover + #sidebar-qrcode-wrapper{
+    opacity: 0.9;
+}
+
+#toolbar-qrcode-wrapper {
+    position: absolute;
+    left: 165px;
+    width: 100px;
+    height: 125px;
+    padding: 15px;
+    background: #fff;
+    top: -115px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: #1767a3;
+    font-weight: bold;
+}
+#toolbar-qrcode-wrapper span {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+}
+#toolbar-qrcode {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: block;
+}
+#fake-qrcode {
+    height: 100px;
+    width: 100px;
+    visibility: hidden;
 }
 /*    Message Block    */
 .message-block {
@@ -385,7 +422,7 @@ body {
 }
 #share-wrapper {
 	left: 6%;
-	width: 110px;
+	width: 140px;
 	padding: 10px 0 10px 3%;
 }
 #admin-tools-wrapper {
@@ -400,6 +437,7 @@ body {
 	margin: 0 10px 0 0;
 	vertical-align: text-bottom;
 	opacity: 0.7;
+    cursor: pointer;
 }
 .toolbar-icon:hover {
 	opacity: 1;
@@ -415,6 +453,13 @@ body {
 .renren {
 	background: url(img/icon-renren.svg);
 	width: 21px;
+}
+.weixin {
+    background: url(img/icon-weixin.svg);
+    width: 24px;
+}
+.weixin:hover + #toolbar-qrcode-wrapper {
+    opacity:1;
 }
 .edit {
 	background: url(img/icon-edit.svg);

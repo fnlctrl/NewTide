@@ -27,10 +27,10 @@
 		<a target='_blank' class='sidebar-link' href='http://weibo.com/zjuqsc'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weibo.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://page.renren.com/601378976/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-renren.svg'/></a>
 		<a target='_blank' class='sidebar-link' id='sidebar-weixin'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-weixin.svg'/></a>
-	</div>
-	<div id='sidebar-qrcode-wrapper'>
-		分享到微信
-		<div id='sidebar-qrcode'></div>
+		<div id='sidebar-qrcode-wrapper'>
+			分享到微信
+			<div id='sidebar-qrcode'></div>
+		</div>
 	</div>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>

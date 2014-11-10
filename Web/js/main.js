@@ -30,7 +30,8 @@ $(function(){
 		isMobile: false,
 		isListPage: undefined,
 		numColumns: 1,
-		LineHeight: 18
+		LineHeight: 18,
+		qrcode: null
 	};
 
 	var util = {
@@ -116,6 +117,33 @@ $(function(){
 				}
 			}
 		})(),
+		cloneCanvas: function(oldCanvas) {
+			//create a new canvas
+			var newCanvas = document.createElement('canvas');
+			var context = newCanvas.getContext('2d');
+			//set dimensions
+			newCanvas.width = oldCanvas.width;
+			newCanvas.height = oldCanvas.height;
+			//apply the old canvas to the new one
+			context.drawImage(oldCanvas, 0, 0);
+			//return the new canvas
+			return newCanvas;
+		},
+		setupQRCode: function() {
+			console.log('a')
+			$body.append('<div id="fake-qrcode"></div>');
+			$('#fake-qrcode').qrcode({
+				width: 100,
+				height: 100,
+				text: encodeURI(location.href),
+				QRErrorCorrectLevel:2,
+				background : "#ffffff",
+				foreground : "#1767a3"
+			});
+			var canvas = $('#fake-qrcode canvas')[0];
+			status.qrcode = util.cloneCanvas(canvas);
+			$('#sidebar-qrcode').append(util.cloneCanvas(canvas));
+		},
 	};
 
 	var toggleMenu = {
@@ -202,7 +230,6 @@ $(function(){
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
 				//showGrid: true,
-				//debug: true,
 				columnFragmentMinHeight: 90,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img']
@@ -230,14 +257,18 @@ $(function(){
 					flowedContent = '';
 				}
 				if ($wpEntryMeta.length) {
-					if ($wpEntryThumbnail[0].complete) {
-						handler();
+					if ($wpEntryThumbnail.length) {
+						if ($wpEntryThumbnail[0].complete) {
+							handler();
+						} else {
+							$wpEntryThumbnail.load(handler);
+						}
 					} else {
-						$wpEntryThumbnail.load(handler);
+						handler();
 					}
 					function handler() {
-						$wpEntryMeta.addClass('col-span-2');
-						fixedContent = $wpEntryMeta[0].outerHTML;
+						$wpEntryMeta.children().addClass('col-span-2');
+						fixedContent = $wpEntryMeta[0].innerHTML;
 						render(fixedContent);
 					}
 				} else {
@@ -294,7 +325,9 @@ $(function(){
 				var href = util.getShareLink();
 				$shareWrapper.append('<a class="toolbar-icon douban" target="_blank" href="'+href.douban+'"></a>')
 							.append('<a class="toolbar-icon weibo" target="_blank" href="'+href.weibo+'"></a>')
-							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>');
+							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>')
+							.append('<a class="toolbar-icon weixin"></a>')
+							.append('<div id="toolbar-qrcode-wrapper"><div id="toolbar-qrcode"></div><span>分享到微信</span></div>');
 				$div.append($shareWrapper);
 				// add edit button
 				var $postEditLink = $('.post-edit-link');
@@ -306,6 +339,10 @@ $(function(){
 				}
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
                 $firstPage.append($div);
+				// copy qrcode
+				setTimeout(function(){
+					$('#toolbar-qrcode').append(status.qrcode);
+				},50)
 			}
 		},
 		enableTurningPages: function(pageW) { // pageW is half the width of book-container
@@ -471,6 +508,7 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
+	util.setupQRCode();
 	if ($wpWrapper.length) {
 		status.needBook = true;
 	}
@@ -509,7 +547,6 @@ $(function(){
 		}
 	}
 	$bookLoadingShade.css({opacity:1,'z-index':'999'});
-	window.book=book;
 	$window.load(function() {
 		book.init(pageW);
 	});
@@ -534,19 +571,6 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 100));
-	setTimeout(function(){
-		$('#sidebar-qrcode').qrcode({
-			width: 100,
-			height: 100,
-			text: encodeURI(location.href),
-			QRErrorCorrectLevel:2,
-			background : "#ffffff",
-			foreground : "#1767a3"
-		});
-		$('#sidebar-weixin').mouseenter(function(){
-			$('#sidebar-qrcode-wrapper').css({opacity:0.9,visibility:'visible'});
-		}).mouseleave(function(){
-			$('#sidebar-qrcode-wrapper').css({opacity:0,visibility:'hidden'});
-		})
-	},1000);
+	window.util=util;
+	window._status=status;
 });

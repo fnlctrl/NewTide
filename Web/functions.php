@@ -37,7 +37,6 @@ function filter_ptags_on_images( $content ){
    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '$2', $content);
 }
 add_filter('the_content', 'filter_ptags_on_images');
-
 // remove all attr of <img>s
 function filter_attr_on_images( $content ){
    return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
@@ -199,6 +198,10 @@ function ajax_reset_password() {
 	}
 }
 add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
+// replace all gravatar with local default image
+add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
+function remove_gravatar( $avatar ) {
+	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);}
 ?>
 
 
