@@ -247,6 +247,7 @@ $(function(){
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
+				render(fixedContent);
 			}
 			function render(fixedContent) {
 				var cfg = book.getConfig(pageW*2);
