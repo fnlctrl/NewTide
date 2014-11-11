@@ -39,6 +39,7 @@ iframe {
 	transition: all 0.1s ease;
 	cursor: pointer;
 	margin: 0 0 0 5px;
+    font-weight: bold;
 }
 .intro-item:hover {
 	font-size: 18px;
@@ -83,7 +84,16 @@ iframe {
     overflow: hidden;
     z-index: -1;
 }
-#intro-photo {
+.intro-photo {
+    position: absolute;
+    left: -5%;
+    top: 0;
     height: 100%;
+    transition: all 0.8s ease;
 }
-
+.intro-photo:nth-child(1) {
+    z-index:2
+}
+.intro-photo:nth-child(2) {
+    z-index:1
+}

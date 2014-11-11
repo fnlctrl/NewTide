@@ -71,7 +71,7 @@ p {
     margin: 0 0 20px 0;
 }
 .wp-entry-title {
-	margin: 32px 0 16px 0;
+	margin: 0 0 18px 0;
 	color: #4585B5;
     font-size: 36px;
     line-height: 36px;
@@ -86,7 +86,6 @@ p {
 .wp-entry-thumbnail {
 	position: relative;
 	max-height: 450px;
-    width: 100% !important;
 }
 .wp-fake-thumbnail-wrapper {
 	position: absolute;
