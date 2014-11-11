@@ -51,7 +51,6 @@ $(function(){
 				status.numColumns = 2;
 				status.LineHeight = 18;
 			}
-			console.log('is list page: ' + status.isListPage);
 		},
 		getNavURL: function() {
 			function parse() {
@@ -130,7 +129,6 @@ $(function(){
 			return newCanvas;
 		},
 		setupQRCode: function() {
-			console.log('a')
 			$body.append('<div id="fake-qrcode"></div>');
 			$('#fake-qrcode').qrcode({
 				width: 100,
@@ -305,7 +303,6 @@ $(function(){
 				book.enableTurningPages(cfg.viewportWidth);
 				book.copyEntryThumbnail();
 				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-				console.log('reflowed');
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
@@ -397,7 +394,6 @@ $(function(){
 				onEndFlip: function(old,page,isLimit) {
 					status.currentPage = page+1;
 					$menuIcon.css({'opacity':'1'});
-					console.log(status.currentPage);
 				}
 			});
 			localStorage.removeItem('returnedFromNextPage');
@@ -426,7 +422,7 @@ $(function(){
 						break;
 					default:
 						break;
-				}	
+				}
 			});
 			if (!status.isMobile) {
 				$window.on('mousewheel', function(event) {
