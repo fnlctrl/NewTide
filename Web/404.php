@@ -9,12 +9,6 @@
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
-	<script src='<?php bloginfo('template_url');?>/js/modernizr.custom.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/hammer-2.0.4.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
 	<?php wp_head(); ?>
 	<style>
 		* {
@@ -74,6 +68,5 @@
 		<img id='akarin' src='<?php bloginfo('template_url');?>/img/akarin.png'/>
 	</div>
 </body>
-
 </html>
 

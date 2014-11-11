@@ -16,7 +16,9 @@ $(function(){
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
 		$nextPageLink = $('#wp-fake-nav-next'),
 		$prevPageLink = $('#wp-fake-nav-prev'),
-		$wpEntryMeta = $('.wp-entry-meta');
+		$wpEntryMeta = $('.wp-entry-meta'),
+		$searchWrapper = $('#sidebar-search-wrapper');
+		$searchInput = $('#sidebar-search-input');
 
 	var status = {
 		showingMenu: null,
@@ -28,7 +30,8 @@ $(function(){
 		isMobile: false,
 		isListPage: undefined,
 		numColumns: 1,
-		LineHeight: 18
+		LineHeight: 18,
+		qrcode: null
 	};
 
 	var util = {
@@ -94,7 +97,53 @@ $(function(){
 				renren:'http://widget.renren.com/dialog/share?title='+shareInfo.title+'&description='+shareInfo.text+'&pic='+shareInfo.image+'&resourceUrl='+shareInfo.href,
 				douban:'http://www.douban.com/share/service?name='+shareInfo.title+'&text='+shareInfo.text+'&image='+shareInfo.image+'&href='+shareInfo.href
 			};
-		}
+		},
+		search: (function() {
+			$searchWrapper.submit(function(e) {
+				var str = $searchInput.val();
+				sessionStorage.setItem('searchstr',str);
+				e.preventDefault();
+				e.stopPropagation();
+				if (str.length) {
+					location.href=location.origin+'/wordpress/?s='+str;
+				} else {
+					location.href=location.origin+'/wordpress';
+				}
+			});
+			if (/\?s=/.test(location.href)) { // on a search result page
+				if (sessionStorage.searchstr) {
+					$searchInput[0].onblur='';
+					$searchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
+				}
+			}
+		})(),
+		cloneCanvas: function(oldCanvas) {
+			//create a new canvas
+			var newCanvas = document.createElement('canvas');
+			var context = newCanvas.getContext('2d');
+			//set dimensions
+			newCanvas.width = oldCanvas.width;
+			newCanvas.height = oldCanvas.height;
+			//apply the old canvas to the new one
+			context.drawImage(oldCanvas, 0, 0);
+			//return the new canvas
+			return newCanvas;
+		},
+		setupQRCode: function() {
+			console.log('a')
+			$body.append('<div id="fake-qrcode"></div>');
+			$('#fake-qrcode').qrcode({
+				width: 100,
+				height: 100,
+				text: encodeURI(location.href),
+				QRErrorCorrectLevel:2,
+				background : "#ffffff",
+				foreground : "#1767a3"
+			});
+			var canvas = $('#fake-qrcode canvas')[0];
+			status.qrcode = util.cloneCanvas(canvas);
+			$('#sidebar-qrcode').append(util.cloneCanvas(canvas));
+		},
 	};
 
 	var toggleMenu = {
@@ -181,13 +230,12 @@ $(function(){
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
 				//showGrid: true,
-				//debug: true,
 				columnFragmentMinHeight: 90,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img']
 			}
 		},
-		init: function() {
+		init: function(pageW) {
 			//preprocessing wordpress-generated content for FTColumnflow to render
 			if (!status.needBook) {
 				return
@@ -196,37 +244,51 @@ $(function(){
 			var fixedContent;
 			if (!status.isListPage) {
 				var $wpEntryImgs = $wpEntryContent.find('img');
-				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
 				$wpEntryImgs.each(function() {
 					var $this = $(this);
-					if ($this.parents('p').length) {
+					if ($this.parent('p').length) {
 						$this.unwrap();
 					}
-				});
-				flowedContent = $wpEntryContent[0].innerHTML;
-				$wpEntryMeta.addClass('col-span-2');
+				})
+				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
+				if ($wpEntryContent.length) {
+					flowedContent = $wpEntryContent[0].innerHTML;
+				} else {
+					flowedContent = '';
+				}
 				if ($wpEntryMeta.length) {
-					fixedContent = $wpEntryMeta[0].outerHTML;
+					if ($wpEntryThumbnail.length) {
+						if ($wpEntryThumbnail[0].complete) {
+							handler();
+						} else {
+							$wpEntryThumbnail.load(handler);
+						}
+					} else {
+						handler();
+					}
+					function handler() {
+						$wpEntryMeta.children().addClass('col-span-2');
+						fixedContent = $wpEntryMeta[0].innerHTML;
+						render(fixedContent);
+					}
 				} else {
 					fixedContent ='';
+					render(fixedContent);
 				}
-
 			} else {
 				flowedContent = $wpWrapper[0].innerHTML;
 				fixedContent = '';
+				render(fixedContent);
 			}
-			var cfg;
-			if (W>1200) {
-				cfg = book.getConfig($window.width()-200);
-			} else {
-				cfg = book.getConfig($window.width());
+			function render(fixedContent) {
+				var cfg = book.getConfig(pageW*2);
+				book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
+				book.columnizer.flow(flowedContent, fixedContent);
+				book.renderArea = $('.cf-render-area');
+				book.enableTurningPages(pageW);
+				book.copyEntryThumbnail();
+				book.setUpEvents();
 			}
-			book.columnizer = new FTColumnflow('book-pages', 'book-container', cfg);
-			book.columnizer.flow(flowedContent, fixedContent);
-			book.renderArea = $('.cf-render-area');
-			book.enableTurningPages(pageW);
-			book.copyEntryThumbnail();
-			book.setUpEvents();
 		},
 		reflow: function(cfg) {
 			if (!status.needBook) {
@@ -234,7 +296,7 @@ $(function(){
 			}
 			$bookLoadingShade.css({opacity:1,'z-index':'500'});
 			clearTimeout(book.timer);
-			book.timer = setTimeout(book.performReflow(cfg), 300);
+			book.timer = setTimeout(book.performReflow(cfg), 100);
 		},
 		performReflow: function(cfg) {
 			return function() {
@@ -247,14 +309,13 @@ $(function(){
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
-			//return
 			if ($wpEntryThumbnail.length) {
 				var $firstPage = $('.cf-page-1');
 				var $div = $('<div />');
 				var img = new Image();
 				img.src = $wpEntryThumbnail[0].src;
 				img.className = 'wp-fake-thumbnail';
-				var h = $firstPage.find('.wp-entry-thumbnail').height() + 50;
+				var h = $firstPage.find('.wp-entry-thumbnail').height() + 35;
 				if (h > 500) {
 					h = 500; // 500 is the max-width of .wp-entry-thumbnail + 50(top page padding)
 				}
@@ -264,7 +325,9 @@ $(function(){
 				var href = util.getShareLink();
 				$shareWrapper.append('<a class="toolbar-icon douban" target="_blank" href="'+href.douban+'"></a>')
 							.append('<a class="toolbar-icon weibo" target="_blank" href="'+href.weibo+'"></a>')
-							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>');
+							.append('<a class="toolbar-icon renren" target="_blank" href="'+href.renren+'"></a>')
+							.append('<a class="toolbar-icon weixin"></a>')
+							.append('<div id="toolbar-qrcode-wrapper"><div id="toolbar-qrcode"></div><span>分享到微信</span></div>');
 				$div.append($shareWrapper);
 				// add edit button
 				var $postEditLink = $('.post-edit-link');
@@ -276,6 +339,10 @@ $(function(){
 				}
 				$firstPage.find('.wp-entry-thumbnail').css({opacity:0,height:h-50});
                 $firstPage.append($div);
+				// copy qrcode
+				setTimeout(function(){
+					$('#toolbar-qrcode').append(status.qrcode);
+				},50)
 			}
 		},
 		enableTurningPages: function(pageW) { // pageW is half the width of book-container
@@ -296,6 +363,9 @@ $(function(){
 			}
 			var $bbItem = $('.bb-item');
 			status.numPages = $bbItem.length;
+			if (status.numPages === 0) {
+				return
+			}
 			// add fake menu icon
 			$bbItem.each(function(){
 				$(this).append($('<div class="menu-icon-fake" />'));//
@@ -303,8 +373,10 @@ $(function(){
 			// enable page flip
 			book.renderArea.addClass('bb-bookblock');
 			var startPage;
-			if (localStorage.returnedFromNextPage === 'true') {
-				startPage = status.numPages;
+			if (localStorage.returnedFromNextPage) {
+				if (localStorage.returnedFromNextPage === 'true') {
+					startPage = status.numPages;
+				}
 			} else {
 				startPage = 1;
 			}
@@ -436,6 +508,7 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
+	util.setupQRCode();
 	if ($wpWrapper.length) {
 		status.needBook = true;
 	}
@@ -469,13 +542,15 @@ $(function(){
 		if (window._config.numColumns) {
 			status.numColumns= window._config.numColumns;
 		}
+		if (window._config.needBook) {
+			status.numColumns= window._config.needBook;
+		}
 	}
 	$bookLoadingShade.css({opacity:1,'z-index':'999'});
-	setTimeout(function() {
-		book.init();
-		$bookLoadingShade.css({opacity:0,'z-index':'-1'});
-	},200);
-
+	$window.load(function() {
+		book.init(pageW);
+	});
+	$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
@@ -496,5 +571,6 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 100));
-
+	window.util=util;
+	window._status=status;
 });
