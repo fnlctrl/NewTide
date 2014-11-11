@@ -40,6 +40,9 @@
 			</div>
 			<div class='wp-entry-content'>
 				<?php the_content(); ?>
+
+			</div>
+			<div class='wp-entry-comments'>
 				<?php comments_template(); ?>
 			</div>
 		<?php }} ?>
