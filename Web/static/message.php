@@ -33,6 +33,8 @@ Template Name: 留言板
 					<?php the_title(); ?>
 				</h1>
 				<?php the_content(); ?>
+			</div>
+			<div class='wp-entry-comments'>
 				<?php comments_template(); ?>
 			</div>
 		<?php }} ?>

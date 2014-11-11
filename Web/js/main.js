@@ -221,7 +221,7 @@ $(function(){
 		columnizer: null,
 		renderArea: null,
 		getConfig: function(W) { // W is the proper(calculated) width for bookContainer(the width of 2 pages)
-			H = $window.height();
+			var H = $window.height();
 			return {
 				columnCount: status.numColumns,
 				viewportHeight: Math.max($window.height()-100,500),
@@ -229,10 +229,10 @@ $(function(){
 				columnGap: W*0.02,
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
-				//showGrid: true,
-				columnFragmentMinHeight: 90,
+				showGrid: true,
+				columnFragmentMinHeight: 144,
 				pagePadding: W*0.04,
-				noWrapOnTags: ['div','img']
+				noWrapOnTags: ['div','img','blockquote']
 			}
 		},
 		init: function(pageW) {
@@ -250,9 +250,9 @@ $(function(){
 						$this.unwrap();
 					}
 				})
-				$wpEntryImgs.css({width:'100%','max-height':500}); //.removeAttr('height width class')
+				$wpEntryImgs.css({width:'100%','max-height':500,'margin-top':'18px'}); //.removeAttr('height width class')
 				if ($wpEntryContent.length) {
-					flowedContent = $wpEntryContent[0].innerHTML;
+					flowedContent = $wpEntryContent[0].innerHTML + $('.wp-entry-comments').html();
 				} else {
 					flowedContent = '';
 				}
@@ -571,6 +571,4 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 100));
-	window.util=util;
-	window._status=status;
 });

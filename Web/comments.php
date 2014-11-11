@@ -23,8 +23,8 @@
 	</div>
 <?php endif;?>
 <?php
-$comments = get_comments(array('post_id'=>get_the_ID()));
-foreach($comments as $comment) :
+	$comments = get_comments(array('post_id'=>get_the_ID()));
+	foreach($comments as $comment) :
 	?>
 	<div class='wp-comment-item'>
 		<div class='wp-comment-avatar'>

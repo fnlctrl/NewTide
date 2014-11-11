@@ -351,10 +351,9 @@ body {
 #sidebar-weixin:hover + #sidebar-qrcode-wrapper{
     opacity: 0.9;
 }
-
 #toolbar-qrcode-wrapper {
     position: absolute;
-    left: 165px;
+    left: 160px;
     width: 100px;
     height: 125px;
     padding: 15px;
@@ -423,7 +422,7 @@ body {
 #share-wrapper {
 	left: 6%;
 	width: 140px;
-	padding: 10px 0 10px 3%;
+	padding: 10px 0 10px 20px;
 }
 #admin-tools-wrapper {
 	right: 6%;
