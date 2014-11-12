@@ -12,7 +12,10 @@ Description: Designed and developed by fnlCtrl in 2014. Mobile version developed
 	-ms-user-select: none;
 }
 .ease {
-	transition: all 0.2s ease;
+	transition: all 0.3s ease;
+}
+.notransition {
+    transition: none !important;
 }
 * {
 	font-family: "Microsoft YaHei"
@@ -42,8 +45,8 @@ body {
 	width: 25px;
 	height: 40px;
 	cursor: pointer;
-	z-index: 100;
 	transition: all 0.2s ease;
+    z-index: 99;
 }
 #menu-icon-arrow {
 	position: absolute;
@@ -64,9 +67,10 @@ body {
 }
 #book-container {
 	position: absolute !important;
-	height: 100% !important;;
+	height: 100% !important;
 	background: #fff;
 	box-shadow: 0 0 1em rgba(0,0,0,0.5);
+    z-index: 2;
 }
 #book-pages {
 	left: 0;
@@ -83,9 +87,9 @@ body {
 	height: 100%;
 	width: 200%;
 	background: #fff;
-	z-index: 90;
-	opacity: 0;
-	transition: all 0.2s ease;
+	z-index: 10;
+	opacity: 1;
+    pointer-events: none;
 }
 #book-container:before {
 	content: '';
@@ -128,7 +132,6 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	width: 200px;
-	z-index: 1;
 }
 #sidebar-login-status {
 	position: absolute;
