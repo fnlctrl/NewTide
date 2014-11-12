@@ -52,7 +52,7 @@ Template Name: 线下活动
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='book-pages'>
 			<div id='intro-wrapper' class='book-page'>
 				<h1 id='intro-title' class='unselectable'>线下活动介绍</h1>

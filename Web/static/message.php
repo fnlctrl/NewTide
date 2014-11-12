@@ -23,7 +23,7 @@ Template Name: 留言板
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='book-pages'></div>
 	</div>
 	<div id='wp-wrapper'>

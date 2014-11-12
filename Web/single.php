@@ -20,7 +20,7 @@
 		</div>
 		<div id='book-nav-next' class='book-nav-icon'></div>
 		<div id='book-nav-prev' class='book-nav-icon'></div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='book-pages'></div>
 	</div>
 	<div id='wp-wrapper'>

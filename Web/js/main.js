@@ -147,6 +147,7 @@ $(function(){
 	var toggleMenu = {
 		hide: function(needReflow) {
 			var W = $window.width();
+			$bookContainer.css({width:W,left:0});
 			$menuIconArrow.css({'transform':'rotateZ(180deg)'});
 			$topbarMenu.css({'backgroundColor':'transparent'});
 			$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
@@ -159,7 +160,6 @@ $(function(){
 			} else {
 				$sidebar.css({left:'-200px'});
 			}
-			$bookContainer.css({width:W,left:0});
 			if (W>1200 && needReflow) {
 				book.reflow(book.getConfig(W));
 			}
@@ -292,9 +292,9 @@ $(function(){
 			if (!status.needBook) {
 				return
 			}
-			$bookLoadingShade.css({opacity:1,'z-index':'500'});
+			$bookLoadingShade.css({opacity:1});
 			clearTimeout(book.timer);
-			book.timer = setTimeout(book.performReflow(cfg), 100);
+			book.timer = setTimeout(book.performReflow(cfg), 300);
 		},
 		performReflow: function(cfg) {
 			return function() {
@@ -302,7 +302,7 @@ $(function(){
 				book.renderArea.bookblock('destroy');
 				book.enableTurningPages(cfg.viewportWidth);
 				book.copyEntryThumbnail();
-				$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+				$bookLoadingShade.css({opacity:0});
 			}
 		},
 		copyEntryThumbnail: function() { // a workaround to show title image with zero padding
@@ -504,35 +504,11 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
-	util.setupQRCode();
 	if ($wpWrapper.length) {
 		status.needBook = true;
 	}
 	if (status.isMobile) {
 		status.needBook = false;
-	}
-	var W = $window.width();
-	var pageW;
-	if (localStorage.userMenuStatus) {
-		if (localStorage.userMenuStatus === 'true') {
-			toggleMenu.show();
-			$bookContainer.width(W-200);
-			pageW = (W-200)/2;
-		} else if (localStorage.userMenuStatus === 'false'){
-			toggleMenu.hide();
-			$bookContainer.width(W);
-			pageW = W/2;
-		}
-	} else {
-		if (W>1200) {
-			toggleMenu.show();
-			$bookContainer.width(W-200);
-			pageW = (W-200)/2;
-		} else {
-			toggleMenu.hide();
-			$bookContainer.width(W);
-			pageW = W/2;
-		}
 	}
 	if (window._config) {
 		if (window._config.numColumns) {
@@ -542,11 +518,47 @@ $(function(){
 			status.numColumns= window._config.needBook;
 		}
 	}
-	$bookLoadingShade.css({opacity:1,'z-index':'999'});
-	$window.load(function() {
-		book.init(pageW);
-	});
-	$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+	var W = $window.width();
+	var pageW;
+	var showOrHideMenuOnLoad = function(show) {
+		$sidebar.addClass('notransition');
+		$bookContainer.addClass('notransition');
+		$sidebar[0].offsetHeight; // small hack here to trigger a reflow, flushing the CSS changes, see http://stackoverflow.com/questions/11131875/
+		if (show) {
+			toggleMenu.show();
+			$bookContainer.width(W-200);
+			pageW = (W-200)/2;
+		} else {
+			toggleMenu.hide();
+			$bookContainer.width(W);
+			pageW = W/2;
+		}
+		$sidebar.removeClass('notransition');
+		$bookContainer.removeClass('notransition');
+	}
+	if (localStorage.userMenuStatus) {
+		if (localStorage.userMenuStatus === 'true') {
+			showOrHideMenuOnLoad(true);
+		} else if (localStorage.userMenuStatus === 'false'){
+			showOrHideMenuOnLoad(false);
+		}
+	} else {
+		if (W>1200) {
+			showOrHideMenuOnLoad(true);
+		} else {
+			showOrHideMenuOnLoad(false);
+		}
+	}
+	if (!status.isMobile) {
+		$bookLoadingShade.css({opacity:1});
+		util.setupQRCode();
+		$window.load(function() {
+			book.init(pageW);
+			$bookLoadingShade.css({opacity:0});
+		});
+	} else {
+		book = null;
+	}
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu

@@ -23,7 +23,7 @@ Template Name: 主页
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='hint-wrapper' class='unselectable'>
 			<div id='hint'>
 				<div id='hint-title'>欢迎来到全新的</div>
