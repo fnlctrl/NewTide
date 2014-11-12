@@ -35,9 +35,9 @@
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>
 		<div id='user-head'></div>
-		<div id='user-id'>登录</div>
+		<div id='user-id' onclick='location.href="login"'>登录</div>
 	</div>
-	<form id='sidebar-search-wrapper'>
+	<form id='sidebar-search-wrapper' class='ease'>
 		<input id='sidebar-search-input' class='ease' type='text' name='s' onblur="this.value=''"/>
 		<img id='sidebar-search-icon' class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/>
 	</form>

@@ -3,6 +3,9 @@ $(function(){
 		$body = $('body'),
 		$topbarMenu = $('#topbar-menu'),
 		$topbarMenuIcon = $('#topbar-menu-icon'),
+		$topbarTitle = $('#topbar-title'),
+		$topbarSearch = $('#topbar-search'),
+		$searchBar = $('#sidebar-search-wrapper'),
 		$sidebar = $('#sidebar'),
 		$cover = $('#cover'),
 		$bookContainer = $('#book-container'),
@@ -31,7 +34,8 @@ $(function(){
 		isListPage: undefined,
 		numColumns: 1,
 		LineHeight: 18,
-		qrcode: null
+		qrcode: null,
+		searchBar: false
 	};
 
 	var util = {
@@ -39,7 +43,7 @@ $(function(){
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				status.isMobile = true;
 			}
-			//status.isMobile = true; // Debug
+			status.isMobile = true; // Debug
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
@@ -154,8 +158,7 @@ $(function(){
 				$(this).hide(0);
 			});
 			if (status.isMobile) {
-				$sidebar.css({left:'-448px'});
-				$('#sidebar-copyright').css({left:'-448px'});
+				$sidebar.css({left:'-40vw'});
 			} else {
 				$sidebar.css({left:'-200px'});
 			}
@@ -177,9 +180,7 @@ $(function(){
 				$(this).fadeTo(300, 0.5);
 			});
 			$sidebar.css({left:'0px'});
-			if (status.isMobile) {
-				$('#sidebar-copyright').css({left:0});
-			} else {
+			if (!status.isMobile) {
 				$bookContainer.css({left:200});
 			}
 			if (W>1200 && needReflow) {
@@ -205,6 +206,17 @@ $(function(){
 				toggleMenu.toggle();
 				localStorage.setItem('userClickedMenu','true');
 				localStorage.setItem('userMenuStatus',status.showingMenu);
+			});
+			$topbarSearch.click(function() {
+				if (status.searchBar) {
+					$searchBar.css({'left':'-100vw'});
+					$(this).css({'backgroundColor':'transparent'});
+					status.searchBar = false;
+				} else {
+					$searchBar.css({'left':0});
+					$(this).css({'backgroundColor':'#88E3EE'});
+					status.searchBar = true;
+				}
 			});
 			$cover.click(function() {
 				toggleMenu.toggle();
@@ -549,6 +561,13 @@ $(function(){
 		book.init(pageW);
 	});
 	$bookLoadingShade.css({opacity:0,'z-index':'-1'});
+	
+	$topbarTitle.html($('.sidebar-item-current').html());
+	
+	if (!$('posts-wrapper').html()) {
+		$bookContainer.css('display','none');
+	}
+	
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
