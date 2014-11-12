@@ -574,15 +574,14 @@ $(function(){
 	} else {
 		book = null;
 	}
-	$bookLoadingShade.css({opacity:1,'z-index':'999'});
+	
 	$window.load(function() {
 		book.init(pageW);
 	});
-	$bookLoadingShade.css({opacity:0,'z-index':'-1'});
 	
 	$topbarTitle.html($('.sidebar-item-current').html());
 	
-	if (!$('posts-wrapper').html()) {
+	if (!$('#posts-wrapper').html()) {
 		$bookContainer.css('display','none');
 	}
 	$window.bind('resize',_.debounce(function(){
