@@ -3,7 +3,7 @@
 <head>
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
-	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0, target-densitydpi=device-dpi, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no" />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
@@ -20,7 +20,7 @@
 		</div>
 		<div id='book-nav-next' class='book-nav-icon'></div>
 		<div id='book-nav-prev' class='book-nav-icon'></div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='book-pages'></div>
 	</div>
 	<div id='wp-wrapper'>
