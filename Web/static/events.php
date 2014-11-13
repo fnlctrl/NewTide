@@ -43,6 +43,9 @@ Template Name: 线下活动
 				"<?php bloginfo('template_url');?>/img/events/音乐节-2.jpg"
 			]
 		];
+		window._timelineConfig = {
+			test:'asdf'
+		}
 	</script>
 </head>
 <body>
