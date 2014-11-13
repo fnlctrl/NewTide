@@ -159,7 +159,7 @@ $(function(){
 				$(this).hide(0);
 			});
 			if (status.isMobile) {
-				$sidebar.css({left:'-40vw'});
+				$sidebar.css({left:'-50vw'});
 			} else {
 				$sidebar.css({left:'-200px'});
 			}
@@ -516,9 +516,6 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
-	if (!status.isMobile) {
-		util.setupQRCode();
-	}
 	if ($wpWrapper.length) {
 		status.needBook = true;
 	}
@@ -573,17 +570,16 @@ $(function(){
 		});
 	} else {
 		book = null;
+		if ($('#wp-wrapper').html()) {
+			$topbarTitle.html($('.sidebar-item-current').html());
+			$bookContainer.css('display','none');
+		}
 	}
 	
 	$window.load(function() {
 		book.init(pageW);
 	});
 	
-	$topbarTitle.html($('.sidebar-item-current').html());
-	
-	if (!$('#posts-wrapper').html()) {
-		$bookContainer.css('display','none');
-	}
 	$window.bind('resize',_.debounce(function(){
 		var W = $window.width();
 		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu

@@ -1,4 +1,5 @@
 /*
+/*
 Theme Name: NewTide for Mobile
 */
 #topbar {
@@ -11,7 +12,7 @@ Theme Name: NewTide for Mobile
 	display	: none;
 }
 
-@media (max-width : 960px) {
+@media (max-width : 640px) {
 
 #hint-wrapper {
 	display	: none;
@@ -36,7 +37,6 @@ body {
 	display				: block;
 	width				: 100%;
 	height				: 56px;
-	position			: relative;
 	z-index				: 1000;
 	background-color	: #10C6D7;
 }
@@ -64,7 +64,6 @@ body {
 	height			: 30px;
 }
 #topbar-title {
-	padding			: 0 8px;
 	display			: inline-block;
 	font-size		: 20px;
 	line-height		: 56px;
@@ -85,10 +84,10 @@ body {
 	height	: 30px;
 }
 #sidebar {
-	width				: 40vw;
+	width				: 50vw;
 	height				: calc(100% - 56px);
 	position			: fixed;
-	left				: -40vw;
+	left				: -60vw;
 	z-index				: 1000;
 	background-color	: #FFF;
 }
@@ -97,7 +96,7 @@ body {
 }
 #sidebar-top {
 	display				: block;
-	width				: 40vw;
+	width				: 50vw;
 	height				: 48px;
 	background-color	: #4585B5;
 }
@@ -114,7 +113,7 @@ body {
 }
 #user-id {
 	display			: inline-block;
-	margin			: 0 2vw;
+	margin			: 0 4vw;
 	vertical-align	: top;
 	font-size		: 24px;
 	line-height		: 48px;
@@ -122,7 +121,7 @@ body {
 }
 #sidebar-sections {
 	position	: static;
-	width		: 40vw;
+	width		: 36vw;
 }
 #sidebar-login-status {
 	display	: none;
@@ -156,7 +155,7 @@ body {
 	background-color	: #FFF;
 }
 .sidebar-section {
-	width			: 40vw;
+	width			: 50vw;
 	font-size		: 24px;
 	line-height		: 40px;
 	margin			: 0;
@@ -178,13 +177,13 @@ body {
 	text-align	: center;
 }
 .sidebar-section:nth-child(1) a:first-child {
-	padding	: 60px 2vw;
+	padding	: 60px 5vw;
 }
 .sidebar-section:nth-child(2) a:first-child {
-	padding	: 0 2vw;
+	padding	: 0 5vw;
 }
 .sidebar-section:nth-child(3) a:first-child {
-	padding	: 0 2vw;
+	padding	: 0 5vw;
 }
 .sidebar-section:nth-child(1) a:first-child:hover {
 	background-color	: #64A6D4;
@@ -210,12 +209,8 @@ body {
 	background-color	: #D9FFE9;
 	color				: #FFF;
 }
-#sidebar-sections hr {
-	width		: 40vw;
-	margin-left	: -18px;
-}
 .sidebar-item {
-	width				: 32vw;
+	width				: 36vw;
 	height				: 40px;
 	line-height			: 40px;
 	background-color	: #FFF;
@@ -223,16 +218,16 @@ body {
 .sidebar-icon {
 	width	: 24px;
 	height	: 24px;
-	margin	: 8px 24px;
+	margin	: 8px 48px;
 	top		: 0;
 	left	: 0;
 	float	: left;
 }
 #sidebar-copyright {
-	width		: 40vw;
+	width		: 50vw;
 	left		: 0;
 	bottom		: 0;
-	padding		: 2vw 0;
+	padding		: 20px 0;
 	text-align	: center;
 }
 #cover {
@@ -262,7 +257,7 @@ body {
 	top			: 40px;
 	left		: 5vw;
 	width		: 90vw;
-	height		: 600px;
+	height		: calc(60vw + 112px);
 	overflow	: hidden;
 	z-index		: 500;
 }
@@ -271,9 +266,9 @@ body {
 	margin-top	: 6px;
 }
 #posts-wrapper {
-	top		: 640px;
-	left	: 5vw;
-	width	: 90vw;
+	width	: 90vw !important;
+	top		: calc(60vw + 100px);
+	left	: 5vw !important;
 }
 #events-wrapper h1, #posts-wrapper h1 {
 	margin	: 2vw 4.6vw;
@@ -433,7 +428,20 @@ body {
 	width		: 70vw;
 	position	: static;
 	display		: inline-block;
-	margin		: 16px;
+	margin		: 16px 2vw;
+}
+#message {
+	width				: 100vw;
+	left				: 0 !important;
+	padding				: 60px 0;
+	text-align			: center;
+	background-color	: #FFF;
+	opacity				: 0.8;
+}
+#akarin {
+	left	: auto !important;
+	right	: auto !important;
+	z-index : -1;
 }
 
 }
