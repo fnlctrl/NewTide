@@ -30,17 +30,17 @@ Template Name: 主页
 				<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
 				<div id='text'>
 					<p>
-					　　你好。我们是水朝夕工作室，求是潮中一群有爱的人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
-					　　在这里，我们分享所爱的事物，也接受大家的投稿，分享你所欣赏的东西。<br/>
+					　　你好，我们是水朝夕工作室，因为共同爱好聚在一起的一群人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
+					　　我们定期举行线下活动，也包括一年一度的的浙江大学青年电影节和潮汐音乐节。
 					</p>
 					<hr>
 					<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>
 						请点击左侧 <b>投稿</b> <img class='hint-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/><br/>
-					</p>
+					</p><br/>
 					<p><span class='hint-subtitle'>· 分页阅读</span><br/>
 						在文章页面可以通过单击页面边缘、使用←→键、鼠标滚轮、滑动屏幕来翻页
 					</p>
-					
+
 				</div>
 				<div id='hint-ignore-button'>
 					我知道了
