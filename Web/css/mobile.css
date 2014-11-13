@@ -73,6 +73,9 @@ body {
 	line-height		: 112px;
 	color			: #FFF;
 }
+#topbar-title .svg {
+	display	: none;
+}
 #topbar-search {
 	width	: 36px;
 	height	: 36px;
@@ -115,8 +118,10 @@ body {
 	width			: 448px;
 	font-size		: 28px;
 	line-height		: 28px;
-	padding-bottom	: 4px;
 	margin			: 0;
+}
+.sidebar-section-title {
+	float	: right;
 }
 .sidebar-section span {
 	width			: 28px;
@@ -125,37 +130,37 @@ body {
 	word-break		: break-all;
 }
 .sidebar-section:nth-child(1) {
-	background-color	: #4585B5;
+	border-bottom	: 3px solid #4585B5;
 }
 .sidebar-section:nth-child(2) {
-	background-color	: #E7485E;
+	border-bottom	: 3px solid #E7485E;
 }
 .sidebar-section:nth-child(3) {
-	background-color	: #27AE60;
+	border-bottom	: 3px solid #27AE60;
 }
-.sidebar-section:nth-child(1) span {
+.sidebar-section a:first-child {
+	width	: 28px;
+}
+.sidebar-section:nth-child(1) a:first-child {
 	padding				: 152px 42px;
+}
+.sidebar-section:nth-child(2) a:first-child {
+	padding				: 44px 42px;
+}
+.sidebar-section:nth-child(3) a:first-child {
+	padding				: 44px 42px;
+}
+.sidebar-section:nth-child(1) .sidebar-item-current{
 	background-color	: #B3D7FF;
-	color				: #4585B5;
+	color				: #FFF;
 }
-.sidebar-section:nth-child(2) span {
-	padding				: 44px 42px;
-	background-color	: #FFB3BF;
-	color				: #E7485E;
+.sidebar-section:nth-child(2) .sidebar-item-current{
+	background-color	: #B3D7FF;
+	color				: #FFF;
 }
-.sidebar-section:nth-child(3) span {
-	padding				: 44px 42px;
-	background-color	: #B3FFD2;
-	color				: #27AE60;
-}
-#sidebar-featured {
-	background-color	: #D9EBFF;
-}
-#sidebar-event {
-	background-color	: #FFD9DF;
-}
-#sidebar-comment {
-	background-color	: #D9FFE9;
+.sidebar-section:nth-child(3) .sidebar-item-current{
+	background-color	: #B3D7FF;
+	color				: #FFF;
 }
 #sidebar-sections hr {
 	width		: 448px;
@@ -202,14 +207,19 @@ body {
 	z-index	: 500;
 }
 #posts-wrapper {
-	top		: 1280px;
+	top		: 1080px;
 	left	: calc(50% - 324px);
 	right	: auto;
 	width	: 648px;
 }
 #events-wrapper h1, #posts-wrapper h1 {
-	margin	: 8px 0;
+	margin	: 16px 24px;
 	color	: #000;
+}
+.posts-container {
+	position	: static;
+	width		: 100%;
+	height		: auto;
 }
 #posts {
 	width		: 648px;
@@ -218,19 +228,20 @@ body {
 	left		: 0;
 	overflow	: hidden;
 }
-#more {
+.more {
 	color		: #000;
 }
 
 /* Wordpress  wrapper */
 #wp-wrapper {
 	position	: static;
-	width		: 648px;
-	margin		: 30px auto;
+	width		: 100%;
+	visibility	: visible;
 }
 .wp-item {
-	width				: 644px;
+	width				: calc(100% - 52px);
 	height				: 192px;
+	margin				: 24px;
 	background-color	: #FFF;
 	border-right		: 4px solid #10C6DC;
 }
@@ -241,14 +252,15 @@ body {
 	background-color	: #FFF;
 }
 .wp-post-image {
-	width	: 192px;
-	height	: 192px;
+	display		: inline-block;
+	width		: 192px;
+	height		: 192px;
 }
 .wp-item-text {
 	display			: inline-block;
 	vertical-align	: top;
 	height			: 192px;
-	width			: 446px;
+	width			: calc(100% - 212px);
 	margin-top		: 10px;
 	top				: 0;
 	padding			: 0;
@@ -268,29 +280,65 @@ body {
 }
 .wp-entry-thumbnail {
 	max-height	: none;
+	display		: inline-block;
 	height		: 400px;
 	z-index		: -1;
 }
 .wp-entry-title {
 	margin-top	: -100px;
+	margin-left	: 24px;
 	font-size	: 32px;
 	color		: #FFF;
 }
 .wp-entry-author {
+	margin-left	: 24px;
 	font-size	: 18px;
 	color		: #FFF;
 }
 .wp-entry-content {
-	line-height	: 36px;
+	margin				: 0;
+	padding				: 16px 0;
+	line-height			: 36px;
+	background-color	: #FFF;
+	border-bottom		: 3px solid #555;
 }
 .wp-entry-content p {
-	display	: block;
-	width	: 648px;
+	display		: block;
+	margin		: 9px 28px;
+	font-size	: 18px;
+	line-height	: 32px;
 }
 .wp-entry-content img {
 	width	: 50%;
 	height	: auto;
-	margin	: 20px 25%;
+	margin	: 20px calc(25% - 36px);
 }
+#wp-comments-form-title {
+	display	: none;
+}
+#wp-reply-form {
+	display	: none;
+}
+.wp-comment-item {
+	margin-top		: 25px;
+	padding-bottom	: 0 !important;
+	border-bottom	: 1px solid #CCC;
+}
+.wp-comment-avatar {
+	width			: 96px;
+	height			: 96px;
+	margin			: 32px;
+	position		: static;
+	float			: left;
+	border-radius	: 96px;
+}
+.wp-comment-text {
+	width	: calc(100% - 192px);
+	left	: 0;
+}
+.wp-comment-author {
+	font-size	: 24px;
+}
+
 
 }
