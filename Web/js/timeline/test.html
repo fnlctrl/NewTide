@@ -13,8 +13,10 @@
         <div id="container"></div>
         <button onclick="TIMELINE.moveLeft();">move left</button>
         <button onclick="TIMELINE.moveRight();">move right</button>
+        <button onclick="TIMELINE.expand();">expand</button>
+        <button onclick="TIMELINE.collapse();">collapse</button>
         <script>
-            var TIMELINE = new MobileHome();
+            var TIMELINE = new MobileDetail();
             TIMELINE.start($('#container'));
         </script>
     </body>
