@@ -205,7 +205,8 @@ body {
 }
 #sidebar-logo {
 	position: relative;
-	width: 64%;
+	width: 130px;
+    height: auto;
 	left: 18%;
 	top: 50px;
 }
