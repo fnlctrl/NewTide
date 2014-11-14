@@ -10,6 +10,8 @@
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -68,7 +70,5 @@
 		<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 		<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
 	</div>
-	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 </body>
 </html>

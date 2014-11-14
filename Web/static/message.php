@@ -15,6 +15,8 @@ Template Name: 留言板
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -45,9 +47,4 @@ Template Name: 留言板
 		numColumns : 1
 	}
 </script>
-<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
-<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
-<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
-<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
-<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
 </html>

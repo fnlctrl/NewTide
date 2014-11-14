@@ -96,6 +96,7 @@ p {
 .wp-fake-thumbnail {
 	position: relative;
 	width: 100%;
+    height: auto;
 }
 #wp-fake-nav-prev {
 	display: none;

@@ -43,10 +43,8 @@ Template Name: 线下活动
 				"<?php bloginfo('template_url');?>/img/events/音乐节-2.jpg"
 			]
 		];
-		window._timelineConfig = {
-			test:'asdf'
-		}
 	</script>
+	<script src='<?php bloginfo('template_url');?>/js/events.js'></script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -134,7 +132,6 @@ Template Name: 线下活动
 		</div>
 	</div>
 </body>
-<script src='<?php bloginfo('template_url');?>/js/events.js'></script>
 </html>
 
 

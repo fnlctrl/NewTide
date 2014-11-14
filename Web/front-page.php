@@ -15,6 +15,7 @@ Template Name: 主页
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -121,7 +122,6 @@ Template Name: 主页
 			<iframe src='<?php echo home_url()?>/timeline' frameBorder="0"></iframe>
 		</div>
 	</div>
-	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 </body>
 </html>
 

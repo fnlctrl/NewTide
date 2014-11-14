@@ -266,6 +266,11 @@ $(function(){
 					flowedContent = '';
 				}
 				if ($wpEntryMeta.length) {
+					function handler() {
+						$wpEntryMeta.children().addClass('col-span-2');
+						fixedContent = $wpEntryMeta[0].innerHTML;
+						render(fixedContent);
+					}
 					if ($wpEntryThumbnail.length) {
 						if ($wpEntryThumbnail[0].complete) {
 							handler();
@@ -274,11 +279,6 @@ $(function(){
 						}
 					} else {
 						handler();
-					}
-					function handler() {
-						$wpEntryMeta.children().addClass('col-span-2');
-						fixedContent = $wpEntryMeta[0].innerHTML;
-						render(fixedContent);
 					}
 				} else {
 					fixedContent ='';
@@ -403,7 +403,7 @@ $(function(){
 					$menuIcon.css({'opacity':'0'});
 				},
 				onEndFlip: function(old,page,isLimit) {
-					status.currentPage = page+1;
+					//status.currentPage = page+1;
 					$menuIcon.css({'opacity':'1'});
 				}
 			});
@@ -599,4 +599,5 @@ $(function(){
 			book.reflow(book.getConfig(W));
 		}
 	}, 100));
+	window._status = status;
 });
