@@ -94,10 +94,11 @@ body {
 #book-container:before {
 	content: '';
 	position: absolute;
-	width: 50%;
+	width: 100%;
+    left: -50%;
 	height: 100%;
 	box-shadow: 5px 0 60px -6px rgba(0,0,0,0.1);
-	z-index: 10;
+	z-index: 2;
     pointer-events: none;
 }
 .cf-page {
