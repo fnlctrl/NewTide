@@ -96,9 +96,9 @@ body {
 	position: absolute;
 	width: 50%;
 	height: 100%;
-	box-shadow: 5px 0px 60px -6px rgba(0,0,0,0.1);
-	background: #fefefe;
-	z-index: 1;
+	box-shadow: 5px 0 60px -6px rgba(0,0,0,0.1);
+	z-index: 10;
+    pointer-events: none;
 }
 .cf-page {
 	top: 50px !important;
