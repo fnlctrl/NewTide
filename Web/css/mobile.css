@@ -316,11 +316,11 @@ body {
 	padding	: 0;
 }
 .wp-item-text h3 {
-	margin		: 5px 1vw;
+	margin		: 10px 1vw;
 	font-size	: 20px;
 }
 .wp-item-metadata {
-	display			: none;
+	margin	: 10px 1vw;
 }
 .wp-item-excerpt {
 	width			: calc(90vw - 170px);
@@ -413,8 +413,8 @@ body {
 	border-bottom	: 2px solid #CCC;
 }
 .wp-comment-avatar {
-	width			: 10vw;
-	height			: 10vw;
+	width			: 20vw;
+	height			: 20vw;
 	margin			: 16px 6vw;
 	position		: static;
 	display			: inline-block;
@@ -422,15 +422,18 @@ body {
 	border-radius	: 10vw;
 }
 .wp-comment-avatar img {
-	width	: 10vw;
-	height	: 10vw;
+	width	: 20vw;
+	height	: 20vw;
 	margin	: 0;
 }
 .wp-comment-text {
-	width		: 70vw;
+	width		: 60vw;
 	position	: static;
 	display		: inline-block;
 	margin		: 16px 2vw;
+}
+.post-edit-link {
+	display	: none;
 }
 #message {
 	width				: 100vw;

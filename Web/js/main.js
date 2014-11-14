@@ -43,7 +43,7 @@ $(function(){
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				status.isMobile = true;
 			}
-			//status.isMobile = true; // Debug
+			status.isMobile = true; // Debug
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
