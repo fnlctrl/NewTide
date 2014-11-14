@@ -397,3 +397,182 @@ MobileDetail.prototype.moveRight = function () {
         _this.moveLock = false;
     }
 };
+
+var DesktopTimeline = function () {
+};
+
+DesktopTimeline.prototype = new Timeline();
+DesktopTimeline.prototype.constructor = DesktopTimeline;
+
+DesktopTimeline.prototype.resize = function () {
+    var _this = this;
+    _this.width = _this.container.width();
+    _this.height = _this.container.height();
+    _this.elementWidth = _this.width;
+    _this.elementHeight = _this.height - 195;
+    _this.elementMargin = 0;
+    _this.elementFullWidth = _this.width;
+    _this.dateWidth = 70;
+    _this.dateMargin = 0;
+    _this.dateFullWidth = 70;
+    $('div.main-panel').height(_this.elementHeight);
+    $('div.timeline-entry').width(_this.elementWidth)
+        .css('margin-right', _this.elementMargin);
+    $('img.entry-cover').width(Math.floor(_this.elementHeight * 2 / 3));
+    $('p.entry-description').css('left', Math.floor(_this.elementHeight * 2 / 3) + 20);
+    $('div.middle-panel').width(_this.width - 100);
+    _this.scrollWrapper.width(_this.count * _this.elementFullWidth);
+    _this.scrollDate.width(_this.count * _this.dateFullWidth);
+    _this.dateStartPos = Math.floor((_this.width - _this.dateFullWidth) / 2);
+};
+
+DesktopTimeline.prototype.render = function () {
+    var _this = this;
+    _this.cleanTextFormat(false, true, 'eventGroup');
+    _this.cleanTextFormat(false, true, 'eventTitle');
+    _this.container.addClass('desktop-timeline-container')
+        .css('background-color', _this.config.backgroundColor);
+    _this.mainPanel = $('<div></div>')
+        .addClass('main-panel')
+        .appendTo(_this.container);
+    _this.controlPanel = $('<div></div>')
+        .addClass('control-panel')
+        .appendTo(_this.container);
+    _this.leftPanel = $('<div></div>')
+        .addClass('left-panel')
+        .appendTo(_this.controlPanel);
+    _this.middlePanel = $('<div></div>')
+        .addClass('middle-panel')
+        .appendTo(_this.controlPanel);
+    _this.entryGroup = $('<p></p>')
+        .addClass('entry-group')
+        .appendTo(_this.middlePanel);
+    _this.entryTitle = $('<p></p>')
+        .addClass('entry-title')
+        .appendTo(_this.middlePanel);
+    _this.entryTime = $('<p></p>')
+        .addClass('entry-time')
+        .appendTo(_this.middlePanel);
+    _this.entryLocation = $('<p></p>')
+        .addClass('entry-location')
+        .appendTo(_this.middlePanel);
+    _this.rightPanel = $('<div></div>')
+        .addClass('right-panel')
+        .appendTo(_this.controlPanel);
+    _this.datePanel = $('<div></div>')
+        .addClass('date-panel')
+        .appendTo(_this.container);
+    _this.scrollWrapper = $('<div></div>').addClass('scroll-content');
+    _this.scrollDate = $('<div></div>').addClass('scroll-date');
+    $.each(_this.data, function(i, entry) {
+        var newElement = {};
+        newElement.parent = $('<div></div>')
+            .addClass('timeline-entry')
+            .appendTo(_this.scrollWrapper);
+        newElement.cover = $('<img>')
+            .addClass('entry-cover')
+            .attr('src', entry.media)
+            .attr('alt', entry.title)
+            .appendTo(newElement.parent);
+        newElement.description = $('<p></p>')
+            .addClass('entry-description')
+            .html(entry.text)
+            .appendTo(newElement.parent);
+        newElement.entryDate = $('<p></p>')
+            .addClass('entry-date')
+            .html(entry.parsedDate.month + '月' + entry.parsedDate.day + '日')
+            .appendTo(_this.scrollDate);
+        _this.data[i].dom = newElement;
+    });
+    _this.scrollWrapper.appendTo(_this.mainPanel);
+    _this.scrollDate.appendTo(_this.datePanel);
+    _this.resize();
+    _this.currentPosition = 0;
+    _this.movePosition(0);
+    _this.container.on('resize', function() {
+        _this.resize();
+    });
+    _this.leftPanel.on('click', function () {
+        _this.moveLeft();
+    });
+    _this.rightPanel.on('click', function () {
+        _this.moveRight();
+    });
+    $('.entry-date').on('click', function () {
+        _this.movePosition(this.indexOf('.entry-date'));
+    });
+    _this.hammer = new Hammer(_this.container[0]);
+    _this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+    _this.hammer.on('swipeleft', function () {
+        _this.moveLeft();
+    });
+    _this.hammer.on('swiperight', function () {
+        _this.moveRight();
+    });
+};
+
+DesktopTimeline.prototype.movePosition = function ( pos ) {
+    var _this = this;
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        _this.currentPosition = pos;
+        var entry = _this.data[_this.currentPosition];
+        _this.entryGroup.html(entry.eventGroup);
+        _this.entryTitle.html(entry.eventTitle);
+        _this.entryTime.html(entry.parsedDate.yearStr + '年' + entry.parsedDate.monthStr + '月' +
+                entry.parsedDate.dayStr + '日');
+        if (entry.hasTime) {
+            _this.entryTime.append(', ' + entry.parsedTime.beginHourStr + ':' +
+                entry.parsedTime.beginMinuteStr + '~' + entry.parsedTime.endHourStr + ':' +
+                entry.parsedTime.endMinuteStr);
+        }
+        _this.entryLocation.html(entry.location);
+        _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.moveLock = false;
+    }
+};
+
+DesktopTimeline.prototype.moveLeft = function () {
+    var _this = this;
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        _this.currentPosition = _this.currentPosition + 1;
+        var entry = _this.data[_this.currentPosition];
+        _this.entryGroup.html(entry.eventGroup);
+        _this.entryTitle.html(entry.eventTitle);
+        _this.entryTime.html(entry.parsedDate.yearStr + '年' + entry.parsedDate.monthStr + '月' +
+                entry.parsedDate.dayStr + '日');
+        if (entry.hasTime) {
+            _this.entryTime.append(', ' + entry.parsedTime.beginHourStr + ':' +
+                entry.parsedTime.beginMinuteStr + '~' + entry.parsedTime.endHourStr + ':' +
+                entry.parsedTime.endMinuteStr);
+        }
+        _this.entryLocation.html(entry.location);
+        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.moveLock = false;
+    }
+};
+
+DesktopTimeline.prototype.moveRight = function () {
+    var _this = this;
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        _this.currentPosition = _this.currentPosition - 1;
+        var entry = _this.data[_this.currentPosition];
+        _this.entryGroup.html(entry.eventGroup);
+        _this.entryTitle.html(entry.eventTitle);
+        _this.entryTime.html(entry.parsedDate.yearStr + '年' + entry.parsedDate.monthStr + '月' +
+                entry.parsedDate.dayStr + '日');
+        if (entry.hasTime) {
+            _this.entryTime.append(', ' + entry.parsedTime.beginHourStr + ':' +
+                entry.parsedTime.beginMinuteStr + '~' + entry.parsedTime.endHourStr + ':' +
+                entry.parsedTime.endMinuteStr);
+        }
+        _this.entryLocation.html(entry.location);
+        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.moveLock = false;
+    }
+};

@@ -1,3 +1,6 @@
+.font-hei {
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
 .show-ellipsis {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
@@ -12,6 +15,11 @@
 .scroll-transition {
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
+}
+.clear-float:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 p {
   margin: 0;
@@ -31,6 +39,7 @@ img {
   position: relative;
   font-size: 20px;
   overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
 .mobile-home-timeline-container .scroll-content {
   position: absolute;
@@ -118,6 +127,7 @@ img {
   position: relative;
   font-size: 20px;
   overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
 .mobile-detail-timeline-container .scroll-content {
   position: absolute;
@@ -225,4 +235,191 @@ img {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.desktop-timeline-container {
+  position: relative;
+  overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+.desktop-timeline-container .main-panel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+.desktop-timeline-container .main-panel .scroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry img.entry-cover {
+  display: block;
+  position: relative;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry p.entry-description {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  line-height: 1.2em;
+}
+.desktop-timeline-container .control-panel {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  padding-top: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .control-panel .left-panel {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 40px;
+}
+.desktop-timeline-container .control-panel .left-panel:before {
+  content: url("./left-arrow.svg");
+  display: block;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 50px;
+  width: 20px;
+  height: 40px;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+.desktop-timeline-container .control-panel .left-panel:hover:before {
+  left: -5px;
+}
+.desktop-timeline-container .control-panel .left-panel:active:before {
+  left: -10px;
+}
+.desktop-timeline-container .control-panel .middle-panel {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  height: 100%;
+  padding: 0 10px;
+}
+.desktop-timeline-container .control-panel .middle-panel p.entry-group,
+.desktop-timeline-container .control-panel .middle-panel p.entry-time,
+.desktop-timeline-container .control-panel .middle-panel p.entry-location {
+  position: relative;
+  font-size: 18px;
+  height: 30px;
+  width: 100%;
+  line-height: 30px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.desktop-timeline-container .control-panel .middle-panel p.entry-title {
+  position: relative;
+  color: #4585b5;
+  font-size: 36px;
+  font-weight: bold;
+  height: 48px;
+  width: 100%;
+  line-height: 44px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.desktop-timeline-container .control-panel .right-panel {
+  position: relative;
+  float: right;
+  height: 100%;
+  width: 40px;
+}
+.desktop-timeline-container .control-panel .right-panel:before {
+  content: url("./right-arrow.svg");
+  display: block;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 50px;
+  width: 20px;
+  height: 40px;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+.desktop-timeline-container .control-panel .right-panel:hover:before {
+  left: 5px;
+}
+.desktop-timeline-container .control-panel .right-panel:active:before {
+  left: 10px;
+}
+.desktop-timeline-container .date-panel {
+  position: relative;
+  border-top: 1px solid #4584b5;
+  height: 35px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .date-panel:before {
+  content: url("./down-arrow.svg");
+  position: relative;
+  margin-left: 50%;
+  top: -1px;
+  left: -8px;
+  width: 15px;
+  height: 8px;
+  z-index: 10;
+}
+.desktop-timeline-container .date-panel .scroll-date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 34px;
+  width: 490px;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+.desktop-timeline-container .date-panel .scroll-date p.entry-date {
+  position: relative;
+  float: left;
+  width: 70px;
+  height: 34px;
+  font-size: 14px;
+  color: #aaaaaa;
+  text-align: center;
+  line-height: 24px;
+  padding-top: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .date-panel .scroll-date p.entry-date:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 4px;
+  left: 50%;
+  border-right: 1px solid #aaaaaa;
+}
+.desktop-timeline-container .date-panel:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(0deg, white, transparent 10%, transparent 90%, white);
+  background: -moz-linear-gradient(0deg, white, transparent 10%, transparent 90%, white);
+  background: -webkit-linear-gradient(0deg, white, transparent 10%, transparent 90%, white);
+  z-index: 20;
 }
