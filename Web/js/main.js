@@ -52,7 +52,7 @@ $(function(){
 			} else {
 				status.isListPage = false;
 				status.numColumns = 2;
-				status.LineHeight = 18;
+				status.LineHeight = 20;
 			}
 		},
 		getNavURL: function() {
@@ -239,7 +239,7 @@ $(function(){
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
 				//showGrid: true,
-				columnFragmentMinHeight: 144,
+				columnFragmentMinHeight: 140,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img','blockquote']
 			}
