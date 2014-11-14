@@ -25,7 +25,7 @@ Theme Name: NewTide for Mobile
 }
 * {
 	font-family	: Droid Sans Fallback;
-	font-size	: 18px;
+	font-size	: 14px;
 	font-weight	: 100;
 }
 body {
@@ -110,14 +110,14 @@ body {
 #user-head {
 	width				: 36px;
 	height				: 36px;
-	margin				: 6px 12px;
+	margin				: 6px 36px;
 	display				: inline-block;
 	background-color	: #CCC;
 	border-radius		: 36px;
 }
 #user-id {
 	display			: inline-block;
-	margin			: 0 4vw;
+	margin			: 0;
 	vertical-align	: top;
 	font-size		: 24px;
 	line-height		: 48px;
@@ -222,7 +222,7 @@ body {
 .sidebar-icon {
 	width	: 24px;
 	height	: 24px;
-	margin	: 8px 48px;
+	margin	: 8px 42px;
 	top		: 0;
 	left	: 0;
 	float	: left;
@@ -284,7 +284,7 @@ body {
 	height		: auto;
 }
 .more {
-	color	 #000;
+	color	: #000;
 }
 
 /* Wordpress  wrapper */
@@ -313,6 +313,24 @@ body {
 	margin		: 0 2vw 0 0;
 }
 .wp-item-text {
+	padding	: 0;
+}
+.wp-item-text h3 {
+	margin		: 5px 1vw;
+	font-size	: 20px;
+}
+.wp-item-metadata {
+	display			: none;
+}
+.wp-item-excerpt {
+	width			: calc(90vw - 170px);
+	height			: 96px;
+	max-height		: none;
+	margin			: 5px 1vw;
+	line-height		: 24px;
+	text-overflow	: ellipsis;
+}
+#posts-wrapper .wp-item-text {
 	display			: inline-block;
 	vertical-align	: top;
 	height			: 150px;
@@ -332,28 +350,9 @@ body {
 	height	: 64px;
 }
 #posts-wrapper .wp-item-text {
-	width	: calc(80vw - 84px);
+	width	: calc(90vw - 80px);
 	height	: 64px;
 	margin	: 5px 0;
-}
-.wp-item-text h3 {
-	margin		: 5px 1vw;
-	font-size	: 24px;
-}
-.wp-item-metadata {
-	display			: none;
-	height			: 24px;
-	margin			: 0 1vw;
-	font-size		: 18px;
-	overflow		: hidden;
-}
-.wp-item-excerpt {
-	height			: 96px;
-	max-height		: none;
-	margin			: 5px 1vw;
-	font-size		: 18px;
-	line-height		: 24px;
-	text-overflow	: ellipsis;
 }
 .wp-entry-thumbnail {
 	max-height	: none;
@@ -369,30 +368,29 @@ body {
 	height		: 32px;
 	margin-top	: -24vw;
 	margin-left	: 3vw;
-	font-size	: 32px;
+	font-size	: 20px;
 	color		: #FFF;
 	overflow	: hidden;
 }
 .wp-entry-author {
 	margin-left	: 3vw;
-	font-size	: 18px;
+	font-size	: 14px;
 	color		: #FFF;
 }
 .wp-entry-author a {
-	font-size	: 18px;
+	font-size	: 14px;
 }
 .wp-entry-content {
 	margin				: auto 0;
 	padding				: 0;
-	line-height			: 28px;
 	background-color	: #FFF;
 	border-bottom		: 2px solid #555;
 }
 .wp-entry-content p {
 	display		: block;
 	margin		: 5px 5vw;
-	font-size	: 24px;
-	line-height	: 32px;
+	font-size	: 16px;
+	line-height	: 24px;
 }
 .wp-entry-content img {
 	display		: block;
@@ -452,8 +450,11 @@ body {
 
 @media (max-width : 480px) {
 
+#user-head {
+	margin	: 6px 12px 6px 30px;
+}
 .sidebar-item {
-	padding-left	: 3vw;
+	padding-left	: 20px;
 }
 .sidebar-item svg {
 	display	: none;
