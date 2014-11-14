@@ -43,7 +43,7 @@ $(function(){
 			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				status.isMobile = true;
 			}
-			status.isMobile = true; // Debug
+			//status.isMobile = true; // Debug
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
@@ -211,16 +211,28 @@ $(function(){
 				if (status.searchBar) {
 					$searchBar.css({'left':'-100vw'});
 					$(this).css({'backgroundColor':'transparent'});
+					$cover.fadeTo(300, 0, function () {
+						$(this).hide(0);
+					});
 					status.searchBar = false;
 				} else {
-					$searchBar.css({'left':0});
+					$searchBar.css({'left':'50vw'});
 					$(this).css({'backgroundColor':'#88E3EE'});
+					$cover.show(0, function () {
+						$(this).fadeTo(300, 0.5);
+					});
 					status.searchBar = true;
 				}
 			});
 			$cover.click(function() {
-				toggleMenu.toggle();
-				localStorage.setItem('userClickedMenu','true');
+				$searchBar.css({'left':'-200vw'});
+				$topbarSearch.css({'backgroundColor':'transparent'});
+				$(this).fadeTo(300, 0, function () {
+					$(this).hide(0);
+				});
+				status.searchBar = false;
+				toggleMenu.hide();
+				localStorage.setItem('userClickedMenu','false');
 				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
 		})()
