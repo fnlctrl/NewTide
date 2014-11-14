@@ -41,6 +41,7 @@ h1 {
 }
 .wp-item {
 	height: 75px;
+    margin: 5px;    
 }
 .wp-post-image {
 	height: 75px;
