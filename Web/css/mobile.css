@@ -25,13 +25,14 @@ Theme Name: NewTide for Mobile
 }
 * {
 	font-family	: Droid Sans Fallback;
-	font-size	: 18px;
+	font-size	: 14px;
 	font-weight	: 100;
 }
 body {
 	width			: 100%;
 	height			: 100%;
-	overflow		: scroll;
+	overflow-x		: hidden;
+	overflow-y		: scroll;
 }
 #topbar {
 	display				: block;
@@ -53,15 +54,15 @@ body {
 	height	: 28px;
 }
 #topbar-logo {
-	width			: auto;
+	width			: 96px;
 	height			: 30px;
-	margin			: 13px 2vw;
+	margin			: 13px 0;
 	display			: inline-block;
 	vertical-align	: top;
 }
 #topbar-logo svg {
-	width			: auto;
-	height			: 30px;
+	width	: 96px;
+	height	: 30px;
 }
 #topbar-title {
 	display			: inline-block;
@@ -82,6 +83,9 @@ body {
 #topbar-search svg {
 	width	: 30px;
 	height	: 30px;
+}
+#topbar-search path {
+	fill	: #FFF;
 }
 #sidebar {
 	width				: 50vw;
@@ -106,14 +110,14 @@ body {
 #user-head {
 	width				: 36px;
 	height				: 36px;
-	margin				: 6px 12px;
+	margin				: 6px 36px;
 	display				: inline-block;
 	background-color	: #CCC;
 	border-radius		: 36px;
 }
 #user-id {
 	display			: inline-block;
-	margin			: 0 4vw;
+	margin			: 0;
 	vertical-align	: top;
 	font-size		: 24px;
 	line-height		: 48px;
@@ -130,9 +134,9 @@ body {
 	width				: calc(100vw - 56px);
 	height				: 56px;
 	padding				: 0;
-	position			: fixed;
-	top					: 0;
-	left				: -100vw;
+	position			: absolute;
+	top					: -56px;
+	left				: -200vw;
 	background-color	: #10C6DC;
 }
 #sidebar-search-input {
@@ -218,7 +222,7 @@ body {
 .sidebar-icon {
 	width	: 24px;
 	height	: 24px;
-	margin	: 8px 48px;
+	margin	: 8px 42px;
 	top		: 0;
 	left	: 0;
 	float	: left;
@@ -268,10 +272,10 @@ body {
 #posts-wrapper {
 	width	: 90vw !important;
 	top		: calc(60vw + 100px);
-	left	: 5vw !important;
+	left	: 0 !important;
 }
 #events-wrapper h1, #posts-wrapper h1 {
-	margin	: 2vw 4.6vw;
+	margin	: 2vw 5vw;
 	color	: #000;
 }
 .posts-container {
@@ -280,7 +284,7 @@ body {
 	height		: auto;
 }
 .more {
-	color		: #000;
+	color	: #000;
 }
 
 /* Wordpress  wrapper */
@@ -290,7 +294,7 @@ body {
 	visibility	: visible;
 }
 .wp-item {
-	width				: 89vw;
+	width				: 90vw;
 	height				: 150px;
 	margin				: 10px 5vw;
 	background-color	: #FFF;
@@ -309,6 +313,24 @@ body {
 	margin		: 0 2vw 0 0;
 }
 .wp-item-text {
+	padding	: 0;
+}
+.wp-item-text h3 {
+	margin		: 10px 1vw;
+	font-size	: 20px;
+}
+.wp-item-metadata {
+	margin	: 10px 1vw;
+}
+.wp-item-excerpt {
+	width			: calc(90vw - 170px);
+	height			: 96px;
+	max-height		: none;
+	margin			: 5px 1vw;
+	line-height		: 24px;
+	text-overflow	: ellipsis;
+}
+#posts-wrapper .wp-item-text {
 	display			: inline-block;
 	vertical-align	: top;
 	height			: 150px;
@@ -316,9 +338,8 @@ body {
 	padding			: 0;
 }
 #posts-wrapper .wp-item {
-	width	: 80vw;
 	height	: 64px;
-	margin	: 5px 4.6vw;
+	margin	: 5px 5vw;
 }
 #posts-wrapper .wp-thumbnail {
 	width	: 64px;
@@ -329,27 +350,9 @@ body {
 	height	: 64px;
 }
 #posts-wrapper .wp-item-text {
-	width	: calc(80vw - 84px);
+	width	: calc(90vw - 80px);
 	height	: 64px;
 	margin	: 5px 0;
-}
-.wp-item-text h3 {
-	margin		: 5px 1vw;
-	font-size	: 24px;
-}
-.wp-item-metadata {
-	height			: 24px;
-	margin			: 0 1vw;
-	font-size		: 18px;
-	overflow		: hidden;
-	text-overflow	: ellipsis;
-}
-.wp-item-excerpt {
-	height			: 72px;
-	margin			: 5px 1vw;
-	font-size		: 18px;
-	line-height		: 24px;
-	text-overflow	: ellipsis;
 }
 .wp-entry-thumbnail {
 	max-height	: none;
@@ -362,33 +365,32 @@ body {
 	margin	: 0;
 }
 .wp-entry-title {
-	height			: 32px;
-	margin-top		: -24vw;
-	margin-left		: 3vw;
-	font-size		: 32px;
-	color			: #FFF;
-	overflow		: hidden;
+	height		: 32px;
+	margin-top	: -24vw;
+	margin-left	: 3vw;
+	font-size	: 20px;
+	color		: #FFF;
+	overflow	: hidden;
 }
 .wp-entry-author {
 	margin-left	: 3vw;
-	font-size	: 18px;
+	font-size	: 14px;
 	color		: #FFF;
 }
 .wp-entry-author a {
-	font-size	: 18px;
+	font-size	: 14px;
 }
 .wp-entry-content {
 	margin				: auto 0;
 	padding				: 0;
-	line-height			: 28px;
 	background-color	: #FFF;
 	border-bottom		: 2px solid #555;
 }
 .wp-entry-content p {
 	display		: block;
-	margin		: 5px 3vw;
-	font-size	: 24px;
-	line-height	: 32px;
+	margin		: 5px 5vw;
+	font-size	: 16px;
+	line-height	: 24px;
 }
 .wp-entry-content img {
 	display		: block;
@@ -411,8 +413,8 @@ body {
 	border-bottom	: 2px solid #CCC;
 }
 .wp-comment-avatar {
-	width			: 10vw;
-	height			: 10vw;
+	width			: 20vw;
+	height			: 20vw;
 	margin			: 16px 6vw;
 	position		: static;
 	display			: inline-block;
@@ -420,15 +422,18 @@ body {
 	border-radius	: 10vw;
 }
 .wp-comment-avatar img {
-	width	: 10vw;
-	height	: 10vw;
+	width	: 20vw;
+	height	: 20vw;
 	margin	: 0;
 }
 .wp-comment-text {
-	width		: 70vw;
+	width		: 60vw;
 	position	: static;
 	display		: inline-block;
 	margin		: 16px 2vw;
+}
+.post-edit-link {
+	display	: none;
 }
 #message {
 	width				: 100vw;
@@ -448,8 +453,11 @@ body {
 
 @media (max-width : 480px) {
 
+#user-head {
+	margin	: 6px 12px 6px 30px;
+}
 .sidebar-item {
-	padding-left	: 3vw;
+	padding-left	: 20px;
 }
 .sidebar-item svg {
 	display	: none;
