@@ -149,43 +149,40 @@ $(function(){
 
 	var toggleMenu = {
 		hide: function(needReflow) {
-			var W = $window.width();
-			$bookContainer.css({width:W,left:0});
-			$menuIconArrow.css({'transform':'rotateZ(180deg)'});
-			$topbarMenu.css({'backgroundColor':'transparent'});
-			$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
-			$cover.fadeTo(300, 0, function () {
-				$(this).hide(0);
-			});
 			if (status.isMobile) {
-				$sidebar.css({left:'-50vw'});
+				$topbarMenu.css({'background':''});
+				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
+				$cover.css({opacity:0});
+				$sidebar.css({left:'-62%'});
 			} else {
+				var W = $window.width();
+				$menuIconArrow.css({'transform':'rotateZ(180deg)'});
+				$bookContainer.css({width:W,left:0})
 				$sidebar.css({left:'-200px'});
-			}
-			if (W>1200 && needReflow) {
-				book.reflow(book.getConfig(W));
-			}
-			if (W<1200 && $bookContainer.width() != W) {
-				book.reflow(book.getConfig(W));
+				if (W>1200 && needReflow) {
+					book.reflow(book.getConfig(W));
+				}
+				if (W<1200 && $bookContainer.width() != W) {
+					book.reflow(book.getConfig(W));
+				}
 			}
 			status.showingMenu = false;
 		},
 		show: function(needReflow) {
-			var W = $window.width();
-			$menuIconArrow.css({'transform':'rotateZ(0deg)'});
-			$topbarMenu.css({'backgroundColor':'#88E3EE'});
-			$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
-			$cover.show(0, function () {
-				$(this).fadeTo(300, 0.5);
-			});
-			$sidebar.css({left:'0px'});
-			if (!status.isMobile) {
+			if (status.isMobile) {
+				$topbarMenu.css({'background':'rgba(255,255,255,0.5)'});
+				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
+				$cover.css({opacity:0.6});
+			} else {
+				var W = $window.width();
+				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
 				$bookContainer.css({left:200});
+				if (W>1200 && needReflow) {
+					$bookContainer.css({width:W-200});
+					book.reflow(book.getConfig(W-200));
+				}
 			}
-			if (W>1200 && needReflow) {
-				$bookContainer.css({width:W-200});
-				book.reflow(book.getConfig(W-200));
-			}
+			$sidebar.css({left:'0px'});
 			status.showingMenu = true;
 		},
 		toggle: function () {
@@ -203,8 +200,6 @@ $(function(){
 			});
 			$topbarMenu.click(function() {
 				toggleMenu.toggle();
-				localStorage.setItem('userClickedMenu','true');
-				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
 			$topbarSearch.click(function() {
 				if (status.searchBar) {
@@ -527,89 +522,82 @@ $(function(){
 	util.getNavURL();
 	util.isListPage();
 	util.isMobile();
-	if ($wpWrapper.length) {
-		status.needBook = true;
-	}
 	if (status.isMobile) {
 		status.needBook = false;
-	}
-	if (window._config) {
-		if (window._config.numColumns) {
-			status.numColumns= window._config.numColumns;
-		}
-		if (window._config.needBook) {
-			status.numColumns= window._config.needBook;
-		}
-	}
-	var W = $window.width();
-	var pageW;
-	var showOrHideMenuOnLoad = function(show) {
-		$sidebar.addClass('notransition');
-		$bookContainer.addClass('notransition');
-		$sidebar[0].offsetHeight; // small hack here to trigger a reflow, flushing the CSS changes, see http://stackoverflow.com/questions/11131875/
-		if (show) {
-			toggleMenu.show();
-			$bookContainer.width(W-200);
-			pageW = (W-200)/2;
-		} else {
-			toggleMenu.hide();
-			$bookContainer.width(W);
-			pageW = W/2;
-		}
-		$sidebar.removeClass('notransition');
-		$bookContainer.removeClass('notransition');
-	}
-	if (localStorage.userMenuStatus) {
-		if (localStorage.userMenuStatus === 'true') {
-			showOrHideMenuOnLoad(true);
-		} else if (localStorage.userMenuStatus === 'false'){
-			showOrHideMenuOnLoad(false);
+		book = null;
+		if ($('#wp-wrapper').html()) {
+			$topbarTitle.html($('.sidebar-item-current').text().trim());
+			$bookContainer.remove();
 		}
 	} else {
-		if (W>1200) {
-			showOrHideMenuOnLoad(true);
-		} else {
-			showOrHideMenuOnLoad(false);
+		if ($wpWrapper.length) {
+			status.needBook = true;
 		}
-	}
-	if (!status.isMobile) {
+		if (window._config) {
+			if (window._config.numColumns) {
+				status.numColumns= window._config.numColumns;
+			}
+			if (window._config.needBook) {
+				status.numColumns= window._config.needBook;
+			}
+		}
+		var W = $window.width();
+		var pageW;
+		var showOrHideMenuOnLoad = function(show) {
+			$sidebar.addClass('notransition');
+			$bookContainer.addClass('notransition');
+			$sidebar[0].offsetHeight; // small hack here to trigger a reflow, flushing the CSS changes, see http://stackoverflow.com/questions/11131875/
+			if (show) {
+				toggleMenu.show();
+				$bookContainer.width(W-200);
+				pageW = (W-200)/2;
+			} else {
+				toggleMenu.hide();
+				$bookContainer.width(W);
+				pageW = W/2;
+			}
+			$sidebar.removeClass('notransition');
+			$bookContainer.removeClass('notransition');
+		}
+		if (localStorage.userMenuStatus) {
+			if (localStorage.userMenuStatus === 'true') {
+				showOrHideMenuOnLoad(true);
+			} else if (localStorage.userMenuStatus === 'false'){
+				showOrHideMenuOnLoad(false);
+			}
+		} else {
+			if (W>1200) {
+				showOrHideMenuOnLoad(true);
+			} else {
+				showOrHideMenuOnLoad(false);
+			}
+		}
 		$bookLoadingShade.css({opacity:1});
 		util.setupQRCode();
 		$window.load(function() {
 			book.init(pageW);
 			$bookLoadingShade.css({opacity:0});
 		});
-	} else {
-		book = null;
-		if ($('#wp-wrapper').html()) {
-			$topbarTitle.html($('.sidebar-item-current').html());
-			$bookContainer.css('display','none');
-		}
-	}
-	
-	$window.load(function() {
-		book.init(pageW);
-	});
-	
-	$window.bind('resize',_.debounce(function(){
-		var W = $window.width();
-		if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
-			if (W>1200) {
-				toggleMenu.show(true);
-			} else {
-				toggleMenu.hide(true);
+		$window.bind('resize',_.debounce(function(){
+			var W = $window.width();
+			if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
+				if (W>1200) {
+					toggleMenu.show(true);
+				} else {
+					toggleMenu.hide(true);
+				}
 			}
-		}
-		if (status.isMobile) {
-			return;
-		}
-		if (status.showingMenu) {
-			$bookContainer.width(W-200);
-			book.reflow(book.getConfig(W-200));
-		} else {
-			$bookContainer.width(W);
-			book.reflow(book.getConfig(W));
-		}
-	}, 100));
-	window._status = status;
+			if (status.isMobile) {
+				return;
+			}
+			if (status.showingMenu) {
+				$bookContainer.width(W-200);
+				book.reflow(book.getConfig(W-200));
+			} else {
+				$bookContainer.width(W);
+				book.reflow(book.getConfig(W));
+			}
+		}, 100));
+	}
+	window.stat =status;
 });

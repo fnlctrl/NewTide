@@ -28,7 +28,7 @@
 	?>
 	<div class='wp-comment-item'>
 		<div class='wp-comment-avatar'>
-			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,50)); ?>'/>
+			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,150)); ?>'/>
 		</div>
 		<div class='wp-comment-text'>
 			<div class='wp-comment-author'><?php echo $comment->comment_author; ?></div>

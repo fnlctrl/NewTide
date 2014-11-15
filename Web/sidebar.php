@@ -1,8 +1,8 @@
-<div id='topbar'>
-	<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
-	<div id='topbar-logo' onclick='location.href="<?php echo home_url();?>"'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></div>
+<div id='topbar' class='fixed'>
+	<div id='topbar-menu' class='ease'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
+	<a href="<?php echo home_url();?>"><img id='topbar-logo' class='svg ease' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>
 	<div id='topbar-title'></div>
-	<div id='topbar-search'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
+	<div id='topbar-search' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 </div>
 <div id='login'>
 	<a id='login-logo' href="<?php bloginfo('url'); ?>"></a>
@@ -34,8 +34,15 @@
 	</div>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>
-		<div id='user-head'></div>
-		<div id='user-id' onclick='location.href="login"'>登录</div>
+		<img id='user-head' src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,150)); ?>'/>
+		<div id='user-id'>
+			<?php if ( $user_ID ) : ?>
+				<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php $user = wp_get_current_user();echo $user->display_name;?></a>
+			<?php else : ?>
+				<a href="login">登录</a>
+			<?php endif; ?>
+		</div>
+
 	</div>
 	<form id='sidebar-search-wrapper' class='ease'>
 		<input id='sidebar-search-input' class='ease' type='text' name='s' onblur="this.value=''"/>
@@ -87,4 +94,4 @@
 	</div>
 	<div id='sidebar-copyright'>© 2001 - 2014 <br/> 浙江大学求是潮</div>
 </div>
-<div id='cover'></div>
+<div id='cover' class='ease'></div>

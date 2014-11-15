@@ -14,11 +14,19 @@ Description: Designed and developed by fnlCtrl in 2014. Mobile version developed
 .ease {
 	transition: all 0.3s ease;
 }
+.ease * {
+    transition: all 0.3s ease;
+}
 .notransition {
     transition: none !important;
 }
 * {
-	font-family: "Microsoft YaHei"
+    font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Droid Sans Fallback", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+    /*-webkit-transform: translateZ(0);*/
+    /*-moz-transform: translateZ(0);*/
+    /*-ms-transform: translateZ(0);*/
+    /*-o-transform: translateZ(0);*/
+    /*transform: translateZ(0);*/
 }
 a {
 	text-decoration: none;
@@ -54,7 +62,7 @@ body {
 	left: 50%;
 	width: 12px;
 	height: 40px;
-	margin: 0px 0 0 -8px;
+	margin: 0 0 0 -8px;
 	transform-origin: 50% 50%;
 }
 .menu-icon-fake {
@@ -230,7 +238,7 @@ body {
 	width: 100%;
 }
 .sidebar-section-title {
-	color: #999 !important;
+	color: #999 ;
 }
 .sidebar-item {
 	height: 28px;
@@ -241,6 +249,7 @@ body {
 	transition: background-color 0.15s ease;
 	cursor: pointer;
 	display: block;
+    color: inherit;
 }
 .sidebar-icon {
 	display: block;
@@ -290,12 +299,6 @@ body {
 .sidebar-section:nth-child(3) .sidebar-item-current{
 	background-color: #27ae60;
 	color: #fff;
-}
-.sidebar-section a {
-	color: inherit;
-}
-.sidebar-section span {
-	cursor: pointer;
 }
 .sidebar-item-current path {
 	fill: #fff;

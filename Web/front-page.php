@@ -9,6 +9,8 @@ Template Name: 主页
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
@@ -79,6 +81,7 @@ Template Name: 主页
 								@ <?php the_category(' &gt; ');?>
 								, <?php the_date('Y-m-d');?>
 							</div>
+							<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 						</div>
 					</div>
 					<?php //End Loop  ?>	
@@ -111,6 +114,7 @@ Template Name: 主页
 								@ <?php the_category(' &gt; ');?>
 								, <?php the_date('Y-m-d');?>
 							</div>
+							<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 						</div>
 					</div>
 					<?php //End Loop  ?>
@@ -119,7 +123,7 @@ Template Name: 主页
 		</div>
 		<div id='events-wrapper'>
 			<h1>近期活动</h1>
-			<iframe src='<?php echo home_url()?>/timeline' frameBorder="0"></iframe>
+<!--			<iframe src='--><?php //echo home_url()?><!--/timeline' frameBorder="0"></iframe>-->
 		</div>
 	</div>
 <!-- Piwik -->

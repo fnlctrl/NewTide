@@ -1,6 +1,3 @@
-/*#book-container:before {
-	z-index: 0;
-}*/
 iframe {
 	position: absolute;
 	height: calc(100% - 120px);
@@ -29,6 +26,9 @@ h1 {
 .more {
 	color: #ed6d7f;
 	font-size: 14px;
+}
+.wp-item-excerpt {
+    display: none   ;
 }
 /*    Posts    */
 .posts-container {
