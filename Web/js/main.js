@@ -52,7 +52,7 @@ $(function(){
 			} else {
 				status.isListPage = false;
 				status.numColumns = 2;
-				status.LineHeight = 20;
+				status.LineHeight = 24;
 			}
 		},
 		getNavURL: function() {
