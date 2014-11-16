@@ -62,6 +62,7 @@ Timeline.prototype.parseDateTime = function() {
             entry.hasTime = false;
         } else {
             var time = entry.time.split('-');
+            entry.hasTime = true;
             entry.parsedTime = {
                 'beginHour': time[0].split(':')[0],
                 'beginHourStr': ('0' + time[0].split(':')[0]).substr(-2),
@@ -394,6 +395,244 @@ MobileDetail.prototype.moveRight = function () {
             _this.scrollWrapper.addClass('scroll-transition');
             _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
         }, 50);
+        _this.moveLock = false;
+    }
+};
+
+var DesktopTimeline = function () {
+};
+
+DesktopTimeline.prototype = new Timeline();
+DesktopTimeline.prototype.constructor = DesktopTimeline;
+
+DesktopTimeline.prototype.resize = function () {
+    var _this = this;
+    _this.width = _this.container.width();
+    _this.height = _this.container.height();
+    _this.elementWidth = _this.width;
+    _this.elementHeight = _this.height - 195;
+    _this.elementMargin = 0;
+    _this.elementFullWidth = _this.width;
+    _this.infoWidth = _this.width - 100;
+    _this.infoFullWidth = _this.width;
+    _this.dateWidth = 60;
+    _this.dateMargin = 10;
+    _this.dateFullWidth = 70;
+    $('div.main-panel').height(_this.elementHeight);
+    $('div.timeline-entry').width(_this.elementWidth)
+        .css('margin-right', _this.elementMargin);
+    $('img.entry-cover').width(Math.floor(_this.elementHeight * 2 / 3));
+    $('p.entry-description').css({
+        'left': Math.floor(_this.elementHeight * 2 / 3) + 20,
+        'max-height': _this.elementHeight
+    });
+    $('div.middle-panel').width(_this.width - 100);
+    $('div.entry-info').width(_this.infoWidth);
+    $.each(_this.data, function ( i, entry ) {
+        entry.dom.description.css('top', 
+            (_this.elementHeight - entry.dom.description.height()) / 2);
+    });
+    _this.scrollWrapper.width(_this.count * _this.elementFullWidth);
+    _this.scrollInfo.width(_this.count * _this.infoFullWidth);
+    _this.scrollDate.width(_this.count * _this.dateFullWidth);
+    _this.dateStartPos = Math.floor((_this.width - _this.dateFullWidth) / 2);
+};
+
+DesktopTimeline.prototype.render = function () {
+    var _this = this;
+    _this.cleanTextFormat(false, true, 'eventGroup');
+    _this.cleanTextFormat(false, true, 'eventTitle');
+    _this.container.addClass('desktop-timeline-container')
+        .css('background-color', _this.config.backgroundColor);
+    _this.mainPanel = $('<div></div>')
+        .addClass('main-panel')
+        .appendTo(_this.container);
+    _this.controlPanel = $('<div></div>')
+        .addClass('control-panel')
+        .appendTo(_this.container);
+    _this.panelLeft = $('<div></div>')
+        .addClass('panel-left')
+        .appendTo(_this.controlPanel);
+    _this.buttonLeft = $('<img></img>')
+        .addClass('button-left')
+        .attr('src', './left-arrow.svg')
+        .appendTo(_this.panelLeft);
+    $.get('./left-arrow.svg', function (data) {
+        var svg = $(data).find('svg').attr('class', _this.buttonLeft.attr('class'));
+        _this.buttonLeft.replaceWith(svg);
+        _this.buttonLeft = svg;
+        _this.buttonLeft.on('click', function () {
+            _this.moveLeft();
+        });
+    }, 'xml');
+    _this.panelRight = $('<div></div>')
+        .addClass('panel-right')
+        .appendTo(_this.controlPanel);
+    _this.buttonRight = $('<img></img>')
+        .addClass('button-right')
+        .attr('src', './right-arrow.svg')
+        .appendTo(_this.panelRight);
+    $.get('./right-arrow.svg', function (data) {
+        var svg = $(data).find('svg').attr('class', _this.buttonRight.attr('class'));
+        _this.buttonRight.replaceWith(svg);
+        _this.buttonRight = svg;
+        _this.buttonRight.on('click', function () {
+            _this.moveRight();
+        });
+    }, 'xml');
+    _this.datePanel = $('<div></div>')
+        .addClass('date-panel')
+        .appendTo(_this.container);
+    _this.scrollWrapper = $('<div></div>')
+        .addClass('scroll-content');
+    _this.scrollInfo = $('<div></div>')
+        .addClass('scroll-info');
+    _this.scrollDate = $('<div></div>')
+        .addClass('scroll-date');
+    $.each(_this.data, function(i, entry) {
+        var newElement = {};
+        newElement.parent = $('<div></div>')
+            .addClass('timeline-entry')
+            .appendTo(_this.scrollWrapper);
+        newElement.cover = $('<img>')
+            .addClass('entry-cover')
+            .attr('src', entry.media)
+            .attr('alt', entry.title)
+            .appendTo(newElement.parent);
+        newElement.description = $('<p></p>')
+            .addClass('entry-description')
+            .html(entry.text)
+            .appendTo(newElement.parent);
+        newElement.info = $('<div></div>')
+            .addClass('entry-info')
+            .appendTo(_this.scrollInfo);
+        newElement.entryGroup = $('<p></p>')
+            .addClass('entry-group')
+            .html(entry.eventGroup)
+            .appendTo(newElement.info);
+        newElement.entryTitle = $('<p></p>')
+            .addClass('entry-title')
+            .html(entry.eventTitle)
+            .appendTo(newElement.info);
+        newElement.entryTime = $('<p></p>')
+            .addClass('entry-time')
+            .html(entry.parsedDate.yearStr + '年' + 
+                entry.parsedDate.monthStr + '月' +
+                entry.parsedDate.dayStr + '日')
+            .appendTo(newElement.info);
+        if (entry.hasTime) {
+            newElement.entryTime.append(', ' + 
+                entry.parsedTime.beginHourStr + ':' + entry.parsedTime.beginMinuteStr + '~' + 
+                entry.parsedTime.endHourStr + ':' + entry.parsedTime.endMinuteStr);
+        }
+        newElement.entryLocation = $('<p></p>')
+            .addClass('entry-location')
+            .html(entry.location)
+            .appendTo(newElement.info);
+        newElement.entryDate = $('<p></p>')
+            .addClass('entry-date')
+            .html(entry.parsedDate.month + '月' + entry.parsedDate.day + '日')
+            .appendTo(_this.scrollDate);
+        _this.data[i].dom = newElement;
+    });
+    _this.scrollWrapper.appendTo(_this.mainPanel);
+    _this.scrollInfo.appendTo(_this.controlPanel);
+    _this.scrollDate.appendTo(_this.datePanel);
+    _this.resize();
+    _this.currentPosition = 0;
+    _this.movePosition(0);
+    _this.container.on('resize', function() {
+        _this.resize();
+    });
+    $('p.entry-date').on('click', function () {
+        console.log('moving to ' + $('.entry-date').index(this));
+        _this.movePosition($('.entry-date').index(this));
+    });
+    _this.hammer = new Hammer(_this.container[0]);
+    _this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+    _this.hammer.on('swipeleft', function () {
+        _this.moveLeft();
+    });
+    _this.hammer.on('swiperight', function () {
+        _this.moveRight();
+    });
+};
+
+DesktopTimeline.prototype.movePosition = function ( pos ) {
+    var _this = this;
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
+        _this.currentPosition = pos;
+        _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
+        if (_this.currentPosition == _this.count - 1) {
+            console.log('disabled left');
+            _this.panelLeft.addClass('disabled');
+        } else {
+            console.log('enabled left');
+            _this.panelLeft.removeClass('disabled');
+        }
+        if (_this.currentPosition === 0) {
+            console.log('disabled right');
+            _this.panelRight.addClass('disabled');
+        } else {
+            console.log('enabled right');
+            _this.panelRight.removeClass('disabled');
+        }
+
+        _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
+        _this.scrollInfo.css('left', (- pos) * _this.infoFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.moveLock = false;
+    }
+};
+
+DesktopTimeline.prototype.moveLeft = function () {
+    var _this = this;
+    console.log('moving');
+    if (_this.currentPosition == _this.count - 1) {
+        return;
+    }
+    console.log('not exiting');
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        console.log('enabled right');
+        _this.panelRight.removeClass('disabled');
+        _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
+        _this.currentPosition = _this.currentPosition + 1;
+        _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
+        if (_this.currentPosition == _this.count - 1) {
+            console.log('disabled left');
+            _this.panelLeft.addClass('disabled');
+        }
+
+        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollInfo.css('left', (- _this.currentPosition) * _this.infoFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.moveLock = false;
+    }
+};
+
+DesktopTimeline.prototype.moveRight = function () {
+    var _this = this;
+    if (_this.currentPosition === 0) {
+        return;
+    }
+    if (!_this.moveLock) {
+        _this.moveLock = true;
+        console.log('enabled left');
+        _this.panelLeft.removeClass('disabled');
+        _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
+        _this.currentPosition = _this.currentPosition - 1;
+        _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
+        if (_this.currentPosition === 0) {
+            console.log('disabled right');
+            _this.panelRight.addClass('disabled');
+        }
+
+        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollInfo.css('left', (- _this.currentPosition) * _this.infoFullWidth);
+        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
         _this.moveLock = false;
     }
 };

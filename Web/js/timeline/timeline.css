@@ -1,3 +1,6 @@
+.font-hei {
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
 .show-ellipsis {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
@@ -12,6 +15,11 @@
 .scroll-transition {
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
+}
+.clear-float:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 p {
   margin: 0;
@@ -29,8 +37,9 @@ img {
 }
 .mobile-home-timeline-container {
   position: relative;
-  font-size: 20px;
+  font-size: 10px;
   overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
 .mobile-home-timeline-container .scroll-content {
   position: absolute;
@@ -118,6 +127,7 @@ img {
   position: relative;
   font-size: 20px;
   overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
 .mobile-detail-timeline-container .scroll-content {
   position: absolute;
@@ -225,4 +235,264 @@ img {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.desktop-timeline-container {
+  position: relative;
+  overflow: hidden;
+  font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+.desktop-timeline-container .main-panel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+.desktop-timeline-container .main-panel .scroll-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.desktop-timeline-container .main-panel .scroll-content:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry img.entry-cover {
+  display: block;
+  position: relative;
+}
+.desktop-timeline-container .main-panel .scroll-content .timeline-entry p.entry-description {
+  position: absolute;
+  right: 0;
+  top: 0;
+  line-height: 1.8em;
+  overflow-y: auto;
+}
+.desktop-timeline-container .control-panel {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .control-panel:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.desktop-timeline-container .control-panel .panel-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.desktop-timeline-container .control-panel .panel-left .button-left {
+  display: block;
+  position: absolute;
+  left: 5px;
+  top: 45px;
+  width: 20px;
+  height: 40px;
+  padding: 5px;
+  z-index: 50;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.desktop-timeline-container .control-panel .panel-left .button-left:hover {
+  left: 0;
+}
+.desktop-timeline-container .control-panel .panel-left .button-left:active {
+  left: -5px;
+}
+.desktop-timeline-container .control-panel .panel-left.disabled .button-left {
+  cursor: default;
+  left: 5px;
+}
+.desktop-timeline-container .control-panel .panel-left.disabled .button-left path {
+  fill: #aaaaaa;
+}
+.desktop-timeline-container .control-panel .panel-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 40px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.desktop-timeline-container .control-panel .panel-right .button-right {
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 45px;
+  width: 20px;
+  height: 40px;
+  padding: 5px;
+  z-index: 50;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.desktop-timeline-container .control-panel .panel-right .button-right:hover {
+  right: 0;
+}
+.desktop-timeline-container .control-panel .panel-right .button-right:active {
+  right: -5px;
+}
+.desktop-timeline-container .control-panel .panel-right.disabled .button-right {
+  cursor: default;
+  right: 5px;
+}
+.desktop-timeline-container .control-panel .panel-right.disabled .button-right path {
+  fill: #aaaaaa;
+}
+.desktop-timeline-container .control-panel .scroll-info {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.desktop-timeline-container .control-panel .scroll-info:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.desktop-timeline-container .control-panel .scroll-info .entry-info {
+  position: relative;
+  margin: 0 50px;
+  float: left;
+}
+.desktop-timeline-container .control-panel .scroll-info .entry-info p.entry-group,
+.desktop-timeline-container .control-panel .scroll-info .entry-info p.entry-time,
+.desktop-timeline-container .control-panel .scroll-info .entry-info p.entry-location {
+  position: relative;
+  font-size: 18px;
+  height: 30px;
+  width: 100%;
+  line-height: 30px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.desktop-timeline-container .control-panel .scroll-info .entry-info p.entry-title {
+  position: relative;
+  color: #4585b5;
+  font-size: 36px;
+  font-weight: bold;
+  height: 48px;
+  width: 100%;
+  line-height: 44px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.desktop-timeline-container .control-panel:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background: -webkit-linear-gradient(to right, white, transparent 50px), -webkit-linear-gradient(to left, white, transparent 50px);
+  background: -moz-linear-gradient(to right, white, transparent 50px), -moz-linear-gradient(to left, white, transparent 50px);
+  background: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
+  z-index: 20;
+}
+.desktop-timeline-container .date-panel {
+  position: relative;
+  border-top: 1px solid #4584b5;
+  height: 35px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .date-panel:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.desktop-timeline-container .date-panel:before {
+  content: url("./down-arrow.svg");
+  display: block;
+  position: relative;
+  margin-left: 50%;
+  top: -1px;
+  left: -8px;
+  width: 15px;
+  height: 8px;
+  z-index: 10;
+  pointer-events: none;
+}
+.desktop-timeline-container .date-panel .scroll-date {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 34px;
+  width: 490px;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.desktop-timeline-container .date-panel .scroll-date p.entry-date {
+  position: relative;
+  float: left;
+  width: 60px;
+  height: 34px;
+  font-size: 14px;
+  color: #aaaaaa;
+  text-align: center;
+  line-height: 24px;
+  padding-top: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.desktop-timeline-container .date-panel .scroll-date p.entry-date:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 4px;
+  left: 50%;
+  border-right: 1px solid #aaaaaa;
+}
+.desktop-timeline-container .date-panel .scroll-date p.highlight {
+  color: #4584b5;
+  font-weight: bold;
+}
+.desktop-timeline-container .date-panel:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background: -webkit-linear-gradient(to right, white, transparent 10%, transparent 90%, white);
+  background: -moz-linear-gradient(to right, white, transparent 10%, transparent 90%, white);
+  background: linear-gradient(to right, white, transparent 10%, transparent 90%, white);
+  z-index: 20;
 }
