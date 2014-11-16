@@ -21,9 +21,6 @@
   display: block;
   clear: both;
 }
-p {
-  margin: 0;
-}
 img {
   display: block;
 }
@@ -40,6 +37,10 @@ img {
   font-size: 10px;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+.mobile-home-timeline-container p {
+  margin: 0;
+  text-indent: 0;
 }
 .mobile-home-timeline-container .scroll-content {
   position: absolute;
@@ -128,6 +129,10 @@ img {
   font-size: 20px;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+.mobile-detail-timeline-container p {
+  margin: 0;
+  text-indent: 0;
 }
 .mobile-detail-timeline-container .scroll-content {
   position: absolute;
@@ -240,6 +245,10 @@ img {
   position: relative;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+.desktop-timeline-container p {
+  margin: 0;
+  text-indent: 0;
 }
 .desktop-timeline-container .main-panel {
   position: relative;
