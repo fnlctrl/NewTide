@@ -1,7 +1,3 @@
-/*
-/*
-Theme Name: NewTide for Mobile
-*/
 #topbar {
 	display	: none;
 }
@@ -12,7 +8,7 @@ Theme Name: NewTide for Mobile
 	display	: none;
 }
 
-@media (max-width : 640px) {
+@media (max-width : 640px) and (min-aspect-ratio: 5/16) and (max-aspect-ratio: 3/4) {
 
 * {
     font-family: "Droid Sans Fallback";
@@ -27,12 +23,23 @@ Theme Name: NewTide for Mobile
 #book-pages {
 	display	: none;
 }
+#sidebar-login-status {
+    display	: none;
+}
+#sidebar-search-wrapper {
+    display:none;
+}
+html {
+    overflow-y: visible;
+}
 body {
-	width			: 100%;
-	height			: 100%;
-	overflow-x		: hidden;
-	overflow-y		: scroll;
+	width: 100%;
     background: #eee;
+    height: auto;
+    overflow-y: visible;
+}
+a {
+    color: #66eeff
 }
 #topbar {
     display: block;
@@ -41,9 +48,8 @@ body {
     left: 0;
     width: 100%;
     height: 56px;
-    z-index: 100;
+    z-index: 5;
     background-color: #10C6D7;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
     box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.2);
 }
 #topbar-menu {
@@ -79,12 +85,37 @@ body {
 	line-height		: 56px;
 	color			: #FFF;
 }
-#topbar-search {
+#topbar-title a {
+    color: #fff;
+}
+#topbar-search-wrapper {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 56px;
+}
+#topbar-search-icon {
+    width: 56px;
+    height: 56px;
     position: absolute;
     right: 0;
-    height: 56px;
-    width: 56px;
 }
+#topbar-search-icon:active {
+    background: rgba(255,255,255,0.5);
+}
+#topbar-search-input {
+    border: none;
+    background-color: #10C6D7;
+    outline: none;
+    padding: 18px 3% 18px 15%;
+    left: 100%;
+    position: absolute;
+    width: 82%;
+    font-size: 18px;
+    color: #fff;
+    height: 20px;
+}
+
 #sidebar {
     height: calc(100% - 56px);
     width: 62%;
@@ -132,31 +163,8 @@ body {
     left: 0;
     top: 64px;
 }
-#sidebar-login-status {
-	display	: none;
-}
-#sidebar-search-wrapper {
-	width				: calc(100vw - 56px);
-	height				: 56px;
-	padding				: 0;
-	position			: absolute;
-	top					: -56px;
-	left				: -200vw;
-	background-color	: #10C6DC;
-}
-#sidebar-search-input {
-	width				: calc(100vw - 88px);
-	position			: absolute;
-	height				: 24px;
-	font-size			: 20px;
-	top					: 10px;
-	left				: 10px;
-	background-color	: #FFF;
-}
-#sidebar-search-icon {
-	top		: 18px;
-	left	: 20px;
-}
+
+
 .sidebar-section-title {
     display: block;
     position: absolute;
@@ -264,19 +272,20 @@ body {
 	position			: fixed;
 	top					: 0;
 	left				: 0;
-	z-index				: 50;
+	z-index: -1;
 	background-color	: #000;
     opacity: 0;
-    pointer-events: none;
+    display: none;
 }
 #book-container {
-	width: calc( 100% - 36px );
+    width: 100%;
     position: relative;
     top: 56px;
     left: 0;
-	background: #eee;
-	box-shadow			: none;
-    margin: 18px;
+    background: #eee;
+    margin: 0;
+    visibility: visible;
+    box-shadow: none;
 }
 #book-container:before {
 	display	: none;
@@ -294,20 +303,22 @@ body {
     height: 280px;
     overflow: hidden;
 }
-#events-wrapper iframe {
+#timeline {
     position: absolute;
     height: 250px;
+    width: 100%;
     bottom: 0px;
 }
 #posts-wrapper {
-    position: absolute;
+    position: relative;
+    height: auto;
 	width: 100%;
     top: 300px;
 	left: 0;
 }
 #events-wrapper h1, #posts-wrapper h1 {
-    margin: 0;
-	color	: #000;
+    margin: 10px 18px 0 18px;
+	color: #999;
     font-size: 18px;
 }
 .posts-container {
@@ -323,44 +334,36 @@ body {
 	color	: #000;
 }
 
-/* Wordpress  wrapper */
+/* Wordpress wrapper */
 #wp-wrapper {
-    width: calc( 100% - 36px );
-    position: relative;
+    width: 100%;
+    position: absolute;
     top: 56px;
     left: 0;
     background: #eee;
-    margin: 18px;
+    margin: 0;
     visibility: visible;
+    height: auto;
 }
 .wp-item {
-	width				: 100%;
 	height				: 96px;
-	margin				: 0 0 5px 0;
+	margin				: 0 18px 5px 18px;
 	background-color	: #FFF;
-	border-right		: 2px solid #10C6DC;
-    border-radius: 3px;
+	border-right		: 3px solid #10C6DC;
+    border-radius: 2px;
 }
-.wp-item:after {  /* a hack to add border that is not included in parent's size */
-    content: '';
-    position: absolute;
-    right: 0;
-    height: 96px;
-    width: 3px;
-    top: 0;
-    background: #10c6dc;
-    z-index: 0;
+.wp-item:first-child {
+    margin-top: 10px;
 }
 .wp-item-text {
-    position: absolute;
-    left: 96px;
+    position: relative;
+    left: 0;
     height: 72px;
-    width: calc(100% - 120px);
+    width: 94%;
     margin: 12px;
     top: 0;
     padding: 0;
 }
-
 .wp-item-text h3 {
     margin: 0 0 4px 0;
     font-size: 18px;
@@ -388,25 +391,43 @@ body {
     margin: 0 12px 0 0;
 }
 .wp-entry-thumbnail {
-	max-height	: none;
-	width		: 100%;
-	height		: auto;
-	display		: inline-block;
-	z-index		: -1;
+    max-height: none;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    z-index: -1;
 }
 .wp-entry-meta {
-	margin	: 0;
+    margin: 0;
+    height: 256px;
+    width: 100%;
+    position: relative;
+    top: -56px;
+    overflow: hidden;
+}
+.wp-entry-meta:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 100%;
+    box-shadow: 0 0 150px 70px rgba(0,0,0,0.5);
+    z-index: -1;
+}
+#wp-entry-meta-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 .wp-entry-title {
-	height		: 32px;
-	margin-top	: -24vw;
-	margin-left	: 3vw;
-	font-size	: 20px;
-	color		: #FFF;
-	overflow	: hidden;
+    position: relative;
+    margin: 18px 18px 0 18px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #FFF;
 }
 .wp-entry-author {
-	margin-left	: 3vw;
+	margin: 0 18px 18px 18px;
 	font-size	: 14px;
 	color		: #FFF;
 }
@@ -414,30 +435,63 @@ body {
 	font-size	: 14px;
 }
 .wp-entry-content {
-	margin				: auto 0;
-	padding				: 0;
-	background-color	: #FFF;
-	border-bottom		: 2px solid #555;
+    position: relative;
+    top: -56px;
+    margin: auto 0;
+    padding: 18px;
+    background-color: #FFF;
+    border-bottom: 2px solid #555;
 }
 .wp-entry-content p {
 	display		: block;
-	margin		: 5px 5vw;
 	font-size	: 16px;
 	line-height	: 24px;
 }
 .wp-entry-content img {
-	display		: block;
-	text-indent	: 0;
-	width		: 50vw;
-	height		: auto;
-	margin		: auto;
-	padding		: 20px;
+    margin: 18px 0 18px 0;
+    text-indent: 0;
+    width: 100%;
+    display: block;
+}
+.wp-entry-comments {
+    position: relative;
+    height: auto;
+    top: -56px;
+    width: 100%;
 }
 #wp-comments-form-title {
-	display	: none;
+    margin: 18px 18px 5px 18px;
+    line-height: 18px;
+    font-size: 18px;
+    color: #999;
 }
 #wp-reply-form {
-	display	: none;
+    margin: 0 18px 18px 18px;
+    width: auto;
+}
+#wp-reply-form input {
+    height: 15px;
+    line-height: 25px;
+    width: 94%;
+    padding: 3%;
+}
+#wp-reply-form textarea, #wp-reply-form input {
+    background: #fff;
+    border-radius: 3px;
+}
+#wp-reply-form textarea {
+    height: 150px;
+    float: left;
+    width: 83%;
+    padding: 5px 14% 5px 3%;
+}
+#wp-reply-form button[name='submit'] {
+    border-bottom: 3px solid #ed6d7f;
+    width: 10%;
+    position: absolute;
+    right: 18px;
+    z-index: 111;
+    height: 160px;
 }
 .wp-comment-item {
 	width			: 100%;
@@ -446,27 +500,32 @@ body {
 	border-bottom	: 2px solid #CCC;
 }
 .wp-comment-avatar {
-	width			: 20vw;
-	height			: 20vw;
-	margin			: 16px 6vw;
-	position		: static;
-	display			: inline-block;
-	float			: left;
-	border-radius	: 10vw;
+    width: 73px;
+    height: 73px;
+    margin: 18px 6px 18px 18px;
+    display: inline-block;
+    float: left;
+    border-radius: 999px;
+    position: relative;
+    border: 2px solid rgba(0,0,0,0.3)
 }
 .wp-comment-avatar img {
-	width	: 20vw;
-	height	: 20vw;
+	width	: 73px;
+	height	: 73px;
 	margin	: 0;
 }
 .wp-comment-text {
-	width		: 60vw;
-	position	: static;
-	display		: inline-block;
-	margin		: 16px 2vw;
+    left: 0;
+    width: 60%;
+    position: relative;
+    display: inline-block;
+    margin: 16px 2vw;
 }
 .post-edit-link {
 	display	: none;
+}
+#wp-fake-nav-prev {
+
 }
 #message {
 	width				: 100vw;

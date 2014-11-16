@@ -9,14 +9,17 @@ Template Name: 主页
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/js/timeline/timeline.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<script>
+		dataLocation ='<?php bloginfo("template_url");?>/js/timeline/timeline.json';
+	</script>
+	<script src='<?php bloginfo('template_url');?>/js/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 </head>
 <body>
@@ -123,25 +126,24 @@ Template Name: 主页
 		</div>
 		<div id='events-wrapper'>
 			<h1>近期活动</h1>
-<!--			<iframe src='--><?php //echo home_url()?><!--/timeline' frameBorder="0"></iframe>-->
+			<div id='timeline'></div>
 		</div>
 	</div>
-<!-- Piwik -->
-<script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//piwik.zjuqsc.com/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 3]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<noscript><p><img src="//piwik.zjuqsc.com/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
-<!-- End Piwik Code -->
-
+	<!-- Piwik -->
+	<script type="text/javascript">
+	  var _paq = _paq || [];
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//piwik.zjuqsc.com/";
+	    _paq.push(['setTrackerUrl', u+'piwik.php']);
+	    _paq.push(['setSiteId', 3]);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<noscript><p><img src="//piwik.zjuqsc.com/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
+	<!-- End Piwik Code -->
 </body>
 </html>
 

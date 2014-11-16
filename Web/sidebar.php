@@ -1,14 +1,17 @@
 <div id='topbar' class='fixed'>
+	<form id='topbar-search-wrapper' class='search-wrapper ease'>
+		<input id='topbar-search-input' type='text' name='s' onblur="this.value=''"/>
+		<div id='topbar-search-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
+	</form>
 	<div id='topbar-menu' class='ease'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
 	<a href="<?php echo home_url();?>"><img id='topbar-logo' class='svg ease' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>
 	<div id='topbar-title'></div>
-	<div id='topbar-search' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 </div>
 <div id='login'>
 	<a id='login-logo' href="<?php bloginfo('url'); ?>"></a>
 	<p id='login-message'></p>
 	<form id='login-form' method='post' data-type='login'>
-		<h3 id='login-form-t itle'>登录</h3>
+		<h3 id='login-form-title'>登录</h3>
 		<label for='username'>用户名</label><input id='username' type='text' name='username' class='login-form-input'/>
 		<label for='password'>密码</label><input id='password' type='password' name='password' class='login-form-input'/>
 		<label for='email'>电子邮件</label><input id='email' type='text' name='email' class='login-form-input'/>
@@ -21,6 +24,7 @@
 	</form>
 </div>
 <div id='sidebar' class='unselectable ease'>
+	<div id='cover' class='ease'></div>
 	<div id='sidebar-external-links'>
 		<a target='_blank' class='sidebar-link' href='http://www.qsc.zju.edu.cn'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-qsc.svg'/></a>
 		<a target='_blank' class='sidebar-link' href='http://site.douban.com/125914/'><img class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-external-douban.svg'/></a>
@@ -39,14 +43,13 @@
 			<?php if ( $user_ID ) : ?>
 				<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php $user = wp_get_current_user();echo $user->display_name;?></a>
 			<?php else : ?>
-				<a href="login">登录</a>
+				<a href="<?php echo get_option('siteurl'); ?>/login">登录</a>
 			<?php endif; ?>
 		</div>
-
 	</div>
-	<form id='sidebar-search-wrapper' class='ease'>
-		<input id='sidebar-search-input' class='ease' type='text' name='s' onblur="this.value=''"/>
-		<img id='sidebar-search-icon' class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/>
+	<form class='search-wrapper ease' id='sidebar-search-wrapper'>
+		<input class='ease' id='sidebar-search-input' type='text' name='s' onblur="this.value=''"/>
+		<img id='sidebar-search-icon' class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-search.svg'/>
 	</form>
 	<div id='sidebar-login-status'>
 		<?php if (!$user_ID ) : ?>
@@ -94,4 +97,3 @@
 	</div>
 	<div id='sidebar-copyright'>© 2001 - 2014 <br/> 浙江大学求是潮</div>
 </div>
-<div id='cover' class='ease'></div>

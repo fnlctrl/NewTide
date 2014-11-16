@@ -74,8 +74,8 @@ body {
 	background: url(img/menu-icon-fake.svg) no-repeat;
 }
 #book-container {
-	position: absolute !important;
-	height: 100% !important;
+	position: absolute;
+	height: 100%;
 	background: #fff;
 	box-shadow: 0 0 1em rgba(0,0,0,0.5);
     z-index: 2;

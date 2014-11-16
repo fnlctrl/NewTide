@@ -23,7 +23,10 @@
 	</div>
 <?php endif;?>
 <?php
-	$comments = get_comments(array('post_id'=>get_the_ID()));
+	$comments = get_comments(array(
+		'post_id'=> get_the_ID(),
+		'status'=> 'approve',
+	));
 	foreach($comments as $comment) :
 	?>
 	<div class='wp-comment-item'>

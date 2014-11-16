@@ -68,7 +68,7 @@ add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 function my_login_logo() { ?>
 	<style type="text/css">
 		#login h1 a {
-			width: 200px;
+			width: 200px !important;
 			height: 65px;
 			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/sidebar-logo.svg);
 			background-size: 100%;
