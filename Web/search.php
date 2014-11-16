@@ -85,7 +85,7 @@ Template Name: Search Page
 			<?php
 			endforeach; wp_reset_postdata();
 		else : ?>
-			<div class='wp-entry-content'><h3>没有找到相关内容，试试别的关键词？</h3></div>
+			<div class='wp-item'><h3>没有找到相关内容，试试别的关键词？</h3></div>
 		<?php
 		endif;
 		?>

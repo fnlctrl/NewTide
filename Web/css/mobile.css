@@ -8,7 +8,7 @@
 	display	: none;
 }
 
-@media (max-width : 640px) and (min-aspect-ratio: 5/16) and (max-aspect-ratio: 3/4) {
+@media (max-width : 400px){
 
 * {
     font-family: "Droid Sans Fallback";
@@ -31,6 +31,7 @@
 }
 html {
     overflow-y: visible;
+    overflow-x: hidden;
 }
 body {
 	width: 100%;
@@ -39,7 +40,7 @@ body {
     overflow-y: visible;
 }
 a {
-    color: #66eeff
+    color: #00b9d1;
 }
 #topbar {
     display: block;
@@ -88,34 +89,37 @@ a {
 #topbar-title a {
     color: #fff;
 }
-#topbar-search-wrapper {
+.topbar-search-wrapper {
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     width: 100%;
     height: 56px;
+    background-color: #10C6D7;
 }
 #topbar-search-icon {
     width: 56px;
     height: 56px;
     position: absolute;
-    right: 0;
+    left: 0;
+}
+.topbar-search-active {
+    left: 0 !important;
 }
 #topbar-search-icon:active {
     background: rgba(255,255,255,0.5);
 }
 #topbar-search-input {
     border: none;
-    background-color: #10C6D7;
     outline: none;
-    padding: 18px 3% 18px 15%;
-    left: 100%;
+    padding: 18px 5% 18px 0;
+    left: 56px;
     position: absolute;
-    width: 82%;
+    width: 95%;
     font-size: 18px;
     color: #fff;
     height: 20px;
+    background-color: #10C6D7;
 }
-
 #sidebar {
     height: calc(100% - 56px);
     width: 62%;
@@ -143,9 +147,8 @@ a {
     height: 40px;
     top: 12px;
     left: 16px;
-    background-color: #CCC;
     border-radius: 300px;
-    border: 2px solid rgba(0,0,0,0.2) outset;
+    border: 2px outset rgba(0,0,0,0.2);
 }
 #user-id {
     font-size: 18px;
@@ -163,8 +166,6 @@ a {
     left: 0;
     top: 64px;
 }
-
-
 .sidebar-section-title {
     display: block;
     position: absolute;
@@ -172,6 +173,8 @@ a {
     right: 0;
     padding: 0 7% 0 7%;
     line-height: 14px;
+    z-index: 1;
+    background: #fff;
 }
 .sidebar-section:nth-child(1) .sidebar-section-title {  /* magic number here... */
     padding-top: 78px;
@@ -231,7 +234,7 @@ a {
     fill: #27ae60;
 }
 .sidebar-item {
-	width				: 75%;
+	width				: 100%;
 	height				: 36px;
 	line-height			: 36px;
 	background-color	: #FFF;
@@ -344,6 +347,7 @@ a {
     margin: 0;
     visibility: visible;
     height: auto;
+    min-height: 100%;
 }
 .wp-item {
 	height				: 96px;
@@ -391,10 +395,8 @@ a {
     margin: 0 12px 0 0;
 }
 .wp-entry-thumbnail {
-    max-height: none;
+    position: relative;
     width: 100%;
-    height: auto;
-    display: inline-block;
     z-index: -1;
 }
 .wp-entry-meta {

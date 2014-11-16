@@ -5,7 +5,7 @@ $(function(){
 		$topbarMenu = $('#topbar-menu'),
 		$topbarMenuIcon = $('#topbar-menu-icon'),
 		$topbarTitle = $('#topbar-title'),
-		$topbarSearchWrapper = $('#topbar-search-wrapper'),
+		$topbarSearchWrapper = $('.topbar-search-wrapper'),
 		$topbarSearchInput = $('#topbar-search-input'),
 		$topbarSearchIcon = $('#topbar-search-icon'),
 		$sidebar = $('#sidebar'),
@@ -118,6 +118,10 @@ $(function(){
 				if (sessionStorage.searchstr) {
 					$sidebarSearchInput[0].onblur='';
 					$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
+					$topbarSearchInput[0].onblur='';
+					$topbarSearchInput.val(sessionStorage.searchstr);
+					$topbarSearchWrapper.addClass('topbar-search-active');3
+					status.searchBar = true;
 				}
 			}
 		})(),
@@ -200,6 +204,9 @@ $(function(){
 				localStorage.setItem('userClickedMenu','true');
 				localStorage.setItem('userMenuStatus',status.showingMenu);
 			});
+			$topbarMenu.click(function() {
+				toggleMenu.toggle();
+			});
 		})()
 	};
 
@@ -216,7 +223,7 @@ $(function(){
 				columnGap: W*0.02,
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
-				//showGrid: true,
+				showGrid: true,
 				columnFragmentMinHeight: 140,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img','blockquote']
@@ -508,29 +515,32 @@ $(function(){
 			$bookContainer.remove();
 		}
 		if ($('.wp-entry-meta').length) {
-			$topbar.css({background:'rgba(16,198,215,0.5)'})
+			$topbar.css({background:'rgba(16,198,215,0.5)'});
+			$topbarSearchWrapper.children().css({background:'none'})
 		}
 		$('.wp-item').width(W-36);
-		$topbarMenu.click(function() {
-			toggleMenu.toggle();
-		});
+		$('#wp-reply-form').width(W-36);
+		$topbarSearchWrapper.css({left:W-56});
 		$topbarSearchIcon.click(function() {
 			if (status.searchBar) {
-				$topbarSearchIcon.css({right:0});
-				$topbarSearchInput.css({left:'100%'});
 				$topbarSearchInput.focus();
-				$topbarSearchWrapper.css({'z-index':0});
+				$topbarSearchWrapper.removeClass('topbar-search-active');
 				status.searchBar = false;
 			} else {
-				$topbarSearchIcon.css({right:W-56});
-				$topbarSearchInput.css({left:0});
-				$topbarSearchWrapper.css({'z-index':1});
+				$topbarSearchWrapper.addClass('topbar-search-active');
 				status.searchBar = true;
 			}
 		});
-		if ($wpEntryThumbnail.height() < 256) {
-			$wpEntryThumbnail.css({height:'100%',width:'auto'});
-		}
+		$topbarSearchInput.blur(function() {
+			$topbarSearchWrapper.removeClass('topbar-search-active');
+			$topbarMenu.css({opacity:1})
+			$topbarTitle.css({opacity:1})
+		})
+		$wpEntryThumbnail.on('load', function(){
+			if ($wpEntryThumbnail.height() < 256) {
+				$wpEntryThumbnail.css({height:'100%',width:'auto'});
+			}
+		});
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;

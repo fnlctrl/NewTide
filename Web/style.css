@@ -14,19 +14,14 @@ Description: Designed and developed by fnlCtrl in 2014. Mobile version developed
 .ease {
 	transition: all 0.3s ease;
 }
-.ease * {
-    transition: all 0.3s ease;
-}
+/*.ease * {*/
+    /*transition: all 0.3s ease;*/
+/*}*/
 .notransition {
     transition: none !important;
 }
 * {
     font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Droid Sans Fallback", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
-    /*-webkit-transform: translateZ(0);*/
-    /*-moz-transform: translateZ(0);*/
-    /*-ms-transform: translateZ(0);*/
-    /*-o-transform: translateZ(0);*/
-    /*transform: translateZ(0);*/
 }
 a {
 	text-decoration: none;
@@ -141,6 +136,11 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	width: 200px;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
 }
 #sidebar-login-status {
 	position: absolute;

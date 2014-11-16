@@ -1,5 +1,6 @@
+<?php $user = wp_get_current_user()?>
 <div id='topbar' class='fixed'>
-	<form id='topbar-search-wrapper' class='search-wrapper ease'>
+	<form class='topbar-search-wrapper search-wrapper ease'>
 		<input id='topbar-search-input' type='text' name='s' onblur="this.value=''"/>
 		<div id='topbar-search-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 	</form>
@@ -38,10 +39,10 @@
 	</div>
 	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>
-		<img id='user-head' src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,150)); ?>'/>
+		<img id='user-head' src='<?php echo get_avatar_url(get_avatar(  $user->user_email,150)); ?>'/>
 		<div id='user-id'>
 			<?php if ( $user_ID ) : ?>
-				<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php $user = wp_get_current_user();echo $user->display_name;?></a>
+				<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user->display_name;?></a>
 			<?php else : ?>
 				<a href="<?php echo get_option('siteurl'); ?>/login">登录</a>
 			<?php endif; ?>
@@ -56,7 +57,7 @@
 			<button id="sidebar-login-btn">登录/注册</button>
 		<?php else :?>
 			欢迎回来,<br/>
-			<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php $user = wp_get_current_user(); echo $user->display_name; ?></a>
+			<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user->display_name; ?></a>
 			<a href="<?php echo wp_logout_url(get_permalink()); ?>">(退出)</a>
 		<?php endif; ?>
 	</div>
