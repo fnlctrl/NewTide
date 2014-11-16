@@ -15,7 +15,7 @@ $(function(){
 				'dataLocation': dataLocation,
 				'maxEntryNumber': 999,
 				'switchInterval': 10000,
-				'backgroundColor': '#FFF'
+				'backgroundColor': '#eee'
 			});
 		}
 	} else {
@@ -33,5 +33,12 @@ $(function(){
 			localStorage.firstLoad = 'false';
 			$postsWrapper.css({left:0,width:'50%'});
 		})
+		timeline = new DesktopTimeline();
+		timeline.start($('#timeline'),{
+			'dataLocation': dataLocation,
+			'maxEntryNumber': 999,
+			'switchInterval': 10000,
+			'backgroundColor': '#fff'
+		});
 	}
 });

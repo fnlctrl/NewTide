@@ -1,8 +1,9 @@
-iframe {
-	position: absolute;
-	height: calc(100% - 120px);
-	bottom: 20px;
-	width: 100%;
+#timeline {
+    position: absolute;
+    height: calc(100% - 120px);
+    bottom: 20px;
+    width: 88%;
+    left: 6%;
 }
 #events-wrapper {
 	position: absolute;

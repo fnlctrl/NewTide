@@ -61,7 +61,7 @@ h3 {
 	color: #999;
 }
 /*    single entry page    */
-p {
+.wp-entry-content p {
 	font-size: 14px;
 	line-height: 24px;
     margin: 0;
