@@ -1,0 +1,37 @@
+<!doctype HTML>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <title>test</title>
+        <link rel="stylesheet" href="test.css">        
+        <link rel="stylesheet" href="timeline.css">
+        <script src="../jquery-2.1.0.min.js"></script>
+        <script src="../hammer-2.0.4.min.js"></script>
+        <script src="timeline.js"></script>
+    </head>
+    <body>
+        <div id="container"></div>
+        <button onclick="TIMELINE.moveLeft();">move left</button>
+        <button onclick="TIMELINE.moveRight();">move right</button>
+        <script>
+            var TIMELINE = new DesktopTimeline();
+            // TIMELINE.start($('#container'));
+            $('<svg></svg>')
+            .attr({
+                'xmlns': 'http://www.w3.org/2000/svg',
+                'version': '1.1',
+                'id': 'left-arrow',
+                'class': 'button-left'
+            })
+            .append($('<path />').attr({
+                'fill': '#4584B5',
+                'd': 'M20,0v12.778l-9.358,7.265L20,27.307V40L0,25.327V14.645L20,0z'
+            }))
+            .appendTo($('#container'));
+            $.get('./left-arrow.svg', function (data) {
+                var svg = $(data).find('svg').attr('class', 'button-left');
+                svg.appendTo($('#container'));
+            }, 'xml');
+        </script>
+    </body>
+</html>

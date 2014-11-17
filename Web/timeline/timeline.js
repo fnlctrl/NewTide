@@ -61,18 +61,18 @@ Timeline.prototype.parseDateTime = function() {
         if (entry.time === '') {
             entry.hasTime = false;
         } else {
-            var time = entry.time.split('-');
+            // var time = entry.time.split('-');
             entry.hasTime = true;
-            entry.parsedTime = {
-                'beginHour': time[0].split(':')[0],
-                'beginHourStr': ('0' + time[0].split(':')[0]).substr(-2),
-                'beginMinute': time[0].split(':')[1],
-                'beginMinuteStr': ('0' + time[0].split(':')[1]).substr(-2),
-                'endHour': time[1].split(':')[0],
-                'endHourStr': ('0' + time[1].split(':')[0]).substr(-2),
-                'endMinute': time[1].split(':')[1],
-                'endMinuteStr': ('0' + time[1].split(':')[1]).substr(-2)
-            };
+            // entry.parsedTime = {
+            //     'beginHour': time[0].split(':')[0],
+            //     'beginHourStr': ('0' + time[0].split(':')[0]).substr(-2),
+            //     'beginMinute': time[0].split(':')[1],
+            //     'beginMinuteStr': ('0' + time[0].split(':')[1]).substr(-2),
+            //     'endHour': time[1].split(':')[0],
+            //     'endHourStr': ('0' + time[1].split(':')[0]).substr(-2),
+            //     'endMinute': time[1].split(':')[1],
+            //     'endMinuteStr': ('0' + time[1].split(':')[1]).substr(-2)
+            // };
         }
     });
 };
@@ -159,7 +159,7 @@ MobileHome.prototype.render = function () {
     _this.resize();
     _this.currentPosition = 1;
     _this.movePosition(1);
-    _this.container.on('resize', function() {
+    $(window).on('resize', function() {
         _this.resize();
     });
     _this.hammer = new Hammer(_this.container[0]);
@@ -274,9 +274,10 @@ MobileDetail.prototype.render = function () {
                 entry.parsedDate.dayStr)
             .appendTo(newElement.footer);
         if (entry.hasTime) {
-            newElement.timeLocation.append(', ' + entry.parsedTime.beginHourStr + ':' +
-                entry.parsedTime.beginMinuteStr + '~' + entry.parsedTime.endHourStr + ':' +
-                entry.parsedTime.endMinuteStr);
+            // newElement.timeLocation.append(', ' + entry.parsedTime.beginHourStr + ':' +
+            //     entry.parsedTime.beginMinuteStr + '~' + entry.parsedTime.endHourStr + ':' +
+            //     entry.parsedTime.endMinuteStr);
+            newElement.timeLocation.append(', ', entry.time);
         }
         newElement.timeLocation.append(', ' + entry.location);
         newElement.expandBox = $('<div></div>')
@@ -297,7 +298,7 @@ MobileDetail.prototype.render = function () {
     _this.resize();
     _this.currentPosition = 1;
     _this.movePosition(1);
-    _this.container.on('resize', function() {
+    $(window).on('resize', function() {
         _this.resize();
     });
     _this.hammer = new Hammer(_this.container[0]);
@@ -409,18 +410,17 @@ DesktopTimeline.prototype.resize = function () {
     var _this = this;
     _this.width = _this.container.width();
     _this.height = _this.container.height();
-    _this.elementWidth = _this.width;
+    _this.elementWidth = _this.width - 100;
     _this.elementHeight = _this.height - 195;
-    _this.elementMargin = 0;
+    _this.elementMargin = 100;
     _this.elementFullWidth = _this.width;
     _this.infoWidth = _this.width - 100;
     _this.infoFullWidth = _this.width;
-    _this.dateWidth = 60;
-    _this.dateMargin = 10;
+    _this.dateWidth = 64;
+    _this.dateMargin = 6;
     _this.dateFullWidth = 70;
     $('div.main-panel').height(_this.elementHeight);
-    $('div.timeline-entry').width(_this.elementWidth)
-        .css('margin-right', _this.elementMargin);
+    $('div.timeline-entry').width(_this.elementWidth);
     $('img.entry-cover').width(Math.floor(_this.elementHeight * 2 / 3));
     $('p.entry-description').css({
         'left': Math.floor(_this.elementHeight * 2 / 3) + 20,
@@ -453,33 +453,15 @@ DesktopTimeline.prototype.render = function () {
     _this.panelLeft = $('<div></div>')
         .addClass('panel-left')
         .appendTo(_this.controlPanel);
-    _this.buttonLeft = $('<img></img>')
+    _this.buttonLeft = $('<div></div>')
         .addClass('button-left')
-        .attr('src', './left-arrow.svg')
-        .appendTo(_this.panelLeft);
-    $.get('./left-arrow.svg', function (data) {
-        var svg = $(data).find('svg').attr('class', _this.buttonLeft.attr('class'));
-        _this.buttonLeft.replaceWith(svg);
-        _this.buttonLeft = svg;
-        _this.buttonLeft.on('click', function () {
-            _this.moveLeft();
-        });
-    }, 'xml');
+        .appendTo(_this.controlPanel);
     _this.panelRight = $('<div></div>')
         .addClass('panel-right')
         .appendTo(_this.controlPanel);
-    _this.buttonRight = $('<img></img>')
+    _this.buttonRight = $('<div></div>')
         .addClass('button-right')
-        .attr('src', './right-arrow.svg')
         .appendTo(_this.panelRight);
-    $.get('./right-arrow.svg', function (data) {
-        var svg = $(data).find('svg').attr('class', _this.buttonRight.attr('class'));
-        _this.buttonRight.replaceWith(svg);
-        _this.buttonRight = svg;
-        _this.buttonRight.on('click', function () {
-            _this.moveRight();
-        });
-    }, 'xml');
     _this.datePanel = $('<div></div>')
         .addClass('date-panel')
         .appendTo(_this.container);
@@ -521,9 +503,10 @@ DesktopTimeline.prototype.render = function () {
                 entry.parsedDate.dayStr + '日')
             .appendTo(newElement.info);
         if (entry.hasTime) {
-            newElement.entryTime.append(', ' + 
-                entry.parsedTime.beginHourStr + ':' + entry.parsedTime.beginMinuteStr + '~' + 
-                entry.parsedTime.endHourStr + ':' + entry.parsedTime.endMinuteStr);
+            // newElement.entryTime.append(', ' + 
+            //     entry.parsedTime.beginHourStr + ':' + entry.parsedTime.beginMinuteStr + '~' + 
+            //     entry.parsedTime.endHourStr + ':' + entry.parsedTime.endMinuteStr);
+            newElement.entryTime.append(', ', entry.time);
         }
         newElement.entryLocation = $('<p></p>')
             .addClass('entry-location')
@@ -541,12 +524,18 @@ DesktopTimeline.prototype.render = function () {
     _this.resize();
     _this.currentPosition = 0;
     _this.movePosition(0);
-    _this.container.on('resize', function() {
+    $(window).on('resize', function() {
         _this.resize();
     });
     $('p.entry-date').on('click', function () {
         console.log('moving to ' + $('.entry-date').index(this));
         _this.movePosition($('.entry-date').index(this));
+    });
+    _this.buttonLeft.on('click', function () {
+        _this.moveLeft();
+    });
+    _this.buttonRight.on('click', function () {
+        _this.moveRight();
     });
     _this.hammer = new Hammer(_this.container[0]);
     _this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });

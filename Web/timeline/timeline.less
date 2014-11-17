@@ -249,6 +249,7 @@ img {
                 position: relative;
                 float: left;
                 height: 100%;
+                margin: 0 50px;
                 img.entry-cover {
                     display: block;
                     position: relative;
@@ -262,6 +263,22 @@ img {
                 }
             }
         }
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            background: -webkit-linear-gradient(to right, white, transparent 50px),
+                        -webkit-linear-gradient(to left,  white, transparent 50px);
+            background:    -moz-linear-gradient(to right, white, transparent 50px),
+                           -moz-linear-gradient(to left,  white, transparent 50px);
+            background:         linear-gradient(to right, white, transparent 50px),
+                                linear-gradient(to left,  white, transparent 50px);            
+            z-index: 20;
+        }
     }
     .control-panel {
         position: relative;
@@ -271,73 +288,55 @@ img {
         overflow: hidden;
         .border-box;
         .clear-float;
-        .panel-left {
+        .button-left {
+            display: block;
             position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 40px;
-            .transition(.3s);
-            .button-left {
-                display: block;
-                position: absolute;
-                left: 5px;
-                top: 45px;
-                width: 20px;
-                height: 40px;
-                padding: 5px;
-                z-index: 50;
-                cursor: pointer;
-                .transition(.2s);
-                &:hover {
-                    left: 0;
-                }
-                &:active {
-                    left: -5px;
-                }
+            left: 5px;
+            top: 45px;
+            width: 20px;
+            height: 40px;
+            padding: 5px;
+            z-index: 50;
+            cursor: pointer;
+            background-image: url('./left-arrow.svg');
+            .transition(.2s);
+            &:hover {
+                left: 0;
+            }
+            &:active {
+                left: -5px;
             }
             &.disabled {
-                .button-left {       
-                    cursor: default;
-                    left: 5px;
-                    path {
-                        fill: #AAA;
-                    }
+                cursor: default;
+                left: 5px;
+                path {
+                    fill: #AAA;
                 }
             }
         }
-        .panel-right {
+        .button-right {
+            display: block;
             position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 40px;
-            .transition(.3s);
-            .button-right {
-                display: block;
-                position: absolute;
-                right: 5px;
-                top: 45px;
-                width: 20px;
-                height: 40px;
-                padding: 5px;
-                z-index: 50;
-                cursor: pointer;
-                .transition(.2s);
-                &:hover {
-                    right: 0;
-                }
-                &:active {
-                    right: -5px;
-                }
+            right: 5px;
+            top: 45px;
+            width: 20px;
+            height: 40px;
+            padding: 5px;
+            z-index: 50;
+            cursor: pointer;
+            background-image: url('./right-arrow.svg');
+            .transition(.2s);
+            &:hover {
+                right: 0;
+            }
+            &:active {
+                right: -5px;
             }
             &.disabled {
-                .button-right {
-                    cursor: default;
-                    right: 5px;
-                    path {
-                        fill: #AAA;
-                    }
+                cursor: default;
+                right: 5px;
+                path {
+                    fill: #AAA;
                 }
             }
         }
@@ -419,14 +418,14 @@ img {
             p.entry-date {
                 position: relative;
                 float: left;
-                width: 60px;
+                width: 64px;
                 height: 34px;
                 font-size: 14px;
                 color: #AAA;
                 text-align: center;
                 line-height: 24px;
                 padding-top: 10px;
-                margin: 0 5px;
+                margin: 0 3px;
                 cursor: pointer;
                 .border-box;
                 &:before {
