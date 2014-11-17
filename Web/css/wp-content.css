@@ -25,6 +25,27 @@
     max-height: 500px;
     margin-top: 18px;
 }
+.cf-column hr {
+    margin: 24px 0 23px 0;
+    height: 1px;
+    background: #aaa;
+    border: none;
+}
+.cf-column h1 {
+    margin: 24px 0 24px 0;
+    line-height: 48px;
+    font-size: 28px;
+}
+.cf-column h2 {
+    margin: 24px 0 24px 0;
+    line-height: 36px;
+    font-size: 24px;
+}
+.cf-column h3 {
+    margin: 24px 0 24px 0;
+    line-height: 24px;
+    font-size: 16px;
+}
 .wp-entry-meta {
     margin: 0 0 20px 0;
 }
@@ -36,11 +57,6 @@
 }
 .wp-entry-content p{
     text-indent: 2em;
-}
-h2 {
-    font-size: 24px;
-    line-height: 48px;
-    margin: 0;
 }
 .wp-entry-author {
     font-size: 16px;
@@ -75,7 +91,7 @@ a {
 	text-decoration: none;
 	color: #64a6d4;
 }
-h3 {
+.wp-item-text h3 {
 	margin: 1em 0 0.5em 0;
 	overflow: hidden;
 	text-overflow: ellipsis;

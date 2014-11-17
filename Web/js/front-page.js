@@ -32,7 +32,7 @@ $(function(){
 			setTimeout(function() {$firstLoadHintWrapper.remove()}, 500);
 			localStorage.firstLoad = 'false';
 			$postsWrapper.css({left:0,width:'50%'});
-		})
+		});
 		timeline = new DesktopTimeline();
 		timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
