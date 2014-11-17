@@ -7,6 +7,69 @@
 	height: 100%;
     visibility: hidden;
 }
+/*    single entry page    */
+.cf-column p {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
+    text-indent: 2em;
+}
+.cf-column strong {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
+    text-indent: 2em;
+}
+.cf-column img {
+    width: 100%;
+    max-height: 500px;
+    margin-top: 18px;
+}
+.wp-entry-meta {
+    margin: 0 0 20px 0;
+}
+.wp-entry-title {
+    margin: 0 0 18px 0;
+    color: #4585B5;
+    font-size: 36px;
+    line-height: 40px;
+}
+.wp-entry-content p{
+    text-indent: 2em;
+}
+h2 {
+    font-size: 24px;
+    line-height: 48px;
+    margin: 0;
+}
+.wp-entry-author {
+    font-size: 16px;
+    line-height: 20px;
+}
+.wp-entry-thumbnail {
+    position: relative;
+    max-height: 450px;
+}
+.wp-fake-thumbnail-wrapper {
+    position: absolute;
+    width: 100% !important;
+    top: -50px !important;
+    overflow: hidden;
+}
+.wp-fake-thumbnail {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+#wp-fake-nav-prev {
+    display: none;
+}
+#wp-fake-nav-next {
+    display: none;
+}
+#post-edit-link {
+    display: none;
+}
 /*    entry list page    */
 a {
 	text-decoration: none;
@@ -36,7 +99,7 @@ h3 {
 .wp-item:active {
 	background: #BDE4FF;
 }
-.wp-entrylist-thumbnail {
+.wp-item img {
 	position: relative;
 	float: left;
 	width: 150px;
@@ -59,58 +122,6 @@ h3 {
 	font-size: 12px;
 	margin: 0 0 1em 0;
 	color: #999;
-}
-/*    single entry page    */
-.wp-entry-content p {
-	font-size: 14px;
-	line-height: 24px;
-    margin: 0;
-    text-indent: 2em;
-}
-.wp-entry-meta {
-    margin: 0 0 20px 0;
-}
-.wp-entry-title {
-	margin: 0 0 18px 0;
-	color: #4585B5;
-    font-size: 36px;
-    line-height: 40px;
-}
-.wp-entry-content img{
-    max-height: 500px;
-}
-h2 {
-    font-size: 24px;
-    line-height: 48px;
-    margin: 0;
-}
-.wp-entry-author {
-	font-size: 16px;
-    line-height: 20px;
-}
-.wp-entry-thumbnail {
-	position: relative;
-	max-height: 450px;
-}
-.wp-fake-thumbnail-wrapper {
-	position: absolute;
-	width: 100% !important;
-	top: -50px !important;
-	overflow: hidden;
-}
-.wp-fake-thumbnail {
-	position: relative;
-	width: 100%;
-    height: auto;
-}
-#wp-fake-nav-prev {
-	display: none;
-}
-#wp-fake-nav-next {
-	display: none;
-}
-#post-edit-link {
-    display: none;
 }
 /*    Comments    */
 #wp-comments-form-title {
@@ -187,7 +198,7 @@ h2 {
     border-radius: 999px;
     width: 50px;
     height: 50px;
-    /*border: 3px solid #aaa;*/
+    margin: 0;
 }
 .wp-comment-author {
     font-weight: bold;

@@ -111,14 +111,15 @@ a {
 #topbar-search-input {
     border: none;
     outline: none;
-    padding: 18px 5% 18px 0;
+    padding: 18px 0 0 0;
     left: 56px;
     position: absolute;
-    width: 95%;
+    width: 80%;
     font-size: 18px;
     color: #fff;
     height: 20px;
-    background-color: #10C6D7;
+    background: none;
+    border-bottom: 1px solid #fff;
 }
 #sidebar {
     height: calc(100% - 56px);
@@ -334,7 +335,7 @@ a {
     margin: 0 0 20px 0;
 }
 .more {
-	color	: #000;
+	color: #999;
 }
 
 /* Wordpress wrapper */
@@ -389,7 +390,7 @@ a {
 	height				: 150px;
 	background-color	: #FFF;
 }
-.wp-entrylist-thumbnail {
+.wp-item img {
 	width: 96px;
 	height: 96px;
     margin: 0 12px 0 0;
@@ -423,7 +424,7 @@ a {
 }
 .wp-entry-title {
     position: relative;
-    margin: 18px 18px 0 18px;
+    margin: 18px 18px 10px 18px;
     font-size: 24px;
     line-height: 28px;
     color: #FFF;
@@ -442,7 +443,7 @@ a {
     margin: auto 0;
     padding: 18px;
     background-color: #FFF;
-    border-bottom: 2px solid #555;
+    border-bottom: 2px solid #aaa;
 }
 .wp-entry-content p {
 	display		: block;

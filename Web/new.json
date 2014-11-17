@@ -1,56 +1,113 @@
 [
 	{
-		"date":"2013,3,15",
+		"date":"2014,10,11",
+		"time":"18:00-21:00",
+		"location":"紫金港 小剧场",
+		"eventTitle":"《乐高大电影》",
+		"eventGroup":"求是电影课",
+		"text":"Everything is AWESOME",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/乐高大电影.png"
+	},
+
+	{
+		"date":"2014,10,26",
+		"time":"14:00-18:30",
+		"location":"紫金港 安中大楼建工之家",
+		"eventTitle":"伊恩·麦克尤恩",
+		"eventGroup":"白夜读书会",
+		"text":"我要找到一个与历史和社会都剥离的虚构世界。",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/伊恩马克尤恩.png"
+	},
+
+	{
+		"date":"2014,10,31",
 		"time":"18:30-21:00",
-		"location":"紫金港 小剧场B座 209",
-		"eventTitle":"大岛渚 1/3<br/> 爱之亡灵》",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"《自私的巨人》",
 		"eventGroup":"潮声潮影",
-		"text":"日本导演大岛渚于2013年1月15日在神奈川县的一家医院因肺炎医治无效去世，享年80岁。<br />大岛渚的作品具有先锋意识和叛逆色彩，运用自己的独特的创造力为日本电影甚至世界电影提供了新鲜的概念。<br /><strong>本次潮声潮影，致敬大岛渚，致敬其作品。</strong><br />正如他自己最爱的和句：“像生于深海中的鱼族，若不自燃，便只有漆黑一片。”",
-		"media":"http://tide.myqsc.com/wp/wp-content/timeline/img/film_2.jpg",
+		"text":"我们逆流而上，却不断被推往过去",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/生长.png"
 	},
+
 	{
-		"date":"2013,5,5",
+		"date":"2014,11,1",
 		"time":"18:30-21:00",
-		"location":"紫金港 国会139",
-		"eventTitle":"开幕式",
-		"eventGroup":"浙江大学第一届青年电影节",
-		"text":" 时代诞生艺术，光影印证梦想。<br/>求是潮诚意带来2013浙江大学第一届青年电影节将在国会139拉开帷幕，有网易视频带来的纪录片《毕业后的大多数》展映，还可以与导演貟子剑现场交流。<br/><strong>《毕业后的大多数》：</strong>随着教育改革和大学扩招，如今出生在八零年代的青年们这一庞大的文化人群已成为当今社会的主要劳动力。影片探寻他们毕业后的生活状况，以考研、公务员、房子、婚姻等社会热点为载体，记录大学生跨出校门后的生活。<br/>独立导演<strong>贠子剑</strong>1987年出生于陕西礼泉县，毕业后进入西安电影制片厂学习、工作。曾担任电视剧和动画编剧，2009年独立编导话剧《光着脚去追梦》并成功演出。2010年拍摄纪录片《毕业后的大多数》，2012年拍摄完成《代表》。",
-		"media":"http://tide.myqsc.com/wp/wp-content/timeline/img/movieSS_0.png",
+		"location":"紫金港 小剧场",
+		"eventTitle":"《布达佩斯大饭店》",
+		"eventGroup":"求是电影课",
+		"text":"浮华不过空梦，唯有真情永恒",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/布达佩斯大饭店.jpg"
 	},
+
 	{
-		"date":"2013,5,9",
-		"time":"",
-		"location":"紫金港 国会139",
-		"eventTitle":"第六届<strong>魅·声色配音大赛<br/></strong>",
-		"eventGroup":"浙江大学第一届青年电影节",
-		"text":"浙江大学第六届“魅·声色”配音大赛，看你浙有才！<br/><br/>以浙为介质，散发最强音！<br/>5月9日　报名平台全线开启<br/>5月16日　作品上传结束&海选投票启动<br/>5月23日　海选投票截止<br/>5月31日　现场决赛",
-		"media":"http://tide.myqsc.com/wp/wp-content/timeline/img/movieSS_0.png",
-	},
-	{
-		"date":"2013,5,11",
+		"date":"2014,11,7",
 		"time":"18:30-21:00",
-		"location":"紫金港 国会139",
-		"eventTitle":"<strong>瓢虫映像电影展映&导演交流</strong><br/><small>潮声潮影　特别版</small>",
-		"eventGroup":"浙江大学第一届青年电影节",
-		"text":"来自不同地区的志愿者跨域协作，致力于全球范围内发现和传播反映中国人文生活的纪实影像，小小虫能散发多大的能量？<br/>一年的时间里，豆瓣上不断增加的关注量，以及在北京、上海、武汉、西安、南京、杭州等地所引发的独立纪录片热潮，让人们认识了这个组织——瓢虫映像。<br/>浙江大学青年电影节，与瓢虫共鸣，与映像共舞。",
-		"media":"http://tide.myqsc.com/wp/wp-content/timeline/img/movieSS_2.png",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"《夏日之王》",
+		"eventGroup":"潮声潮影",
+		"text":"我们逆流而上，却不断被推往过去",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/生长.png"
 	},
+
 	{
-		"date":"2013,5,11",
+		"date":"2014,11,14",
 		"time":"18:30-21:00",
-		"location":"紫金港小剧场B座　209",
-		"eventTitle" :"<strong>瓢虫映像电影展映&导演交流</strong><br/><small>电影名称</small>",
-		"eventGroup":"浙江大学第一届青年电影节",
-		"text":"来自不同地区的志愿者跨域协作，致力于全球范围内发现和传播反映中国人文生活的纪实影像，小小虫能散发多大的能量？<br/>一年的时间里，豆瓣上不断增加的关注量，以及在北京、上海、武汉、西安、南京、杭州等地所引发的独立纪录片热潮，让人们认识了这个组织——瓢虫映像。<br/>浙江大学青年电影节，与瓢虫共鸣，与映像共舞。",
-		"media"  :"http://tide.myqsc.com/wp/wp-content/timeline/img/movieSS_2.png",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"《听说桐岛要退部》",
+		"eventGroup":"潮声潮影",
+		"text":"我们逆流而上，却不断被推往过去",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/生长.png"
 	},
+
 	{
-		"date":"2013,5,14",
-		"time":"14:30-17:00",
-		"location":"紫金港小剧场B座　209",
-		"eventTitle" :"<strong>瓢虫映像电影展映&导演交流</strong><br/><small>电影名称</small>",
-		"eventGroup":"浙江大学第一届青年电影节",
-		"text":"来自不同地区的志愿者跨域协作，致力于全球范围内发现和传播反映中国人文生活的纪实影像，小小虫能散发多大的能量？<br/>一年的时间里，豆瓣上不断增加的关注量，以及在北京、上海、武汉、西安、南京、杭州等地所引发的独立纪录片热潮，让人们认识了这个组织——瓢虫映像。<br/>浙江大学青年电影节，与瓢虫共鸣，与映像共舞。",
-		"media"  :"http://tide.myqsc.com/wp/wp-content/timeline/img/movieSS_2.png"
+		"date":"2014,11,15",
+		"time":"18:30-21:00",
+		"location":"紫金港 小剧场",
+		"eventTitle":"美国队长2：冬兵",
+		"eventGroup":"求是电影课",
+		"text":"Don't trust anyone, Captain.",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/美国队长2.png"
+	},
+
+	{
+		"date":"2014,11,22",
+		"time":"18:30-21:00",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"Lana Del Rey",
+		"eventGroup":"音浪罗曼史",
+		"text":"我游荡在缭乱的世界<br/>穿过雾霭、花丛和荒原<br/>我歌唱未被触动的核心<br/>以及时间里的悲欢",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/Lana-Del-Rey.jpg"
+	},
+
+	{
+		"date":"2014,11,28",
+		"time":"00:00-00:00",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"待定",
+		"eventGroup":"潮声潮影",
+		"text":"待定",
+		"media":""
+	},
+
+	{
+		"date":"2014,11,29",
+		"time":"18:30-21:00",
+		"location":"紫金港 小剧场",
+		"eventTitle":"《横道世之介》",
+		"eventGroup":"求是电影课",
+		"text":"你会如何回忆我，带着笑或是很沉默。",
+		"media":""
+	},
+
+	{
+		"date":"2014,11,30",
+		"time":"18:30-21:00",
+		"location":"00:00-00:00",
+		"eventTitle":"更多活动<br/>待更新",
+		"eventGroup":"待定",
+		"text":"待定",
+		"media":""
 	}
 ]
+
+
