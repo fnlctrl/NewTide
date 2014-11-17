@@ -223,7 +223,7 @@ $(function(){
 				columnGap: W*0.02,
 				standardiseLineHeight: true,
 				lineHeight: status.LineHeight,
-				showGrid: true,
+				//showGrid: true,
 				columnFragmentMinHeight: 140,
 				pagePadding: W*0.04,
 				noWrapOnTags: ['div','img','blockquote']
