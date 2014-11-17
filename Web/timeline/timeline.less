@@ -62,12 +62,13 @@ img {
         .timeline-entry {
             position: relative;
             float: left;
+            margin-top: .8em;
             .entry-header {
-                position: relative;
-                margin-top: .8em;
+                position: absolute;
+                top: 0;
                 width: 100%;
                 height: 2.4em;
-                background-color: #10C6DC;
+                background-color: rgba(16, 198, 220, .9);
                 p.entry-group {
                     position: absolute;
                     top: 0;
@@ -81,14 +82,14 @@ img {
                     .show-ellipsis;
                 }
             }
-            p.entry-date {
+            .entry-date {
                 position: absolute;
-                top: .2em;
+                top: -.6em;
                 right: .6em;
                 width: 3.6em;
                 height: 3.6em;
                 padding: .6em 0;
-                border-radius: 3em;
+                border-radius: 3.6em;
                 color: white;
                 text-align: center;
                 line-height: 1.2em;
@@ -98,18 +99,18 @@ img {
                 z-index: 100;
                 .border-box;
             }
-            img.entry-cover {
+            .entry-cover {
                 display: block;
                 position: relative;
                 top: 0;
                 width: 100%;
             }
             .entry-footer {
-                position: relative;
-                top: 0;
+                position: absolute;
+                bottom: 0;
                 width: 100%;
                 height: 2.4em;
-                background-color: #10C6DC;
+                background-color: rgba(16, 198, 220, .9);
                 p.entry-title {
                     position: relative;
                     width: 100%;

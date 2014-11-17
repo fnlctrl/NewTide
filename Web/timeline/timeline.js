@@ -103,13 +103,14 @@ MobileHome.prototype.resize = function() {
     var _this = this;
     _this.height = _this.container.height();
     _this.width = _this.container.width();
-    _this.elementWidth = Math.floor((_this.height - 112) * 2 / 3);
+    _this.elementHeight = _this.height - 8;
+    _this.elementWidth = Math.floor(_this.elementHeight * 2 / 3);
     _this.elementMargin = _this.width - 2 * _this.elementWidth;
     _this.elementFullWidth = _this.width - _this.elementWidth;
-    $('div.timeline-entry').height(_this.height)
+    $('div.timeline-entry').height(_this.elementHeight)
         .width(_this.elementWidth)
         .css('margin-right', _this.elementMargin);
-    $('div.timeline-entry img.entry-cover').height(_this.height - 112);
+    $('div.timeline-entry img.entry-cover').height(_this.height - 8);
     _this.scrollWrapper.width((_this.count + 2) * _this.elementFullWidth);
 };
 
