@@ -59,6 +59,7 @@ img {
   width: 100%;
   height: 2.4em;
   background-color: rgba(16, 198, 220, 0.9);
+  z-index: 10;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-header p.entry-group {
   position: absolute;
@@ -108,6 +109,7 @@ img {
   width: 100%;
   height: 2.4em;
   background-color: rgba(16, 198, 220, 0.9);
+  z-index: 10;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-title {
   position: relative;
@@ -127,7 +129,7 @@ img {
 }
 .mobile-detail-timeline-container {
   position: relative;
-  font-size: 20px;
+  font-size: 10px;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
@@ -148,7 +150,6 @@ img {
 .mobile-detail-timeline-container .scroll-content .timeline-entry img.entry-cover {
   position: relative;
   width: 100%;
-  height: 720px;
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer {
   position: relative;
