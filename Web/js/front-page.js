@@ -1,23 +1,13 @@
 $(function(){
 	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		if (/events/.test(location.href)) {
-			timeline = new MobileDetail();
-			timeline.start($('#timeline'),{
-				'dataLocation': dataLocation,
-				'maxEntryNumber': 999,
-				'switchInterval': 10000,
-				'backgroundColor': '#FFF'
-			});
-		} else {
-			timeline = new MobileHome();
-			timeline.start($('#timeline'),{
-				'dataLocation': dataLocation,
-				'maxEntryNumber': 999,
-				'switchInterval': 10000,
-				'backgroundColor': '#eee'
-			});
-		}
+		timeline = new MobileHome();
+		timeline.start($('#timeline'),{
+			'dataLocation': dataLocation,
+			'maxEntryNumber': 999,
+			'switchInterval': 10000,
+			'backgroundColor': '#eee'
+		});
 	} else {
 		var $firstLoadHintWrapper = $('#hint-wrapper'),
 			$ignoreButton = $('#hint-ignore-button'),

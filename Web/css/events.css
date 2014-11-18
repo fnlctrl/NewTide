@@ -15,12 +15,16 @@ h1 {
     z-index: 10;
     position: relative;
 }
-#timeline-wrapper {
+#events-wrapper {
 	left: 50%;
 }
-iframe {
-	width: 100%;
-	height: calc(100% - 50px);
+#timeline {
+    position: absolute;
+    height: calc(100% - 120px);
+    bottom: 20px;
+    width: 97%;
+    left: 10px;
+    z-index: 0;
 }
 #intro-title {
     color: #fff;

@@ -20,7 +20,7 @@
 #menu-icon {
 	display	: none;
 }
-#book-pages {
+#intro-wrapper {
 	display	: none;
 }
 #sidebar-login-status {
@@ -545,6 +545,8 @@ a {
 	right	: auto !important;
 	z-index : -1;
 }
+/*    events page     */
+
 
 }
 
