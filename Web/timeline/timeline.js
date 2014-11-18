@@ -437,6 +437,8 @@ DesktopTimeline.prototype.resize = function () {
     _this.scrollInfo.width(_this.count * _this.infoFullWidth);
     _this.scrollDate.width(_this.count * _this.dateFullWidth);
     _this.dateStartPos = Math.floor((_this.width - _this.dateFullWidth) / 2);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 DesktopTimeline.prototype.render = function () {
@@ -522,9 +524,8 @@ DesktopTimeline.prototype.render = function () {
     _this.scrollWrapper.appendTo(_this.mainPanel);
     _this.scrollInfo.appendTo(_this.controlPanel);
     _this.scrollDate.appendTo(_this.datePanel);
-    _this.resize();
     _this.currentPosition = 0;
-    _this.movePosition(0);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -556,18 +557,14 @@ DesktopTimeline.prototype.movePosition = function ( pos ) {
         _this.currentPosition = pos;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
-            console.log('disabled left');
-            _this.panelLeft.addClass('disabled');
-        } else {
-            console.log('enabled left');
-            _this.panelLeft.removeClass('disabled');
-        }
-        if (_this.currentPosition === 0) {
-            console.log('disabled right');
             _this.panelRight.addClass('disabled');
         } else {
-            console.log('enabled right');
             _this.panelRight.removeClass('disabled');
+        }
+        if (_this.currentPosition === 0) {
+            _this.panelLeft.addClass('disabled');
+        } else {
+            _this.panelLeft.removeClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
@@ -586,14 +583,12 @@ DesktopTimeline.prototype.moveLeft = function () {
     console.log('not exiting');
     if (!_this.moveLock) {
         _this.moveLock = true;
-        console.log('enabled right');
-        _this.panelRight.removeClass('disabled');
+        _this.panelLeft.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition + 1;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
-            console.log('disabled left');
-            _this.panelLeft.addClass('disabled');
+            _this.panelRight.addClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
@@ -610,14 +605,12 @@ DesktopTimeline.prototype.moveRight = function () {
     }
     if (!_this.moveLock) {
         _this.moveLock = true;
-        console.log('enabled left');
-        _this.panelLeft.removeClass('disabled');
+        _this.panelRight.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition - 1;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition === 0) {
-            console.log('disabled right');
-            _this.panelRight.addClass('disabled');
+            _this.panelLeft.addClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
