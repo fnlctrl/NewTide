@@ -301,24 +301,27 @@ a {
 /* Front Page */
 #events-wrapper {
     position: absolute;
-    top: 0px;
-    left: 18px;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 500px;
+    height: 300px;
     overflow: hidden;
 }
 #timeline {
-    position: absolute;
-    height: 298px;
-    width: 100%;
-    top: 18px;
+    position: relative;
+    height: 250px;
+    width: auto;
+    margin: 0 18px 0 18px;
+    left: 0;
+    bottom: 0;
 }
 #posts-wrapper {
     position: relative;
     height: auto;
 	width: 100%;
-    top: 300px;
+    top: 330px;
 	left: 0;
+    margin: 0;
 }
 #events-wrapper h1, #posts-wrapper h1 {
     margin: 10px 18px 0 18px;
@@ -354,7 +357,7 @@ a {
 	height				: 96px;
 	margin				: 0 18px 5px 18px;
 	background-color	: #FFF;
-	border-right		: 3px solid #10C6DC;
+	border-right		: 3px inset #10C6DC;
     border-radius: 2px;
 }
 .wp-item:first-child {

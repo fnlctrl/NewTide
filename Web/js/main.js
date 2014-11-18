@@ -523,7 +523,6 @@ $(function(){
 		}
 		$('.wp-item').width(W-36);
 		$('#wp-reply-form').width(W-36);
-		$('#events-wrapper').width(W-36);
 		$topbarSearchWrapper.css({left:W-56});
 		$topbarSearchIcon.click(function() {
 			if (status.searchBar) {

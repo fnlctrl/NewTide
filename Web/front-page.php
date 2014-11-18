@@ -13,13 +13,13 @@ Template Name: 主页
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/js/timeline/timeline.css' media='screen' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script>
 		dataLocation ='<?php bloginfo("template_url");?>/new.json';
 	</script>
-	<script src='<?php bloginfo('template_url');?>/js/timeline/timeline.js'></script>
+	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 </head>
 <body>
@@ -55,6 +55,10 @@ Template Name: 主页
 			<div id='hint-wave-wrapper'>
 				<img id='hint-wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
 			</div>
+		</div>
+		<div id='events-wrapper'>
+			<h1>近期活动</h1>
+			<div id='timeline'></div>
 		</div>
 		<div id='posts-wrapper' class='ease'>
 			<h1>编辑精选　<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a></h1>
@@ -123,10 +127,6 @@ Template Name: 主页
 					<?php //End Loop  ?>
 				<?php endforeach; wp_reset_postdata();?>
 			</div>
-		</div>
-		<div id='events-wrapper'>
-			<h1>近期活动</h1>
-			<div id='timeline'></div>
 		</div>
 	</div>
 	<!-- Piwik -->
