@@ -30,6 +30,7 @@ Timeline.prototype.start = function ( container, options ) {
         _this.data = jsonData;
         _this.count = jsonData.length;
         _this.parseDateTime();
+        _this.container.empty();
         _this.render();
     })
     .fail(function ( errorMsg ) {
@@ -112,6 +113,8 @@ MobileHome.prototype.resize = function() {
         .css('margin-right', _this.elementMargin);
     $('div.timeline-entry img.entry-cover').height(_this.height - 8);
     _this.scrollWrapper.width((_this.count + 2) * _this.elementFullWidth);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 MobileHome.prototype.render = function () {
@@ -157,9 +160,8 @@ MobileHome.prototype.render = function () {
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
-    _this.resize();
     _this.currentPosition = 1;
-    _this.movePosition(1);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -233,11 +235,13 @@ MobileDetail.prototype.resize = function () {
     _this.elementFullWidth = _this.width;
     $('div.timeline-entry').width(_this.elementWidth)
         .css('margin-right', _this.elementMargin);
-    $('div.entry-cover').width(_this.elementWidth)
-        .height(Math.floor(_this.elementWidth * 3 / 2));
-    _this.height = Math.floor(_this.elementWidth * 3 / 2) + 125;
+    $('.entry-footer p').width(_this.width - 40);
+    $('.entry-cover').height(Math.floor(_this.elementWidth * 3 / 2));
+    _this.height = Math.floor(_this.elementWidth * 3 / 2) + 100;
     _this.container.height(_this.height);
     _this.scrollWrapper.width((_this.count + 2) * _this.elementFullWidth);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 MobileDetail.prototype.render = function () {
@@ -296,9 +300,8 @@ MobileDetail.prototype.render = function () {
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
-    _this.resize();
     _this.currentPosition = 1;
-    _this.movePosition(1);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -331,7 +334,7 @@ MobileDetail.prototype.expand = function () {
                 'opacity': 1
             });
         }, 50);
-        entry.dom.expandBox.css('height', 185 + entry.dom.description.height());
+        entry.dom.expandBox.css('height', 140 + entry.dom.description.height());
     }
 };
 
@@ -344,7 +347,7 @@ MobileDetail.prototype.collapse = function () {
         setTimeout(function () {
             entry.dom.description.css('visibility', 'hidden');
         }, 100);
-        entry.dom.expandBox.css('height', 125);
+        entry.dom.expandBox.css('height', 100);
     }
 };
 
