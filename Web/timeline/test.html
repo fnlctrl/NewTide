@@ -5,8 +5,8 @@
         <title>test</title>
         <link rel="stylesheet" href="test.css">        
         <link rel="stylesheet" href="timeline.css">
-        <script src="../jquery-2.1.0.min.js"></script>
-        <script src="../hammer-2.0.4.min.js"></script>
+        <script src="../js/jquery-2.1.0.min.js"></script>
+        <script src="../js/hammer-2.0.4.min.js"></script>
         <script src="timeline.js"></script>
     </head>
     <body>
@@ -14,7 +14,7 @@
         <button onclick="TIMELINE.moveLeft();">move left</button>
         <button onclick="TIMELINE.moveRight();">move right</button>
         <script>
-            var TIMELINE = new DesktopTimeline();
+            var TIMELINE = new MobileHome();
             TIMELINE.start($('#container'));
         </script>
     </body>

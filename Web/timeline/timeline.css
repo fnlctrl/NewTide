@@ -51,13 +51,14 @@ img {
 .mobile-home-timeline-container .scroll-content .timeline-entry {
   position: relative;
   float: left;
+  margin-top: .8em;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-header {
-  position: relative;
-  margin-top: .8em;
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 2.4em;
-  background-color: #10c6dc;
+  background-color: rgba(16, 198, 220, 0.9);
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-header p.entry-group {
   position: absolute;
@@ -76,14 +77,14 @@ img {
   overflow: hidden;
   white-space: nowrap;
 }
-.mobile-home-timeline-container .scroll-content .timeline-entry p.entry-date {
+.mobile-home-timeline-container .scroll-content .timeline-entry .entry-date {
   position: absolute;
-  top: .2em;
+  top: -0.6em;
   right: .6em;
   width: 3.6em;
   height: 3.6em;
   padding: .6em 0;
-  border-radius: 3em;
+  border-radius: 3.6em;
   color: white;
   text-align: center;
   line-height: 1.2em;
@@ -95,18 +96,18 @@ img {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.mobile-home-timeline-container .scroll-content .timeline-entry img.entry-cover {
+.mobile-home-timeline-container .scroll-content .timeline-entry .entry-cover {
   display: block;
   position: relative;
   top: 0;
   width: 100%;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-footer {
-  position: relative;
-  top: 0;
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 2.4em;
-  background-color: #10c6dc;
+  background-color: rgba(16, 198, 220, 0.9);
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-title {
   position: relative;
@@ -274,6 +275,7 @@ img {
   position: relative;
   float: left;
   height: 100%;
+  margin: 0 50px;
 }
 .desktop-timeline-container .main-panel .scroll-content .timeline-entry img.entry-cover {
   display: block;
@@ -285,6 +287,19 @@ img {
   top: 0;
   line-height: 1.8em;
   overflow-y: auto;
+}
+.desktop-timeline-container .main-panel:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background: -webkit-linear-gradient(to right, white, transparent 50px), -webkit-linear-gradient(to left, white, transparent 50px);
+  background: -moz-linear-gradient(to right, white, transparent 50px), -moz-linear-gradient(to left, white, transparent 50px);
+  background: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
+  z-index: 20;
 }
 .desktop-timeline-container .control-panel {
   position: relative;
@@ -301,16 +316,7 @@ img {
   display: block;
   clear: both;
 }
-.desktop-timeline-container .control-panel .panel-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 40px;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-.desktop-timeline-container .control-panel .panel-left .button-left {
+.desktop-timeline-container .control-panel .button-left {
   display: block;
   position: absolute;
   left: 5px;
@@ -320,32 +326,24 @@ img {
   padding: 5px;
   z-index: 50;
   cursor: pointer;
+  background-image: url('./left-arrow.svg');
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.desktop-timeline-container .control-panel .panel-left .button-left:hover {
+.desktop-timeline-container .control-panel .button-left:hover {
   left: 0;
 }
-.desktop-timeline-container .control-panel .panel-left .button-left:active {
+.desktop-timeline-container .control-panel .button-left:active {
   left: -5px;
 }
-.desktop-timeline-container .control-panel .panel-left.disabled .button-left {
+.desktop-timeline-container .control-panel .button-left.disabled {
   cursor: default;
   left: 5px;
 }
-.desktop-timeline-container .control-panel .panel-left.disabled .button-left path {
+.desktop-timeline-container .control-panel .button-left.disabled path {
   fill: #aaaaaa;
 }
-.desktop-timeline-container .control-panel .panel-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 40px;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-.desktop-timeline-container .control-panel .panel-right .button-right {
+.desktop-timeline-container .control-panel .button-right {
   display: block;
   position: absolute;
   right: 5px;
@@ -355,20 +353,21 @@ img {
   padding: 5px;
   z-index: 50;
   cursor: pointer;
+  background-image: url('./right-arrow.svg');
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.desktop-timeline-container .control-panel .panel-right .button-right:hover {
+.desktop-timeline-container .control-panel .button-right:hover {
   right: 0;
 }
-.desktop-timeline-container .control-panel .panel-right .button-right:active {
+.desktop-timeline-container .control-panel .button-right:active {
   right: -5px;
 }
-.desktop-timeline-container .control-panel .panel-right.disabled .button-right {
+.desktop-timeline-container .control-panel .button-right.disabled {
   cursor: default;
   right: 5px;
 }
-.desktop-timeline-container .control-panel .panel-right.disabled .button-right path {
+.desktop-timeline-container .control-panel .button-right.disabled path {
   fill: #aaaaaa;
 }
 .desktop-timeline-container .control-panel .scroll-info {
@@ -467,14 +466,14 @@ img {
 .desktop-timeline-container .date-panel .scroll-date p.entry-date {
   position: relative;
   float: left;
-  width: 60px;
+  width: 64px;
   height: 34px;
   font-size: 14px;
   color: #aaaaaa;
   text-align: center;
   line-height: 24px;
   padding-top: 10px;
-  margin: 0 5px;
+  margin: 0 3px;
   cursor: pointer;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
