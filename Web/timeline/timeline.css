@@ -153,11 +153,9 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer {
   position: relative;
-  height: 125px;
+  height: 10em;
   width: 100%;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-bottom: 5px;
+  padding: 1.5em 1em .5em 1em;
   background-color: #3ccee0;
   color: white;
   -webkit-box-sizing: border-box;
@@ -166,9 +164,9 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-group {
   position: relative;
-  font-size: 36px;
-  line-height: 46px;
-  height: 46px;
+  font-size: 2.4em;
+  line-height: 32px;
+  height: 32px;
   z-index: 100;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
@@ -177,9 +175,9 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-title {
   position: relative;
-  font-size: 20px;
-  line-height: 28px;
-  height: 28px;
+  font-size: 1.8em;
+  line-height: 24px;
+  height: 24px;
   z-index: 100;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
@@ -188,9 +186,9 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-time-location {
   position: relative;
-  font-size: 18px;
-  line-height: 26px;
-  height: 26px;
+  font-size: 1.4em;
+  line-height: 24px;
+  height: 24px;
   z-index: 100;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
@@ -201,7 +199,7 @@ img {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 125px;
+  height: 10em;
   -webkit-transition: all 0.1s ease;
   transition: all 0.1s ease;
 }
@@ -222,7 +220,7 @@ img {
   height: 4px;
   margin-left: 50%;
   left: -22px;
-  margin-top: 5px;
+  margin-top: .5em;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -232,10 +230,10 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-expand-box .expand-wrapper p.entry-description {
   position: relative;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 1.6em;
+  line-height: 1.5em;
   width: 100%;
-  padding: 20px 20px;
+  padding: 1em;
   color: white;
   opacity: 0;
   visibility: hidden;
@@ -320,14 +318,14 @@ img {
 .desktop-timeline-container .control-panel .button-left {
   display: block;
   position: absolute;
-  left: 5px;
+  left: 10px;
   top: 45px;
   width: 20px;
   height: 40px;
   padding: 5px;
   z-index: 50;
   cursor: pointer;
-  background-image: url('./left-arrow.svg');
+  background: url('./left-arrow.svg'), content-box, no-repeat;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
@@ -354,7 +352,7 @@ img {
   padding: 5px;
   z-index: 50;
   cursor: pointer;
-  background-image: url('./right-arrow.svg');
+  background: url('./right-arrow.svg'), content-box, no-repeat;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }

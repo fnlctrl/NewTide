@@ -30,6 +30,7 @@ Timeline.prototype.start = function ( container, options ) {
         _this.data = jsonData;
         _this.count = jsonData.length;
         _this.parseDateTime();
+        _this.container.empty();
         _this.render();
     })
     .fail(function ( errorMsg ) {
@@ -112,6 +113,8 @@ MobileHome.prototype.resize = function() {
         .css('margin-right', _this.elementMargin);
     $('div.timeline-entry img.entry-cover').height(_this.height - 8);
     _this.scrollWrapper.width((_this.count + 2) * _this.elementFullWidth);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 MobileHome.prototype.render = function () {
@@ -157,9 +160,8 @@ MobileHome.prototype.render = function () {
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
-    _this.resize();
     _this.currentPosition = 1;
-    _this.movePosition(1);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -233,11 +235,13 @@ MobileDetail.prototype.resize = function () {
     _this.elementFullWidth = _this.width;
     $('div.timeline-entry').width(_this.elementWidth)
         .css('margin-right', _this.elementMargin);
-    $('div.entry-cover').width(_this.elementWidth)
-        .height(Math.floor(_this.elementWidth * 3 / 2));
-    _this.height = Math.floor(_this.elementWidth * 3 / 2) + 125;
+    $('.entry-footer p').width(_this.width - 40);
+    $('.entry-cover').height(Math.floor(_this.elementWidth * 3 / 2));
+    _this.height = Math.floor(_this.elementWidth * 3 / 2) + 100;
     _this.container.height(_this.height);
     _this.scrollWrapper.width((_this.count + 2) * _this.elementFullWidth);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 MobileDetail.prototype.render = function () {
@@ -296,9 +300,8 @@ MobileDetail.prototype.render = function () {
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
-    _this.resize();
     _this.currentPosition = 1;
-    _this.movePosition(1);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -331,7 +334,7 @@ MobileDetail.prototype.expand = function () {
                 'opacity': 1
             });
         }, 50);
-        entry.dom.expandBox.css('height', 185 + entry.dom.description.height());
+        entry.dom.expandBox.css('height', 140 + entry.dom.description.height());
     }
 };
 
@@ -344,7 +347,7 @@ MobileDetail.prototype.collapse = function () {
         setTimeout(function () {
             entry.dom.description.css('visibility', 'hidden');
         }, 100);
-        entry.dom.expandBox.css('height', 125);
+        entry.dom.expandBox.css('height', 100);
     }
 };
 
@@ -437,6 +440,8 @@ DesktopTimeline.prototype.resize = function () {
     _this.scrollInfo.width(_this.count * _this.infoFullWidth);
     _this.scrollDate.width(_this.count * _this.dateFullWidth);
     _this.dateStartPos = Math.floor((_this.width - _this.dateFullWidth) / 2);
+
+    _this.movePosition(_this.currentPosition);
 };
 
 DesktopTimeline.prototype.render = function () {
@@ -522,9 +527,8 @@ DesktopTimeline.prototype.render = function () {
     _this.scrollWrapper.appendTo(_this.mainPanel);
     _this.scrollInfo.appendTo(_this.controlPanel);
     _this.scrollDate.appendTo(_this.datePanel);
-    _this.resize();
     _this.currentPosition = 0;
-    _this.movePosition(0);
+    _this.resize();
     $(window).on('resize', function() {
         _this.resize();
     });
@@ -556,18 +560,14 @@ DesktopTimeline.prototype.movePosition = function ( pos ) {
         _this.currentPosition = pos;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
-            console.log('disabled left');
-            _this.panelLeft.addClass('disabled');
-        } else {
-            console.log('enabled left');
-            _this.panelLeft.removeClass('disabled');
-        }
-        if (_this.currentPosition === 0) {
-            console.log('disabled right');
             _this.panelRight.addClass('disabled');
         } else {
-            console.log('enabled right');
             _this.panelRight.removeClass('disabled');
+        }
+        if (_this.currentPosition === 0) {
+            _this.panelLeft.addClass('disabled');
+        } else {
+            _this.panelLeft.removeClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
@@ -586,14 +586,12 @@ DesktopTimeline.prototype.moveLeft = function () {
     console.log('not exiting');
     if (!_this.moveLock) {
         _this.moveLock = true;
-        console.log('enabled right');
-        _this.panelRight.removeClass('disabled');
+        _this.panelLeft.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition + 1;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
-            console.log('disabled left');
-            _this.panelLeft.addClass('disabled');
+            _this.panelRight.addClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
@@ -610,14 +608,12 @@ DesktopTimeline.prototype.moveRight = function () {
     }
     if (!_this.moveLock) {
         _this.moveLock = true;
-        console.log('enabled left');
-        _this.panelLeft.removeClass('disabled');
+        _this.panelRight.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition - 1;
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition === 0) {
-            console.log('disabled right');
-            _this.panelRight.addClass('disabled');
+            _this.panelLeft.addClass('disabled');
         }
 
         _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
