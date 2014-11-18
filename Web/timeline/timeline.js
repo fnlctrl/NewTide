@@ -533,10 +533,10 @@ DesktopTimeline.prototype.render = function () {
         _this.movePosition($('.entry-date').index(this));
     });
     _this.buttonLeft.on('click', function () {
-        _this.moveLeft();
+        _this.moveRight();
     });
     _this.buttonRight.on('click', function () {
-        _this.moveRight();
+        _this.moveLeft();
     });
     _this.hammer = new Hammer(_this.container[0]);
     _this.hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
