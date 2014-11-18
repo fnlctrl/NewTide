@@ -2,14 +2,15 @@
     position: absolute;
     height: calc(100% - 120px);
     bottom: 20px;
-    width: 88%;
-    left: 6%;
+    width: 97%;
+    left: 10px;
 }
 #events-wrapper {
 	position: absolute;
 	left: 50%;
 	height: 100%;
 	width: 50%;
+    z-index: 0;
 }
 #posts-wrapper {
 	position: absolute;
@@ -23,6 +24,9 @@ h1 {
 	color: #ed6d7f;
 	line-height: 28px;
 	font-size: 28px;
+}
+#events-wrapper h1 {
+    margin: 50px 0 0 60px;
 }
 .more {
 	color: #ed6d7f;

@@ -300,7 +300,7 @@ a {
 
 /* Front Page */
 #events-wrapper {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -319,7 +319,6 @@ a {
     position: relative;
     height: auto;
 	width: 100%;
-    top: 330px;
 	left: 0;
     margin: 0;
 }
