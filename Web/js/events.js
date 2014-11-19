@@ -2,12 +2,13 @@ $(function() {
 	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		timeline = new MobileDetail();
-		timeline.start($('#timeline'),{
+		timeline.start($('#timeline-mobile'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
 			'backgroundColor': '#eee'
 		});
+		setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
 	} else {
 		var $events = $('.intro-event-info'),
 			$items = $('.intro-item'),

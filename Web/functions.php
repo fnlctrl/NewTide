@@ -86,13 +86,18 @@ function my_login_logo_url_title() {
     return '水朝夕而至，曰潮';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
-// enable contributors to upload file
-function allow_contributor_uploads() {
+// enable contributors and authors to upload file and read unpublished posts
+function allow_upload_and_read() {
 	$contributor = get_role('contributor');
 	$contributor->add_cap('upload_files');
+	$contributor->add_cap('read_private_pages');
+	$contributor->add_cap('read_private_posts');
+	$author = get_role('author');
+	$author->add_cap('read_private_pages');
+	$author->add_cap('read_private_posts');
 }
-if ( current_user_can('contributor') && !current_user_can('upload_files') ) {
-	add_action('admin_init', 'allow_contributor_uploads');
+if ( current_user_can('contributor') || current_user_can('author')) {
+	add_action('admin_init', 'allow_upload_and_read');
 }
 // Ajax login
 function ajax_login(){

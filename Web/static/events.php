@@ -9,6 +9,7 @@ Template Name: 线下活动
 	<meta charset='UTF-8'/> 
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="mobile-web-app-capable" content="yes">
 	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
@@ -132,6 +133,7 @@ Template Name: 线下活动
 			<div id='timeline'></div>
 		</div>
 	</div>
+	<div id='timeline-mobile'></div>
 </body>
 </html>
 

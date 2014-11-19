@@ -512,7 +512,7 @@ $(function(){
 		});
 		status.needBook = false;
 		book = null;
-		if ($('#wp-wrapper').html()) {
+		if ($('.sidebar-item-current').html()) {
 			var href = $('.sidebar-item-current').attr('href');
 			var text = $('.sidebar-item-current').text().trim()
 			$topbarTitle.html('<a href="'+href+'">'+text+'</a>');

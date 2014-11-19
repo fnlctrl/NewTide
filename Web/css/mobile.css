@@ -7,6 +7,9 @@
 .wp-thumbnail {
 	display	: none;
 }
+#timeline-mobile {
+    display: none;
+}
 
 @media (max-width : 400px){
 
@@ -315,6 +318,15 @@ a {
     left: 0;
     bottom: 0;
 }
+#timeline-mobile {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+}
 #posts-wrapper {
     position: relative;
     height: auto;
@@ -339,7 +351,6 @@ a {
 .more {
 	color: #999;
 }
-
 /* Wordpress wrapper */
 #wp-wrapper {
     width: 100%;
