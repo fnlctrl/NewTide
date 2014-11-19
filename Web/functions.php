@@ -92,8 +92,10 @@ function allow_upload_and_read() {
 	$contributor->add_cap('upload_files');
 	$contributor->add_cap('read_private_pages');
 	$contributor->add_cap('read_private_posts');
+	$contributor->add_cap('read_post');
 	$author = get_role('author');
 	$author->add_cap('read_private_pages');
+	$author->add_cap('read_post');
 	$author->add_cap('read_private_posts');
 }
 if ( current_user_can('contributor') || current_user_can('author')) {
