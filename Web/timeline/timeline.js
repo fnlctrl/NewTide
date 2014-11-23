@@ -7,7 +7,9 @@ var defaultOptions = {
     'dataLocation': 'timeline.json',
     'maxEntryNumber': 999,
     'switchInterval': 10000,
-    'backgroundColor': '#FFF'
+    'backgroundColor': '#FFF',
+    'siteUrl': 'http://tide.myqsc.com/',
+    'startDate': 'nearest'
 };
 
 var Timeline = function() {
@@ -40,6 +42,12 @@ Timeline.prototype.start = function ( container, options ) {
 
 Timeline.prototype.parseDateTime = function() {
     var _this = this;
+    var today = new Date(),
+        yyyy = today.getFullYear(),
+        dd = today.getDate(),
+        mm = today.getMonth() + 1;
+    console.log(mm + ' ' + dd);
+    _this.nearestEntry = _this.count - 1;
     $.each(_this.data, function (i, entry) {
         var date = entry.date.split(','),
             year = date[0],
@@ -50,15 +58,21 @@ Timeline.prototype.parseDateTime = function() {
             weekday = (day + Math.floor(2.6 * month - 0.2) - 2 * ye + ar +
                 Math.floor(ye / 4) + Math.floor(ar / 4)) % 7;
         entry.parsedDate = {
-            'year': year,
+            'year': parseInt(year),
             'yearStr': ('0' + year).substr(-4),
-            'month': month,
+            'month': parseInt(month),
             'monthStr': ('0' + month).substr(-2),
-            'day': day,
+            'day': parseInt(day),
             'dayStr': ('0' + day).substr(-2),
             'weekday': weekday,
             'weekdayStr': weekdays[weekday]
         };
+        if (_this.nearestEntry === _this.count - 1 && (yyyy < entry.parsedDate.year ||
+            ((yyyy == entry.parsedDate.year) && ((mm < entry.parsedDate.month) ||
+            (mm == entry.parsedDate.month) && (dd <= entry.parsedDate.day))))) {
+            _this.nearestEntry = i;
+        }
+        console.log(_this.nearestEntry);
         if (entry.time === '') {
             entry.hasTime = false;
         } else {
@@ -102,12 +116,13 @@ MobileHome.prototype.constructor = MobileHome;
 
 MobileHome.prototype.resize = function() {
     var _this = this;
-    _this.height = _this.container.height();
     _this.width = _this.container.width();
-    _this.elementHeight = _this.height - 8;
-    _this.elementWidth = Math.floor(_this.elementHeight * 2 / 3);
-    _this.elementMargin = _this.width - 2 * _this.elementWidth;
-    _this.elementFullWidth = _this.width - _this.elementWidth;
+    _this.elementMargin = 5;
+    _this.elementWidth = Math.floor((_this.width - _this.elementMargin) / 2);
+    _this.elementFullWidth = _this.elementWidth + _this.elementMargin;
+    _this.elementHeight = Math.floor(_this.elementWidth * 3 / 2);
+    _this.height = _this.elementHeight + 8;
+    _this.container.height(_this.height);
     $('div.timeline-entry').height(_this.elementHeight)
         .width(_this.elementWidth)
         .css('margin-right', _this.elementMargin);
@@ -155,12 +170,20 @@ MobileHome.prototype.render = function () {
             .addClass('entry-title')
             .html(entry.eventTitle)
             .appendTo(newElement.footer);
+        newElement.parent.on('click', function () {
+            window.location.href = _this.config.siteUrl + 'events#' + _this.currentPosition;
+        });
         _this.data[i].dom = newElement;
     });
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
-    _this.currentPosition = 1;
+    if (_this.config.startDate === 'nearest') {
+        _this.currentPosition = _this.nearestEntry + 1;
+        console.log('moving to nearest');
+    } else {
+        _this.currentPosition = 1;
+    }
     _this.resize();
     $(window).on('resize', function() {
         _this.resize();
@@ -252,6 +275,7 @@ MobileDetail.prototype.render = function () {
     _this.container.addClass('mobile-detail-timeline-container')
         .css('background-color', _this.config.backgroundColor);
     _this.scrollWrapper = $('<div></div>').addClass('scroll-content');
+    _this.scrollWrapper.appendTo(_this.container);
     $.each(_this.data, function(i, entry) {
         var newElement = {};
         newElement.parent = $('<div></div>')
@@ -295,12 +319,27 @@ MobileDetail.prototype.render = function () {
             .addClass('entry-description')
             .html(entry.text)
             .appendTo(newElement.expandWrapper);
+        newElement.expandWrapper.on('click', function () {
+            if (_this.data[_this.currentPosition - 1].expanded) {
+                _this.collapse();
+            } else {
+                _this.expand();
+            }
+        });
         _this.data[i].dom = newElement;
     });
     _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
     _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
-    _this.scrollWrapper.appendTo(_this.container);
-    _this.currentPosition = 1;
+    if (window.location.hash) {
+        _this.currentPosition = parseInt(window.location.hash.substr(1));
+    } else {
+        if (_this.config.startDate === 'nearest') {
+            console.log('moving to nearest');
+            _this.currentPosition = _this.nearestEntry + 1;
+        } else {
+            _this.currentPosition = 1;
+        }
+    }
     _this.resize();
     $(window).on('resize', function() {
         _this.resize();
@@ -360,6 +399,7 @@ MobileDetail.prototype.movePosition = function ( pos ) {
         _this.scrollWrapper.removeClass('scroll-transition');
         _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
         _this.moveLock = false;
+        window.location.hash = _this.currentPosition;
     }
 };
 
@@ -378,6 +418,7 @@ MobileDetail.prototype.moveLeft = function () {
             _this.currentPosition = _this.currentPosition + 1;
             _this.scrollWrapper.addClass('scroll-transition');
             _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+            window.location.hash = _this.currentPosition;
         }, 50);
         _this.moveLock = false;
     }
@@ -399,6 +440,7 @@ MobileDetail.prototype.moveRight = function () {
             _this.currentPosition = _this.currentPosition - 1;
             _this.scrollWrapper.addClass('scroll-transition');
             _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+            window.location.hash = _this.currentPosition;
         }, 50);
         _this.moveLock = false;
     }
@@ -527,7 +569,11 @@ DesktopTimeline.prototype.render = function () {
     _this.scrollWrapper.appendTo(_this.mainPanel);
     _this.scrollInfo.appendTo(_this.controlPanel);
     _this.scrollDate.appendTo(_this.datePanel);
-    _this.currentPosition = 0;
+    if (_this.config.startDate === 'nearest') {
+        _this.currentPosition = _this.nearestEntry;
+    } else {
+        _this.currentPosition = 0;
+    }
     _this.resize();
     $(window).on('resize', function() {
         _this.resize();
