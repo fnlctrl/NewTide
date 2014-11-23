@@ -295,9 +295,10 @@ img {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background: -webkit-linear-gradient(to right, white, transparent 50px), -webkit-linear-gradient(to left, white, transparent 50px);
-  background: -moz-linear-gradient(to right, white, transparent 50px), -moz-linear-gradient(to left, white, transparent 50px);
-  background: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
+  background-color: white;
+  background-image: -webkit-linear-gradient(left, white, transparent 50px), -webkit-linear-gradient(right, white, transparent 50px);
+  background-image: -moz-linear-gradient(left, white, transparent 50px), -moz-linear-gradient(right, white, transparent 50px);
+  background-image: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
   z-index: 20;
 }
 .desktop-timeline-container .control-panel {
@@ -422,9 +423,10 @@ img {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background: -webkit-linear-gradient(to right, white, transparent 50px), -webkit-linear-gradient(to left, white, transparent 50px);
-  background: -moz-linear-gradient(to right, white, transparent 50px), -moz-linear-gradient(to left, white, transparent 50px);
-  background: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
+  background-color: white;
+  background-image: -webkit-linear-gradient(left, white, transparent 50px), -webkit-linear-gradient(right, white, transparent 50px);
+  background-image: -moz-linear-gradient(left, white, transparent 50px), -moz-linear-gradient(right, white, transparent 50px);
+  background-image: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
   z-index: 20;
 }
 .desktop-timeline-container .date-panel {
@@ -498,8 +500,9 @@ img {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background: -webkit-linear-gradient(to right, white, transparent 10%, transparent 90%, white);
-  background: -moz-linear-gradient(to right, white, transparent 10%, transparent 90%, white);
-  background: linear-gradient(to right, white, transparent 10%, transparent 90%, white);
+  background-color: white;
+  background-image: -webkit-linear-gradient(left, white, transparent 10%, transparent 90%, white);
+  background-image: -moz-linear-gradient(left, white, transparent 10%, transparent 90%, white);
+  background-image: linear-gradient(to right, white, transparent 10%, transparent 90%, white);
   z-index: 20;
 }
