@@ -14,7 +14,6 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 ); // Display relatio
 remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that is generated on the wp_head hook, WP version
 show_admin_bar(false);
 
-
 // enqueue scripts
 function theme_scripts() {
 	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);
@@ -208,17 +207,6 @@ add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
 // replace all gravatar with local default image
 add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 function remove_gravatar( $avatar ) {
-	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);}
+	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);
+}
 ?>
-
-
-
-
-
-
-
-
-
-
-
-

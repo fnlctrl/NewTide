@@ -80,33 +80,23 @@
 	},
 
 	{
-		"date":"2014,11,28",
-		"time":"00:00-00:00",
-		"location":"紫金港 小剧场B座209",
-		"eventTitle":"待定",
-		"eventGroup":"潮声潮影",
-		"text":"待定",
-		"media":""
-	},
-
-	{
 		"date":"2014,11,29",
 		"time":"18:30-21:00",
 		"location":"紫金港 小剧场",
 		"eventTitle":"《横道世之介》",
 		"eventGroup":"求是电影课",
 		"text":"你会如何回忆我，带着笑或是很沉默。",
-		"media":""
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/海报_横道世之介.png"
 	},
 
 	{
-		"date":"2014,11,30",
-		"time":"18:30-21:00",
-		"location":"00:00-00:00",
+		"date":"2014,12,31",
+		"time":"",
+		"location":"",
 		"eventTitle":"更多活动<br/>待更新",
-		"eventGroup":"待定",
-		"text":"待定",
-		"media":""
+		"eventGroup":"",
+		"text":"",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/default_poster.jpg"
 	}
 ]
 
