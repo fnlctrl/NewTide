@@ -9,12 +9,18 @@ Template Name: Search Page
 	<meta charset='UTF-8'/>
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
-	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
+	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
+	<script>
+		window._config = {
+			numColumns : 1
+		}
+	</script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -92,12 +98,5 @@ Template Name: Search Page
 		<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 		<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
 	</div>
-	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
-	<script>
-		window._config = {
-			numColumns : 1
-		}
-	</script>
 </body>
 </html>

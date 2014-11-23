@@ -10,8 +10,7 @@ Template Name: 主页
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
@@ -103,7 +102,7 @@ Template Name: 主页
 					'orderby' => 'post_date',
 					'order' => 'DESC',
 					'post_type' => 'post',
-					'category__not_in'=> array(get_cat_ID('设计品'),-get_cat_ID('编辑精选')),
+					'category__not_in'=> array(get_cat_ID('设计品'),get_cat_ID('编辑精选')),
 					'post_status' => 'publish',
 				);
 				$query_latest = new WP_Query( $args2 );

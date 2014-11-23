@@ -1,4 +1,7 @@
-<?php $user = wp_get_current_user()?>
+<?php
+	$user = wp_get_current_user();
+	$useragent=$_SERVER['HTTP_USER_AGENT'];
+?>
 <div id='topbar' class='fixed'>
 	<form class='topbar-search-wrapper search-wrapper ease'>
 		<input id='topbar-search-input' type='text' name='s' onblur="this.value=''"/>
@@ -37,7 +40,7 @@
 			<div id='sidebar-qrcode'></div>
 		</div>
 	</div>
-	<a href="<?php bloginfo('url'); ?>"><img id='sidebar-logo' src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
+	<a id='sidebar-logo' href="<?php bloginfo('url'); ?>"><img src='<?php bloginfo('template_url');?>/img/sidebar-logo.svg'/></a>
 	<div id='sidebar-top'>
 		<img id='user-head' src='<?php echo get_avatar_url(get_avatar(  $user->user_email,150)); ?>'/>
 		<div id='user-id'>
@@ -48,7 +51,7 @@
 			<?php endif; ?>
 		</div>
 	</div>
-	<form class='search-wrapper ease' id='sidebar-search-wrapper'>
+	<form id='sidebar-search-wrapper' class='search-wrapper ease'>
 		<input class='ease' id='sidebar-search-input' type='text' name='s' onblur="this.value=''"/>
 		<img id='sidebar-search-icon' class='svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-search.svg'/>
 	</form>
