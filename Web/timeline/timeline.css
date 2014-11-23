@@ -295,7 +295,7 @@ img {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background-color: white;
+  /*background-color: white;*/
   background-image: -webkit-linear-gradient(left, white, transparent 50px), -webkit-linear-gradient(right, white, transparent 50px);
   background-image: -moz-linear-gradient(left, white, transparent 50px), -moz-linear-gradient(right, white, transparent 50px);
   background-image: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
@@ -423,7 +423,7 @@ img {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background-color: white;
+  /*background-color: white;*/
   background-image: -webkit-linear-gradient(left, white, transparent 50px), -webkit-linear-gradient(right, white, transparent 50px);
   background-image: -moz-linear-gradient(left, white, transparent 50px), -moz-linear-gradient(right, white, transparent 50px);
   background-image: linear-gradient(to right, white, transparent 50px), linear-gradient(to left, white, transparent 50px);
