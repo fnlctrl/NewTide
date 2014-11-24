@@ -1,12 +1,13 @@
 $(function(){
-	var _timeline;
+	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		_timeline = new MobileHome();
-		_timeline.start($('#timeline'),{
+		timeline = new MobileHome();
+		timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 5000,
-			'backgroundColor': '#eee'
+			'backgroundColor': '#eee',
+			'siteUrl': 'http://tide.myqsc.com/'
 		});
 	} else {
 		var $firstLoadHintWrapper = $('#hint-wrapper'),
@@ -23,8 +24,8 @@ $(function(){
 			localStorage.firstLoad = 'false';
 			$postsWrapper.css({left:0,width:'50%'});
 		});
-		_timeline = new DesktopTimeline();
-		_timeline.start($('#timeline'),{
+		timeline = new DesktopTimeline();
+		timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
