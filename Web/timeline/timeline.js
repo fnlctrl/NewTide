@@ -11,7 +11,8 @@ var defaultOptions = {
     'backgroundColor': '#FFF',
     'siteUrl': 'http://tide.myqsc.com/wp/',
     'startDate': 'nearest',
-    'debounce': 200
+    'debounce': 200,
+    'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/newtide/img/default-poster.svg'
 };
 
 var Timeline = function() {
@@ -165,6 +166,9 @@ MobileHome.prototype.render = function () {
             .html(entry.parsedDate.weekdayStr + '<br/>' + 
                 entry.parsedDate.monthStr + '/' + entry.parsedDate.dayStr)
             .appendTo(newElement.parent);
+        if (entry.media === '') {
+            entry.media = _this.config.defaultImage;
+        }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
             .attr('src', entry.media)
@@ -288,6 +292,9 @@ MobileDetail.prototype.render = function () {
         newElement.parent = $('<div></div>')
             .addClass('timeline-entry')
             .appendTo(_this.scrollWrapper);
+        if (entry.media === '') {
+            entry.media = _this.config.defaultImage;
+        }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
             .attr('src', entry.media)
@@ -533,6 +540,9 @@ DesktopTimeline.prototype.render = function () {
         newElement.parent = $('<div></div>')
             .addClass('timeline-entry')
             .appendTo(_this.scrollWrapper);
+        if (entry.media === '') {
+            entry.media = _this.config.defaultImage;
+        }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
             .attr('src', entry.media)
