@@ -14,6 +14,8 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 ); // Display relatio
 remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that is generated on the wp_head hook, WP version
 show_admin_bar(false);
 
+require_once 'Mobile_Detect.php';
+
 // enqueue scripts
 function theme_scripts() {
 	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);

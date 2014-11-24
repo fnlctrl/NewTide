@@ -1,8 +1,8 @@
 $(function(){
-	var timeline;
+	var _timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		timeline = new MobileHome();
-		timeline.start($('#timeline'),{
+		_timeline = new MobileHome();
+		_timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
@@ -23,8 +23,8 @@ $(function(){
 			localStorage.firstLoad = 'false';
 			$postsWrapper.css({left:0,width:'50%'});
 		});
-		timeline = new DesktopTimeline();
-		timeline.start($('#timeline'),{
+		_timeline = new DesktopTimeline();
+		_timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,

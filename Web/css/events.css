@@ -31,9 +31,6 @@ h1 {
 }
 #intro-events-list {
 	width: auto;
-	/*position: absolute;*/
-    /*padding: 100px 30px 30px 100px;*/
-    /*background: rgba(255,255,255,0.9);*/
     top: 0;
     left: 0;
 }

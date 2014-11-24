@@ -11,7 +11,6 @@ Template Name: 线下活动
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/events.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />

@@ -17,7 +17,8 @@ Template Name: 主页
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script>
-		dataLocation ='<?php bloginfo("template_url");?>/new.json';
+//		dataLocation ='<?php //bloginfo("template_url");?>///new.json';
+		dataLocation ='http://localhost/wordpress/wp-content/uploads/2014/11/test.doc';
 	</script>
 	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
@@ -36,7 +37,7 @@ Template Name: 主页
 				<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
 				<div id='text'>
 					<p>
-					　　你好，我们是水朝夕工作室，因为共同爱好聚在一起的一群人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
+					　　你好，我们是水朝夕工作室，因为共同爱好而聚在一起的一群人。现在你看到的，是我们尝试与有爱的大家联系的窗口<br/>
 					</p>
 					<hr>
 					<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>
