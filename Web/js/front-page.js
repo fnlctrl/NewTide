@@ -5,7 +5,7 @@ $(function(){
 		_timeline.start($('#timeline'),{
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
-			'switchInterval': 10000,
+			'switchInterval': 5000,
 			'backgroundColor': '#eee'
 		});
 	} else {
@@ -28,7 +28,8 @@ $(function(){
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
-			'backgroundColor': '#fff'
+			'backgroundColor': '#fff',
+			'debounce': 300
 		});
 	}
 });
