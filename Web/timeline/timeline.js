@@ -10,7 +10,8 @@ var defaultOptions = {
     'switchInterval': 10000,
     'backgroundColor': '#FFF',
     'siteUrl': 'http://tide.myqsc.com/',
-    'startDate': 'nearest'
+    'startDate': 'nearest',
+    'debounce': 200
 };
 
 var Timeline = function() {
@@ -34,6 +35,7 @@ Timeline.prototype.start = function ( container, options ) {
         _this.count = jsonData.length;
         _this.parseDateTime();
         _this.container.empty();
+        _this.resizeDebounceLock = false;
         _this.render();
     })
     .fail(function ( errorMsg ) {
@@ -457,6 +459,7 @@ DesktopTimeline.prototype.resize = function () {
     var _this = this;
     _this.width = _this.container.width();
     _this.height = _this.container.height();
+    console.log(_this.width + ' ' + _this.height);
     _this.elementWidth = _this.width - 100;
     _this.elementHeight = _this.height - 195;
     _this.elementMargin = 100;
@@ -485,6 +488,7 @@ DesktopTimeline.prototype.resize = function () {
     _this.dateStartPos = Math.floor((_this.width - _this.dateFullWidth) / 2);
 
     _this.movePosition(_this.currentPosition);
+    _this.resizeDebounceLock = false;
 };
 
 DesktopTimeline.prototype.render = function () {
@@ -577,7 +581,12 @@ DesktopTimeline.prototype.render = function () {
     }
     _this.resize();
     $(window).on('resize', function() {
-        _this.resize();
+        if (!_this.resizeDebounceLock) {
+            _this.resizeDebounceLock = true;
+            setTimeout(function () {
+                _this.resize();
+            }, _this.config.debounce);
+        }
     });
     $('p.entry-date').on('click', function () {
         console.log('moving to ' + $('.entry-date').index(this));
