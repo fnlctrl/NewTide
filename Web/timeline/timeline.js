@@ -1,3 +1,4 @@
+
 /*global Hammer:false */
 'use strict';
 

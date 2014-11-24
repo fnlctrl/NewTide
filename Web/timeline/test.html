@@ -10,14 +10,14 @@
         <script src="timeline.js"></script>
     </head>
     <body>
-        <div id="main">
-            <div id="container"></div>
-        </div>
+        <div id="container"></div>
         <button onclick="TIMELINE.moveLeft();">move left</button>
         <button onclick="TIMELINE.moveRight();">move right</button>
         <script>
             var TIMELINE = new DesktopTimeline();
-            TIMELINE.start($('#container'));
+            TIMELINE.start($('#container'),{
+                dataLocation: '../new.json'
+            });
         </script>
     </body>
 </html>

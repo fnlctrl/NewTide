@@ -218,7 +218,7 @@ $(function(){
 			var H = $window.height();
 			return {
 				columnCount: status.numColumns,
-				viewportHeight: Math.max($window.height()-100,500),
+				viewportHeight: Math.max($window.height()-100,600),
 				viewportWidth: W/2,
 				columnGap: W*0.02,
 				standardiseLineHeight: true,

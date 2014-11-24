@@ -1,10 +1,10 @@
 #timeline {
-    position: absolute;
-    height: calc(100% - 120px);
-    bottom: 20px;
-    width: 97%;
-    left: 10px;
-}
+     position: absolute;
+     height: calc(100% - 120px);
+     bottom: 20px;
+     width: 97%;
+     left: 10px;
+ }
 #events-wrapper {
 	position: absolute;
 	left: 50%;

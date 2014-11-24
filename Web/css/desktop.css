@@ -731,6 +731,7 @@ a {
     cursor: pointer;
     transition: background 0.1s ease;
     color: #4585B5;
+    display: block;
 }
 .wp-item:hover {
     background: #D4EEFF;
