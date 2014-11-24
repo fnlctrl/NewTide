@@ -37,8 +37,13 @@ Timeline.prototype.start = function ( container, options ) {
         _this.container.empty();
         _this.render();
     })
-    .fail(function ( errorMsg ) {
-        console.log(errorMsg);
+    .fail(function ( data ) {
+        var jsonData = JSON.parse($(data.responseText).text());
+	    _this.data = jsonData;
+	    _this.count = jsonData.length;
+	    _this.parseDateTime();
+	    _this.container.empty();
+	    _this.render();
     });
 };
 

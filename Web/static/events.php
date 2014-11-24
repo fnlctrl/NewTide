@@ -17,7 +17,7 @@ Template Name: 线下活动
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script>
-		dataLocation ='<?php bloginfo("template_url");?>/new.json';
+		dataLocation ='<?php bloginfo('url');?>/json';
 		var imgSrcs = [
 			[
 				"<?php bloginfo('template_url');?>/img/events/音浪-1.jpg",
