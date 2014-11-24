@@ -34,7 +34,6 @@ Timeline.prototype.start = function ( container, options ) {
         _this.count = jsonData.length;
         _this.parseDateTime();
         _this.container.empty();
-        _this.resizeDebounceLock = false;
         _this.render();
     })
     .fail(function ( errorMsg ) {
@@ -580,12 +579,10 @@ DesktopTimeline.prototype.render = function () {
     }
     _this.resize();
     $(window).on('resize', function() {
-        if (!_this.resizeDebounceLock) {
-            _this.resizeDebounceLock = true;
-            setTimeout(function () {
-                _this.resize();
-            }, _this.config.debounce);
-        }
+        clearTimeout(_this.debounceTimeout);
+        _this.debounceTimeout = setTimeout(function () {
+            _this.resize();
+        }, _this.config.debounce);
     });
     $('p.entry-date').on('click', function () {
         console.log('moving to ' + $('.entry-date').index(this));
