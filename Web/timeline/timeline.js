@@ -173,7 +173,7 @@ MobileHome.prototype.render = function () {
             .html(entry.eventTitle)
             .appendTo(newElement.footer);
         newElement.parent.on('click', function () {
-            window.location.href = _this.config.siteUrl + 'events#' + _this.currentPosition;
+            window.location.href = _this.config.siteUrl + 'events/#' + _this.currentPosition;
         });
         _this.data[i].dom = newElement;
     });
