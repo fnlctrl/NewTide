@@ -6,8 +6,7 @@ $(function(){
 			'dataLocation': dataLocation,
 			'maxEntryNumber': 999,
 			'switchInterval': 5000,
-			'backgroundColor': '#eee',
-			'siteUrl': 'http://tide.myqsc.com/'
+			'backgroundColor': '#eee'
 		});
 	} else {
 		var $firstLoadHintWrapper = $('#hint-wrapper'),

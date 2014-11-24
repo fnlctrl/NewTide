@@ -9,7 +9,7 @@ var defaultOptions = {
     'maxEntryNumber': 999,
     'switchInterval': 10000,
     'backgroundColor': '#FFF',
-    'siteUrl': 'http://tide.myqsc.com/',
+    'siteUrl': 'http://tide.myqsc.com/wp/',
     'startDate': 'nearest',
     'debounce': 200
 };
