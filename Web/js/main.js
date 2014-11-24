@@ -293,7 +293,7 @@ $(function(){
 			}
 			$bookLoadingShade.css({opacity:1});
 			clearTimeout(book.timer);
-			book.timer = setTimeout(book.performReflow(cfg), 300);
+			book.timer = setTimeout(book.performReflow(cfg), 500);
 		},
 		performReflow: function(cfg) {
 			return function() {
@@ -587,7 +587,7 @@ $(function(){
 			book.init(pageW);
 			$bookLoadingShade.css({opacity:0});
 		});
-		$window.bind('resize',_.debounce(function(){
+		$window.bind('resize',function(){
 			var W = $window.width();
 			if (localStorage.userClickedMenu !== 'true') { //auto toggle menu to fit the window after resizing, disabled if user manually toggled menu
 				if (W>1200) {
@@ -606,7 +606,6 @@ $(function(){
 				$bookContainer.width(W);
 				book.reflow(book.getConfig(W));
 			}
-		}, 100));
+		});
 	}
-	window.stat =status;
 });

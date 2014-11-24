@@ -17,8 +17,7 @@ Template Name: 主页
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script>
-//		dataLocation ='<?php //bloginfo("template_url");?>///new.json';
-		dataLocation ='http://localhost/wordpress/wp-content/uploads/2014/11/test.doc';
+		dataLocation ='<?php bloginfo('url');?>/json';
 	</script>
 	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>

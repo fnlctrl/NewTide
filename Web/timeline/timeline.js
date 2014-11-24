@@ -9,7 +9,7 @@ var defaultOptions = {
     'maxEntryNumber': 999,
     'switchInterval': 10000,
     'backgroundColor': '#FFF',
-    'siteUrl': 'http://tide.myqsc.com/',
+    'siteUrl': 'http://tide.myqsc.com/wp/',
     'startDate': 'nearest',
     'debounce': 200
 };
@@ -37,8 +37,13 @@ Timeline.prototype.start = function ( container, options ) {
         _this.container.empty();
         _this.render();
     })
-    .fail(function ( errorMsg ) {
-        console.log(errorMsg);
+    .fail(function ( data ) {
+        var jsonData = JSON.parse($(data.responseText).text());
+	    _this.data = jsonData;
+	    _this.count = jsonData.length;
+	    _this.parseDateTime();
+	    _this.container.empty();
+	    _this.render();
     });
 };
 
@@ -173,7 +178,7 @@ MobileHome.prototype.render = function () {
             .html(entry.eventTitle)
             .appendTo(newElement.footer);
         newElement.parent.on('click', function () {
-            window.location.href = _this.config.siteUrl + 'events#' + _this.currentPosition;
+            window.location.href = _this.config.siteUrl + 'events/#' + _this.currentPosition;
         });
         _this.data[i].dom = newElement;
     });
