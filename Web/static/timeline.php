@@ -14,7 +14,7 @@ Template Name: Timeline
 	</style>
 </head>
 <body>
-	<div id='timeline-embed'></div>
+<div id='timeline-embed'></div>
 </body>
 <script type="text/javascript">
 	var timeline_config = {

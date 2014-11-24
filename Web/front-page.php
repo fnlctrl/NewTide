@@ -8,19 +8,19 @@ Template Name: 主页
 <head>
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
-	<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'/>
-	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
+	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
-	<script src='<?php bloginfo('template_url');?>/js/jquery-2.1.1.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.mousewheel.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/underscore-1.6.0.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/global.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/main.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 	<?php wp_head(); ?>
+	<script>
+		dataLocation ='<?php bloginfo("template_url");?>/new.json';
+	</script>
+	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -29,15 +29,14 @@ Template Name: 主页
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
 			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 		</div>
-		<div id='book-loading-shade'></div>
+		<div id='book-loading-shade' class='ease'></div>
 		<div id='hint-wrapper' class='unselectable'>
 			<div id='hint'>
 				<div id='hint-title'>欢迎来到全新的</div>
 				<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
 				<div id='text'>
 					<p>
-					　　你好。我们是水朝夕工作室，求是潮中一群有爱的人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
-					　　在这里，我们分享所爱的事物，也接受大家的投稿，分享你所欣赏的东西。<br/>
+					　　你好，我们是水朝夕工作室，因为共同爱好聚在一起的一群人。现在你看到的，是我们尝试与有爱的大家联系的窗口。<br/>
 					</p>
 					<hr>
 					<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>
@@ -46,7 +45,7 @@ Template Name: 主页
 					<p><span class='hint-subtitle'>· 分页阅读</span><br/>
 						在文章页面可以通过单击页面边缘、使用←→键、鼠标滚轮、滑动屏幕来翻页
 					</p>
-					
+
 				</div>
 				<div id='hint-ignore-button'>
 					我知道了
@@ -55,6 +54,10 @@ Template Name: 主页
 			<div id='hint-wave-wrapper'>
 				<img id='hint-wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
 			</div>
+		</div>
+		<div id='events-wrapper'>
+			<h1>近期活动</h1>
+			<div id='timeline'></div>
 		</div>
 		<div id='posts-wrapper' class='ease'>
 			<h1>编辑精选　<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a></h1>
@@ -72,13 +75,11 @@ Template Name: 主页
 				foreach ( $query_editors_picks->get_posts() as $post ) : setup_postdata( $post );?>
 					<?php //Begin Loop ?>
 					<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-						<div class='wp-thumbnail'>
-							<?php 
-								if ( has_post_thumbnail() ) {
-									the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
-								}
-							?>
-						</div>
+						<?php
+							if ( has_post_thumbnail() ) {
+								the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+							}
+						?>
 						<div class='wp-item-text'>
 							<h3><?php the_title(); ?></h3>
 							<div class='wp-item-metadata'>
@@ -86,6 +87,7 @@ Template Name: 主页
 								@ <?php the_category(' &gt; ');?>
 								, <?php the_date('Y-m-d');?>
 							</div>
+							<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 						</div>
 					</div>
 					<?php //End Loop  ?>	
@@ -99,7 +101,7 @@ Template Name: 主页
 					'orderby' => 'post_date',
 					'order' => 'DESC',
 					'post_type' => 'post',
-					'category__not_in'=> array(get_cat_ID('设计品'),-get_cat_ID('编辑精选')),
+					'category__not_in'=> array(get_cat_ID('设计品'),get_cat_ID('编辑精选')),
 					'post_status' => 'publish',
 				);
 				$query_latest = new WP_Query( $args2 );
@@ -118,18 +120,29 @@ Template Name: 主页
 								@ <?php the_category(' &gt; ');?>
 								, <?php the_date('Y-m-d');?>
 							</div>
+							<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
 						</div>
 					</div>
 					<?php //End Loop  ?>
 				<?php endforeach; wp_reset_postdata();?>
 			</div>
 		</div>
-		<div id='events-wrapper'>
-			<h1>近期活动</h1>
-			<iframe src='<?php echo home_url()?>/timeline' frameBorder="0"></iframe>
-		</div>
-		
 	</div>
+	<!-- Piwik -->
+	<script type="text/javascript">
+	  var _paq = _paq || [];
+	  _paq.push(['trackPageView']);
+	  _paq.push(['enableLinkTracking']);
+	  (function() {
+	    var u="//piwik.zjuqsc.com/";
+	    _paq.push(['setTrackerUrl', u+'piwik.php']);
+	    _paq.push(['setSiteId', 3]);
+	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+	    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+	  })();
+	</script>
+	<noscript><p><img src="//piwik.zjuqsc.com/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
+	<!-- End Piwik Code -->
 </body>
 </html>
 

@@ -897,36 +897,36 @@ var FTColumnflow = (function () {
 
 		function _addFlowedElement(element, index) {
 
-			var originalPadding, existingPadding, totalElementHeight,
-				desiredElementHeight, newPadding, overflow, loopCount,
+			var originalMargin, existingMargin, totalElementHeight,
+				desiredElementHeight, newMargin, overflow, loopCount,
 
 				nextElement = element.nextSibling;
 
 			// Check if it's necessary to sanitize elements to conform to the baseline grid
 			if (config.standardiseLineHeight) {
 
-				originalPadding = parseInt(element.getAttribute('data-cf-original-padding'), 10) || null;
-				existingPadding = parseInt(window.getComputedStyle(element).getPropertyValue('padding-bottom'), 10);
+				originalMargin = parseFloat(element.getAttribute('data-cf-original-margin'), 10) || null;
+				existingMargin = parseFloat(window.getComputedStyle(element).getPropertyValue('margin-bottom'), 10);
 
-				if (null === originalPadding) {
-					originalPadding = existingPadding;
-					element.setAttribute('data-cf-original-padding', originalPadding);
+				if (null === originalMargin) {
+					originalMargin = existingMargin;
+					element.setAttribute('data-cf-original-margin', originalMargin);
 				} else {
-					existingPadding = originalPadding;
+					existingMargin = originalMargin;
 				}
 
-				// Return the element to its original padding
-				if (originalPadding !== existingPadding) {
-					element.style.paddingBottom = originalPadding + 'px';
+				// Return the element to its original margin
+				if (originalMargin !== existingMargin) {
+					element.style.marginBottom = originalMargin + 'px';
 				}
 
-				totalElementHeight   = nextElement ? (nextElement.offsetTop - element.offsetTop) : element.offsetHeight;
+				totalElementHeight   = _getElementHeight(element, nextElement);
 				desiredElementHeight = _roundUpToGrid(totalElementHeight);
 
-				newPadding = desiredElementHeight - totalElementHeight + existingPadding;
+				newMargin = desiredElementHeight - totalElementHeight + existingMargin;
 
-				if (newPadding !== existingPadding) {
-					element.style.paddingBottom = newPadding + 'px';
+				if (newMargin !== existingMargin) {
+					element.style.marginBottom = newMargin + 'px';
 				}
 			}
 
@@ -942,6 +942,13 @@ var FTColumnflow = (function () {
 
 			// TODO:GC: Remove this loop-protection check
 			if (loopCount >= 30) console.error('FTColumnflow: Caught and destroyed a loop when wrapping columns for element', element.outerHTML.substr(0, 200) + '...');
+		}
+
+		function _getElementHeight(element, nextElement) {
+			if (!element.getBoundingClientRect) {
+				return nextElement ? (nextElement.offsetTop - element.offsetTop) : element.offsetHeight;
+			}
+			return nextElement ? nextElement.getBoundingClientRect().top - element.getBoundingClientRect().top : element.getBoundingClientRect().height;
 		}
 
 		function _wrapColumn(currentElementIndex, overflow) {

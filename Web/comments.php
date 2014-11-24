@@ -16,7 +16,6 @@
 				<?php endif; ?>
 				<button name='submit' type='submit'>发表评论</button>
 				<textarea name='comment' placeholder='说点什么?'></textarea>
-
 				<?php comment_id_fields(); ?>
 				<?php do_action('comment_form', $post->ID); ?>
 			</form>
@@ -24,12 +23,15 @@
 	</div>
 <?php endif;?>
 <?php
-$comments = get_comments(array('post_id'=>get_the_ID()));
-foreach($comments as $comment) :
+	$comments = get_comments(array(
+		'post_id'=> get_the_ID(),
+		'status'=> 'approve',
+	));
+	foreach($comments as $comment) :
 	?>
 	<div class='wp-comment-item'>
 		<div class='wp-comment-avatar'>
-			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,50)); ?>'/>
+			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,150)); ?>'/>
 		</div>
 		<div class='wp-comment-text'>
 			<div class='wp-comment-author'><?php echo $comment->comment_author; ?></div>
