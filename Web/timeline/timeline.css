@@ -242,7 +242,6 @@ img {
   box-sizing: border-box;
 }
 .desktop-timeline-container {
-  position: relative;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
