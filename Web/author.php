@@ -4,9 +4,6 @@
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
