@@ -3,7 +3,8 @@ $(function(){
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		timeline = new MobileHome();
 		timeline.start($('#timeline'),{
-			'dataLocation': dataLocation,
+			'dataLocation': siteInfo.jsonurl,
+			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 5000,
 			'backgroundColor': '#eee'
@@ -25,7 +26,8 @@ $(function(){
 		});
 		timeline = new DesktopTimeline();
 		timeline.start($('#timeline'),{
-			'dataLocation': dataLocation,
+			'dataLocation': siteInfo.jsonurl,
+			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
 			'backgroundColor': '#fff',

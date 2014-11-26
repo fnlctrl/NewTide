@@ -27,6 +27,12 @@ wp_enqueue_script( 'jquery-2.11', get_template_directory_uri() . '/js/jquery-2.1
 wp_enqueue_script( 'hammer', get_template_directory_uri() . '/js/hammer-2.0.4.min.js', array(), '2.0.4', false);
 wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array(), '1.0.0', false);
 wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', false);
+wp_localize_script( 'main', 'siteInfo', array(
+	'siteurl' => get_site_url().'/',
+	'ajaxurl' => admin_url('admin-ajax.php'),
+	'redirecturl' => get_permalink(),
+	'jsonurl' => get_site_url().'/json',
+));
 if ($isMobile) {
 	wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
 } else {
@@ -35,10 +41,6 @@ if ($isMobile) {
 	wp_enqueue_script( 'jquery.qrcode', get_template_directory_uri() . '/js/jquery.qrcode.min.js', array(), '1.0.0', false);
 	wp_enqueue_script( 'jquery.mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.min.js', array(), '3.1.12', false);
 	wp_enqueue_script( 'ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
-	wp_localize_script( 'ajax-login', 'ajaxLoginObject', array(
-		'ajaxurl' => admin_url('admin-ajax.php'),
-		'redirecturl' => get_permalink(),
-	));
 }
 
 // remove all <a>s wrapped around <img>s

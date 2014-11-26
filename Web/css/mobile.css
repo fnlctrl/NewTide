@@ -1,36 +1,13 @@
-#topbar {
-	display	: none;
+.ease {
+    transition: all 0.3s ease;
 }
-#sidebar-top {
-	display	: none;
-}
-.wp-thumbnail {
-	display	: none;
-}
-#timeline-mobile {
-    display: none;
-}
-
-@media (max-width : 400px){
-
 * {
     font-family: "Droid Sans Fallback";
     font-weight: normal;
 }
-#hint-wrapper {
-	display	: none;
-}
-#menu-icon {
-	display	: none;
-}
-#intro-wrapper {
-	display	: none;
-}
-#sidebar-login-status {
-    display	: none;
-}
-#sidebar-search-wrapper {
-    display:none;
+a {
+    text-decoration: none;
+    color: #00b9d1;
 }
 html {
     overflow-y: visible;
@@ -41,9 +18,7 @@ body {
     background: #eee;
     height: auto;
     overflow-y: visible;
-}
-a {
-    color: #00b9d1;
+    margin: 0;
 }
 #topbar {
     display: block;
@@ -52,9 +27,19 @@ a {
     left: 0;
     width: 100%;
     height: 56px;
-    z-index: 5;
+    z-index: 10;
     background-color: #10C6D7;
-    box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.2);
+    box-shadow: 0 0 10px 3px rgba(0,0,0,0.2);
+}
+#topbar:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    z-index: 10;
 }
 #topbar-menu {
     position: absolute;
@@ -77,6 +62,8 @@ a {
     position: absolute;
     top: 0;
     left: 56px;
+    display: block;
+    height: 100%;
 }
 #topbar-logo:active {
     background: rgba(255,255,255,0.5);
@@ -91,13 +78,14 @@ a {
 }
 #topbar-title a {
     color: #fff;
+    font-size: 18px;
 }
 .topbar-search-wrapper {
     position: absolute;
     z-index: 2;
     width: 100%;
     height: 56px;
-    background-color: #10C6D7;
+    /*background-color: #10C6D7;*/
 }
 #topbar-search-icon {
     width: 56px;
@@ -125,13 +113,14 @@ a {
     border-bottom: 1px solid #fff;
 }
 #sidebar {
-    height: calc(100% - 56px);
+    height: 100%;
     width: 62%;
     left: -62%;
     position: fixed;
-    z-index: 99;
+    z-index: 8;
     background-color: #FFF;
     top: 56px;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
 }
 #sidebar-external-links {
 	display	: none;
@@ -145,6 +134,14 @@ a {
 #sidebar-logo {
 	display	: none;
 }
+#cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+}
 #user-head {
     position: absolute;
     width: 40px;
@@ -152,7 +149,6 @@ a {
     top: 12px;
     left: 16px;
     border-radius: 300px;
-    border: 2px outset rgba(0,0,0,0.2);
 }
 #user-id {
     font-size: 18px;
@@ -204,6 +200,9 @@ a {
     position: relative;
     overflow: hidden;
 }
+.sidebar-section path {
+    fill: #757575;
+}
 .sidebar-section hr {
 	display	: none;
 }
@@ -228,22 +227,26 @@ a {
     background-color	: #d9ffe9;
     color				: #27ae60;
 }
-.sidebar-section:nth-child(1) .sidebar-item-current path {
-	fill: #4585b5;
-}
-.sidebar-section:nth-child(2) .sidebar-item-current path {
-    fill: #ed6d7f;
-}
-.sidebar-section:nth-child(3) .sidebar-item-current path {
-    fill: #27ae60;
-}
+/*.sidebar-section:nth-child(1) .sidebar-item-current path {*/
+	/*fill: #4585b5;*/
+/*}*/
+/*.sidebar-section:nth-child(2) .sidebar-item-current path {*/
+    /*fill: #ed6d7f;*/
+/*}*/
+/*.sidebar-section:nth-child(3) .sidebar-item-current path {*/
+    /*fill: #27ae60;*/
+/*}*/
 .sidebar-item {
 	width				: 100%;
 	height				: 36px;
 	line-height			: 36px;
 	background-color	: #FFF;
     position: relative;
-    color: #999;
+    color: #212121;
+    text-align: left;
+    vertical-align: text-bottom;
+    cursor: pointer;
+    display: block;
 }
 .sidebar-item:nth-child(1):active {
 	background: #d9ebff;
@@ -301,56 +304,6 @@ a {
 	display	: none;
 }
 
-/* Front Page */
-#events-wrapper {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-}
-#timeline {
-    position: relative;
-    height: 250px;
-    width: auto;
-    margin: 0 18px 0 18px;
-    left: 0;
-    bottom: 0;
-}
-#timeline-mobile {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 100%;
-    display: block;
-    overflow: hidden;
-}
-#posts-wrapper {
-    position: relative;
-    height: auto;
-	width: 100%;
-	left: 0;
-    margin: 0;
-}
-#events-wrapper h1, #posts-wrapper h1 {
-    margin: 10px 18px 0 18px;
-	color: #999;
-    font-size: 18px;
-}
-.posts-container {
-    position: relative;
-    width: 100%;
-    left: 0;
-    top: 6px;
-    height: auto;
-    overflow: hidden;
-    margin: 0 0 20px 0;
-}
-.more {
-	color: #999;
-}
 /* Wordpress wrapper */
 #wp-wrapper {
     width: 100%;
@@ -369,6 +322,13 @@ a {
 	background-color	: #FFF;
 	border-right		: 3px inset #10C6DC;
     border-radius: 2px;
+    position: relative;
+    float: left;
+    clear: both;
+    overflow: hidden;
+    cursor: pointer;
+    color: #4585B5;
+    display: block;
 }
 .wp-item:first-child {
     margin-top: 10px;
@@ -385,6 +345,9 @@ a {
 .wp-item-text h3 {
     margin: 0 0 4px 0;
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .wp-item-metadata {
     display: none;
@@ -396,6 +359,9 @@ a {
     font-size: 12px;
     text-overflow: ellipsis;
     margin: 0;
+    max-height: 4em;
+    overflow: hidden;
+    color: #333;
 }
 .wp-thumbnail {
 	display				: inline-block;
@@ -407,11 +373,12 @@ a {
 	width: 96px;
 	height: 96px;
     margin: 0 12px 0 0;
+    float: left;
 }
 .wp-entry-thumbnail {
     position: relative;
     width: 100%;
-    z-index: -1;
+    z-index: 0;
 }
 .wp-entry-meta {
     margin: 0;
@@ -428,12 +395,13 @@ a {
     width: 100%;
     top: 100%;
     box-shadow: 0 0 150px 70px rgba(0,0,0,0.5);
-    z-index: -1;
+    z-index: 1;
 }
 #wp-entry-meta-text {
     position: absolute;
     bottom: 0;
     width: 100%;
+    z-index: 2;
 }
 .wp-entry-title {
     position: relative;
@@ -461,7 +429,7 @@ a {
 .wp-entry-content p {
 	display		: block;
 	font-size	: 16px;
-	line-height	: 24px;
+	line-height	: 28px;
 }
 .wp-entry-content img {
     margin: 18px 0 18px 0;
@@ -540,7 +508,7 @@ a {
 .post-edit-link {
 	display	: none;
 }
-#wp-fake-nav-prev {
+#wp-nav-prev {
 
 }
 #message {
@@ -556,9 +524,15 @@ a {
 	right	: auto !important;
 	z-index : -1;
 }
-/*    events page     */
-
-
+#timeline-mobileDetail {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    z-index:1
 }
 
 /*@media (max-width : 480px) {*/

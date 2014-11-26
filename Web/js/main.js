@@ -19,8 +19,8 @@ $(function(){
 		$wpEntryContent = $('.wp-entry-content'),
 		$wpWrapper = $('#wp-wrapper'),
 		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
-		$nextPageLink = $('#wp-fake-nav-next'),
-		$prevPageLink = $('#wp-fake-nav-prev'),
+		$nextPageLink = $('#wp-nav-next'),
+		$prevPageLink = $('#wp-nav-prev'),
 		$wpEntryMeta = $('.wp-entry-meta'),
 		$searchWrapper = $('.search-wrapper');
 		$sidebarSearchInput = $('#sidebar-search-input');
@@ -176,7 +176,6 @@ $(function(){
 		},
 		show: function(needReflow) {
 			if (status.isMobile) {
-				$topbarMenu.css({'background':'rgba(255,255,255,0.5)'});
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
 				$cover.css({opacity:0.6});
 			} else {
@@ -505,33 +504,43 @@ $(function(){
 	util.isMobile();
 	var W = $window.width();
 	if (status.isMobile) {
-		$wpEntryThumbnail.on('load', function(){
-			if ($wpEntryThumbnail.height() < 256) {
-				$wpEntryThumbnail.css({height:'100%',width:'auto'});
-			}
-		});
 		status.needBook = false;
 		book = null;
+		if ($wpEntryThumbnail.length) {
+			function handler() {
+				if ($wpEntryThumbnail.height() < 256) {
+					$wpEntryThumbnail.css({height:'100%',width:'auto'});
+				}
+			}
+			if ($wpEntryThumbnail[0].complete) {
+				handler();
+			} else {
+				$wpEntryThumbnail.load(handler);
+			}
+		}
 		if ($('.sidebar-item-current').html()) {
 			var href = $('.sidebar-item-current').attr('href');
 			var text = $('.sidebar-item-current').text().trim()
 			$topbarTitle.html('<a href="'+href+'">'+text+'</a>');
 			$bookContainer.remove();
 		}
-		if ($('.wp-entry-meta').length) {
+		if ($('.wp-entry-meta').length) { // on single entry page
 			$topbar.css({background:'rgba(16,198,215,0.5)'});
+		}
+		if (/event/.test(location.href)) { // on events page
+			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
 		$('.wp-item').width(W-36);
 		$('#wp-reply-form').width(W-36);
 		$topbarSearchWrapper.css({left:W-56});
 		$topbarSearchIcon.click(function() {
 			if (status.searchBar) {
-				$topbarSearchInput.focus();
 				$topbarSearchWrapper.removeClass('topbar-search-active');
 				status.searchBar = false;
 			} else {
 				$topbarSearchWrapper.addClass('topbar-search-active');
 				status.searchBar = true;
+				$topbarSearchInput.focus();
 			}
 		});
 		$topbarSearchInput.blur(function() {

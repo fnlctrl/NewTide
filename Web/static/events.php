@@ -9,13 +9,11 @@ Template Name: 线下活动
 	<meta charset='UTF-8'/> 
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<meta name="mobile-web-app-capable" content="yes">
+	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/events.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
-	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script>
-		dataLocation ='<?php bloginfo('url');?>/json';
 		var imgSrcs = [
 			[
 				"<?php bloginfo('template_url');?>/img/events/音浪-1.jpg",
@@ -48,6 +46,7 @@ Template Name: 线下活动
 </head>
 <body>
 	<?php get_sidebar(); ?>
+	<?php if(!$isMobile) :?>
 	<div id='book-container' class='ease'>
 		<div id='menu-icon'>
 			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
@@ -115,7 +114,7 @@ Template Name: 线下活动
 					<img src='<?php bloginfo('template_url');?>/img/events/event-logo-yinyuejie.svg'/>
 				</div>
 				<div class='intro-event-text'>
-					联合杭州各大高校乐团的音乐盛典，就在潮汐音乐节！历经半年缜密策划，凝聚众人心血，推广与水朝夕工作室合办，为有才华的年轻人提供实现梦想的舞台。<br/>
+					联合杭州各大高校乐团的音乐盛典，就在潮汐音乐节！历经半年缜密策划，凝聚众人心血，推广策划中心与水朝夕工作室合办，为有才华的年轻人提供实现梦想的舞台。<br/>
 					潮汐音乐节分为“原创音乐征集大赛”、“音乐节创意市集”和“现场音乐会”三个子活动。
 				</div>
 			</div>
@@ -129,7 +128,9 @@ Template Name: 线下活动
 			<div id='timeline'></div>
 		</div>
 	</div>
-	<div id='timeline-mobile'></div>
+	<?php else: ?>
+	<div id='timeline-mobileDetail'></div>
+	<?php endif ?>
 </body>
 </html>
 

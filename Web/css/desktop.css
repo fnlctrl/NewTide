@@ -700,10 +700,10 @@ body {
     width: 100%;
     height: auto;
 }
-#wp-fake-nav-prev {
+#wp-nav-prev {
     display: none;
 }
-#wp-fake-nav-next {
+#wp-nav-next {
     display: none;
 }
 #post-edit-link {

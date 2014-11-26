@@ -4,14 +4,10 @@
 	<meta charset='UTF-8'/>	
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/desktop.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
-
 </head>
 <body>
 	<?php get_sidebar(); ?>
@@ -47,9 +43,8 @@
 				<?php comments_template(); ?>
 			</div>
 		<?php }} ?>
-
-		<div id='wp-fake-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
-		<div id='wp-fake-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
+		<div id='wp-nav-prev'><?php next_post_link( '%link', '', TRUE ); ?></div>
+		<div id='wp-nav-next'><?php previous_post_link( '%link', '', TRUE ); ?></div>
 		<?php if(current_user_can('edit_others_pages')||current_user_can('edit_published_posts')) {  ?>
 			<?php edit_post_link('Edit');?>
 		<?php } ?>

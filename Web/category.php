@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset='UTF-8'/>	
+	<meta charset='UTF-8'/>
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
@@ -62,8 +62,8 @@
 			</div>
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
-		<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
-		<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<div id='wp-nav-prev'><?php echo get_previous_posts_page_link()?></div>
+		<div id='wp-nav-next'><?php echo get_next_posts_page_link()?></div>
 	</div>
 </body>
 </html>

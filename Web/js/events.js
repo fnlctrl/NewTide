@@ -1,9 +1,11 @@
 $(function() {
+	window.scrollTo(0,1);
 	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		timeline = new MobileDetail();
-		timeline.start($('#timeline-mobile'),{
-			'dataLocation': dataLocation,
+		timeline.start($('#timeline-mobileDetail'),{
+			'dataLocation': siteInfo.jsonurl,
+			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
 			'backgroundColor': '#eee'
@@ -50,7 +52,8 @@ $(function() {
 		$items.eq(0).click();
 		timeline = new DesktopTimeline();
 		timeline.start($('#timeline'),{
-			'dataLocation': dataLocation,
+			'dataLocation': siteInfo.jsonurl,
+			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
 			'backgroundColor': '#fff'

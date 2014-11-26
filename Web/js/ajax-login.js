@@ -42,7 +42,7 @@ $(function(){
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
-				url: ajaxLoginObject.ajaxurl,
+				url: siteInfo.ajaxurl,
 				data: {
 					'action': 'ajaxlogin', //calls wp_ajax_nopriv_ajaxlogin
 					'username': $('#username').val(),
@@ -52,7 +52,7 @@ $(function(){
 				success: function(data){
 					$loginMessage.text(data.message);
 					if (data.loggedin == true){
-						document.location.href = ajaxLoginObject.redirecturl;
+						document.location.href = siteInfo.redirecturl;
 					}
 				}
 			});
@@ -61,7 +61,7 @@ $(function(){
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
-				url: ajaxLoginObject.ajaxurl,
+				url: siteInfo.ajaxurl,
 				data: {
 					'action': 'register_user',
 					'username': $('#username').val(),
@@ -77,7 +77,7 @@ $(function(){
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
-				url: ajaxLoginObject.ajaxurl,
+				url: siteInfo.ajaxurl,
 				data: {
 					'action': 'reset_user_pass',
 					'user_login': $('#email-or-id').val(),
@@ -89,7 +89,6 @@ $(function(){
 				}
 			});
 		}
-
 		e.preventDefault();
 	});
 });
