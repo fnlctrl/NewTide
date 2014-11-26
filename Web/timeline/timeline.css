@@ -57,6 +57,7 @@ img {
   top: 0;
   width: 100%;
   height: 24px;
+  font-size: 10px;
   background-color: rgba(16, 198, 220, 0.9);
   z-index: 10;
 }
