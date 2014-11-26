@@ -534,7 +534,9 @@ body {
     overflow: hidden;
     z-index:1
 }
-
+#events-wrapper {
+    display: none;
+}
 /*@media (max-width : 480px) {*/
 
 /*#user-head {*/

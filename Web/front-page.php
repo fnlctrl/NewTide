@@ -50,13 +50,14 @@ Template Name: 主页
 					<img id='hint-wave' src='<?php bloginfo('template_url');?>/img/hint-wave.svg'/>
 				</div>
 			</div>
+			<div id='events-wrapper'>
+				<h1>近期活动</h1>
+				<div id='timeline-desktop'></div>
+			</div>
 	<?php else:?>
 		<div id='wp-wrapper'>
+			<div id='timeline-mobileHome'></div>
 	<?php endif?>
-	<div id='events-wrapper'>
-		<h1>近期活动</h1>
-		<div id='timeline'></div>
-	</div>
 	<div id='posts-wrapper' class='ease'>
 		<h1>编辑精选　<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a></h1>
 		<div class='posts-container'>

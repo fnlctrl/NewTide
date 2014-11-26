@@ -2,7 +2,7 @@ $(function(){
 	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		timeline = new MobileHome();
-		timeline.start($('#timeline'),{
+		timeline.start($('#timeline-mobileHome'),{
 			'dataLocation': siteInfo.jsonurl,
 			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
@@ -25,7 +25,7 @@ $(function(){
 			$postsWrapper.css({left:0,width:'50%'});
 		});
 		timeline = new DesktopTimeline();
-		timeline.start($('#timeline'),{
+		timeline.start($('#timeline-desktop'),{
 			'dataLocation': siteInfo.jsonurl,
 			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
