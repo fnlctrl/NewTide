@@ -77,16 +77,26 @@ body {
     z-index: 2;
     width: 100%;
     height: 56px;
+    left: 0;
     /*background-color: #10C6D7;*/
 }
 #topbar-search-icon {
     width: 56px;
     height: 56px;
     position: absolute;
-    left: 0;
+    right: 0;
 }
-.topbar-search-active {
-    left: 0 !important;
+.topbar-search-active + * + * + #topbar-logo {
+    display: none !important;
+}
+.topbar-search-active + * + #topbar-search-icon {
+    display: none;
+}
+.topbar-search-active + #topbar-menu {
+    display: none;
+}
+.topbar-search-active + * + * + * +#topbar-title {
+    display: none;
 }
 #topbar-search-icon:active {
     background: rgba(255,255,255,0.5);
