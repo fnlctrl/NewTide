@@ -234,6 +234,7 @@ img {
   width: 100%;
   padding: 16px;
   color: white;
+  white-space: pre-wrap;
   opacity: 0;
   visibility: hidden;
   -webkit-box-sizing: border-box;
@@ -283,6 +284,7 @@ img {
   right: 0;
   top: 0;
   line-height: 1.8em;
+  white-space: pre-wrap;
   overflow-y: auto;
 }
 .desktop-timeline-container .main-panel:after {
