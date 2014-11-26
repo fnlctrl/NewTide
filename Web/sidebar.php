@@ -13,6 +13,7 @@
 		<a id='topbar-logo' href="<?php echo home_url();?>"><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>
 		<div id='topbar-title'></div>
 	</div>
+	<div id='cover' class='ease'></div>
 <?php else:?>
 	<div id='login'>
 		<a id='login-logo' href="<?php bloginfo('url'); ?>"></a>
@@ -33,12 +34,12 @@
 <?php endif;?>
 <div id='sidebar' class='unselectable ease'>
 	<?php if ($isMobile):?>
-		<div id='cover' class='ease'></div>
 		<div id='sidebar-top'>
 			<img id='user-head' src='<?php echo get_avatar_url(get_avatar(  $user->user_email,150)); ?>'/>
 			<div id='user-id'>
 				<?php if ( $user_ID ) : ?>
 					<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user->display_name;?></a>
+					<p><?php echo $user->user_email?></p>
 				<?php else : ?>
 					<a href="<?php echo get_option('siteurl'); ?>/login">登录</a>
 				<?php endif; ?>
@@ -106,5 +107,7 @@
 			</a>
 		</div>
 	</div>
+	<?php if (!$isMobile):?>
 	<div id='sidebar-copyright'>© 2001 - 2014 <br/> 浙江大学求是潮</div>
+	<?php endif; ?>
 </div>

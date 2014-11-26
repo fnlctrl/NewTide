@@ -1,21 +1,6 @@
 /*    global    */
-.unselectable {
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-.ease {
-    transition: all 0.3s ease;
-}
-.notransition {
-    transition: none !important;
-}
 * {
     font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Droid Sans Fallback", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
-}
-a {
-    text-decoration: none;
 }
 html {
     overflow: hidden;
@@ -24,11 +9,8 @@ body {
     background-image: url(../img/texture.png);
     background-repeat: repeat;
     height: 100%;
-    width: 100%;
     min-height: 630px;
     position: absolute;
-    padding: 0;
-    margin: 0;
     overflow: hidden;
 }
 /*    book    */
@@ -386,15 +368,11 @@ body {
 }
 /*    Message Block    */
 .message-block {
-    width:500px;
     height:100px;
     background-color: rgba(0,140,206,0.8);
     position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    width: auto;
+    margin: 18px;
     z-index: 11;
     opacity: 0;
     transition: all 0.2s ease;
@@ -874,14 +852,11 @@ a {
     width: calc(50% - 210px);
     height: 100%;
 }
-#posts-wrapper h1 {
+#posts-wrapper h1, #events-wrapper h1 {
     margin: 50px 0 0 50px;
     color: #ed6d7f;
     line-height: 28px;
     font-size: 28px;
-}
-#events-wrapper h1 {
-    margin: 50px 0 0 60px;
 }
 .more {
     color: #ed6d7f;

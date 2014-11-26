@@ -4,3 +4,26 @@ Author: fnlCtrl
 Version: 1.0
 Description: Designed and developed by fnlCtrl in 2014. Mobile version developed by NinthStar(https://github.com/NinthStar). Timeline component developed by Zhudhjen(https://github.com/zhudhjen). For techincal supports, please contact fnlctrl@gmail.com.
 */
+.unselectable {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.ease {
+    transition: all 0.3s ease;
+}
+.notransition {
+    transition: none !important;
+}
+a {
+    text-decoration: none;
+}
+* {
+    font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Droid Sans Fallback", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
+}
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}

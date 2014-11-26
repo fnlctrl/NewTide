@@ -14,34 +14,38 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 ); // Display relatio
 remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that is generated on the wp_head hook, WP version
 show_admin_bar(false);
 
-
 // detect mobile browsers
 require_once 'Mobile_Detect.php';
 $mobileDetect = new Mobile_Detect;
 $isMobile = $mobileDetect->isMobile();
 
 // enqueue scripts
-wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);
-wp_enqueue_script( 'underscore-1.6.0', get_template_directory_uri() . '/js/underscore-1.6.0.min.js', array(), '1.6.0', false);
-wp_enqueue_script( 'jquery-2.11', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', array(), '2.1.1', false);
-wp_enqueue_script( 'hammer', get_template_directory_uri() . '/js/hammer-2.0.4.min.js', array(), '2.0.4', false);
-wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array(), '1.0.0', false);
-wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', false);
-wp_localize_script( 'main', 'siteInfo', array(
-	'siteurl' => get_site_url().'/',
-	'ajaxurl' => admin_url('admin-ajax.php'),
-	'redirecturl' => get_permalink(),
-	'jsonurl' => get_site_url().'/json',
-));
-if ($isMobile) {
-	wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
-} else {
-	wp_enqueue_style( 'desktop', get_template_directory_uri() . '/css/desktop.css', array(), '1.0.0', false);
-	wp_enqueue_style( 'jquery.bookblock', get_template_directory_uri() . '/css/bookblock.css', array(), '1.0.0', false);
-	wp_enqueue_script( 'jquery.qrcode', get_template_directory_uri() . '/js/jquery.qrcode.min.js', array(), '1.0.0', false);
-	wp_enqueue_script( 'jquery.mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.min.js', array(), '3.1.12', false);
-	wp_enqueue_script( 'ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
+function scripts_init () {
+	global $isMobile;
+	wp_enqueue_style( 'global', get_stylesheet_uri());
+	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);
+	wp_enqueue_script( 'underscore-1.6.0', get_template_directory_uri() . '/js/underscore-1.6.0.min.js', array(), '1.6.0', false);
+	wp_enqueue_script( 'jquery-2.11', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', array(), '2.1.1', false);
+	wp_enqueue_script( 'hammer', get_template_directory_uri() . '/js/hammer-2.0.4.min.js', array(), '2.0.4', false);
+	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array(), '1.0.0', false);
+	wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', false);
+	wp_localize_script( 'main', 'siteInfo', array(
+		'siteurl' => get_site_url().'/',
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		'redirecturl' => get_permalink(),
+		'jsonurl' => get_site_url().'/json',
+	));
+	if ($isMobile) {
+		wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
+	} else {
+		wp_enqueue_style( 'desktop', get_template_directory_uri() . '/css/desktop.css', array(), '1.0.0', false);
+		wp_enqueue_style( 'jquery.bookblock', get_template_directory_uri() . '/css/bookblock.css', array(), '1.0.0', false);
+		wp_enqueue_script( 'jquery.qrcode', get_template_directory_uri() . '/js/jquery.qrcode.min.js', array(), '1.0.0', false);
+		wp_enqueue_script( 'jquery.mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.min.js', array(), '3.1.12', false);
+		wp_enqueue_script( 'ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
+	}
 }
+add_action( 'wp_enqueue_scripts', 'scripts_init' );
 
 // remove all <a>s wrapped around <img>s
 function filter_ptags_on_images( $content ){
@@ -230,8 +234,8 @@ function ajax_reset_password() {
 add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
 
 // replace all gravatar with local default image
-add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 function remove_gravatar( $avatar ) {
 	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);
 }
+add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 ?>

@@ -82,12 +82,15 @@ $(function(){
 				},150);
 			};
 		},
-		showNotice: function(string) {
+		showNotice: function(string,duration) {
+			if (duration===undefined) {
+				duration = 1500;
+			}
 			var $notice = $("<div id='message-" + Math.random() + "' class='message-block'></div>").append($("<div class='message-content'></div>").text(string));
 			$body.append($notice);
 			setTimeout(function(){$notice.css({opacity:1});}, 100);
 			$notice.bind('click', util.clearNotice($notice));
-			setTimeout(util.clearNotice($notice), 1500);
+			setTimeout(util.clearNotice($notice), duration);
 		},
 		getShareLink: function(){
 			var shareInfo = {
@@ -159,7 +162,7 @@ $(function(){
 				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
 				$cover.css({opacity:0});
-				$sidebar.css({left:'-62%'});
+				$sidebar.css({left:'-80%'});
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(180deg)'});
@@ -506,6 +509,10 @@ $(function(){
 	if (status.isMobile) {
 		status.needBook = false;
 		book = null;
+		if (/MicroMessenger/i.test(navigator.userAgent) && (localStorage.showedSuggestion !== 'true')) {
+			util.showNotice('您正在使用微信内置浏览器，\n建议点击右上角菜单中的\n“在浏览器中打开”以获得最佳浏览体验。_(:з」∠)_',10000);
+			localStorage.setItem('showedSuggestion','true');
+		}
 		if ($wpEntryThumbnail.length) {
 			function handler() {
 				if ($wpEntryThumbnail.height() < 256) {
