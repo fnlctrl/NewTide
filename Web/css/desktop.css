@@ -852,3 +852,198 @@ a {
     float: left;
     width: 100%;
 }
+/*    front page    */
+#timeline-desktop {
+    position: absolute;
+    height: calc(100% - 120px);
+    bottom: 20px;
+    width: 97%;
+    left: 10px;
+}
+#events-wrapper {
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    width: 50%;
+    z-index: 0;
+}
+#posts-wrapper {
+    position: absolute;
+    left: 210px;
+    z-index: 2;
+    width: calc(50% - 210px);
+    height: 100%;
+}
+#posts-wrapper h1 {
+    margin: 50px 0 0 50px;
+    color: #ed6d7f;
+    line-height: 28px;
+    font-size: 28px;
+}
+#events-wrapper h1 {
+    margin: 50px 0 0 60px;
+}
+.more {
+    color: #ed6d7f;
+    font-size: 14px;
+}
+/*    Posts    */
+.posts-container {
+    position: relative;
+    left: 50px;
+    top: 20px;
+    width: calc(100% - 70px);
+    height: calc(50% - 120px);
+    overflow-y: scroll;
+}
+.wp-item-frontpage {
+    height: 75px;
+    margin: 5px;
+    width: 95%;
+    position: relative;
+    float: left;
+    clear: both;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    color: #4585B5;
+    display: block;
+}
+.wp-item-frontpage:hover {
+    background: #D4EEFF;
+}
+.wp-item-frontpage:active {
+    background: #BDE4FF;
+}
+.wp-item-frontpage img {
+    height: 75px;
+    width: 75px;
+    float: left;
+    margin: 0 20px 0 0;
+}
+.wp-item-text-frontpage {
+    position: relative;
+    top: -10px;
+    padding: 0 20px 0 0;
+}
+.wp-item-text-frontpage h3 {
+    margin: 1em 0 0.5em 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.wp-item-excerpt-frontpage {
+    display: none;
+}
+/*    First Load Hint    */
+#hint-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210px;
+    height: 100%;
+    background-color: #42a0de;
+    color: #fff;
+    transition: width 0.5s ease;
+    z-index: 100;
+}
+#hint {
+    position: absolute;
+    top: 50px;
+    width: 130px;
+    left: 40px;
+    height: 100%;
+}
+#hint p {
+    text-indent: 0px;
+}
+#hint hr {
+    border: 0;
+    height: 1px;
+    background: #fff;
+    margin: 20px 0 20px 0;
+}
+#hint-title {
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0 0 15px 0;
+}
+#logo:hover path {
+    fill: #d4eeff;
+}
+#text {
+    position: absolute;
+    top: 130px;
+    font-size: 14px;
+    width: 100%;
+}
+.hint-subtitle {
+    position: relative;
+    font-weight: bold;
+    left: -10px;
+}
+.hint-icon {
+    vertical-align: text-bottom;
+}
+.hint-icon path {
+    fill: #fff;
+}
+#hint-ignore-button {
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    bottom: 75px;
+    text-align: center;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+#hint-ignore-button:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+#hint-ignore-button:active {
+    background: #fff;
+    color: #42a0de;
+}
+#hint-wave-wrapper {
+    position: absolute;
+    top: 150px;
+    width: 210px;
+    height: 20px;
+    overflow: hidden;
+}
+#hint-wave {
+    position: absolute;
+    left: 0;
+    animation-name: wave;
+    -webkit-animation-name: wave;
+    animation-duration: 4s;
+    -webkit-animation-duration: 4s;
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    transition: all 0.3s ease;
+}
+@keyframes wave {
+    from {
+        left: -210px;
+    }
+
+    to {
+        left: 0;
+    }
+}
+@-webkit-keyframes wave {
+    from {
+        left: -210px;
+    }
+
+    to {
+        left: 0;
+    }
+}

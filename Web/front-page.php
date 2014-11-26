@@ -11,7 +11,6 @@ Template Name: 主页
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/front-page.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
 	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
@@ -73,20 +72,20 @@ Template Name: 主页
 			$query_editors_picks = new WP_Query( $args1 );
 			foreach ( $query_editors_picks->get_posts() as $post ) : setup_postdata( $post );?>
 				<?php //Begin Loop ?>
-				<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
+				<div class='wp-item wp-item-frontpage' onclick='location.href="<?php the_permalink(); ?>"'>
 					<?php
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 					}
 					?>
-					<div class='wp-item-text'>
+					<div class='wp-item-text wp-item-text-frontpage'>
 						<h3><?php the_title(); ?></h3>
 						<div class='wp-item-metadata'>
 							文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
 							@ <?php the_category(' &gt; ');?>
 							, <?php the_date('Y-m-d');?>
 						</div>
-						<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
+						<div class='wp-item-excerpt wp-item-excerpt-frontpage'><?php echo get_the_excerpt();?></div>
 					</div>
 				</div>
 				<?php //End Loop  ?>
@@ -106,20 +105,20 @@ Template Name: 主页
 			$query_latest = new WP_Query( $args2 );
 			foreach ( $query_latest->get_posts() as $post ) : setup_postdata( $post );?>
 				<?php //Begin Loop ?>
-				<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
+				<div class='wp-item wp-item-frontpage' onclick='location.href="<?php the_permalink(); ?>"'>
 					<?php
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 					}
 					?>
-					<div class='wp-item-text'>
+					<div class='wp-item-text wp-item-text-frontpage'>
 						<h3><?php the_title(); ?></h3>
 						<div class='wp-item-metadata'>
 							文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
 							@ <?php the_category(' &gt; ');?>
 							, <?php the_date('Y-m-d');?>
 						</div>
-						<div class='wp-item-excerpt'><?php echo get_the_excerpt();?></div>
+						<div class='wp-item-excerpt wp-item-excerpt-frontpage'><?php echo get_the_excerpt();?></div>
 					</div>
 				</div>
 				<?php //End Loop  ?>
