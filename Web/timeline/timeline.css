@@ -34,7 +34,6 @@ img {
 }
 .mobile-home-timeline-container {
   position: relative;
-  font-size: 10px;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
@@ -51,13 +50,13 @@ img {
 .mobile-home-timeline-container .scroll-content .timeline-entry {
   position: relative;
   float: left;
-  margin-top: .8em;
+  margin-top: 8px;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-header {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 2.4em;
+  height: 24px;
   background-color: rgba(16, 198, 220, 0.9);
   z-index: 10;
 }
@@ -65,10 +64,10 @@ img {
   position: absolute;
   top: 0;
   left: 0;
-  right: 4.8em;
+  right: 48px;
   bottom: 0;
-  padding-left: .5em;
-  line-height: 2.4em;
+  padding-left: 5px;
+  line-height: 24px;
   color: white;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -80,18 +79,18 @@ img {
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-date {
   position: absolute;
-  top: -0.6em;
-  right: .6em;
-  width: 3.6em;
-  height: 3.6em;
-  padding: .6em 0;
-  border-radius: 3.6em;
+  top: -6px;
+  right: 6px;
+  width: 36px;
+  height: 36px;
+  padding: 6px 0;
+  border-radius: 36px;
   color: white;
   text-align: center;
-  line-height: 1.2em;
-  font-size: 1em;
+  line-height: 12px;
+  font-size: 10px;
   background-color: #ed6d7f;
-  box-shadow: 0 0 0 0.2em rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
   z-index: 100;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -107,18 +106,18 @@ img {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.4em;
+  height: 24px;
   background-color: rgba(16, 198, 220, 0.9);
   z-index: 10;
 }
 .mobile-home-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-title {
   position: relative;
   width: 100%;
-  height: 2.4em;
-  line-height: 2.4em;
-  padding-left: .5em;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 5px;
   color: white;
-  font-size: 1em;
+  font-size: 10px;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -129,7 +128,6 @@ img {
 }
 .mobile-detail-timeline-container {
   position: relative;
-  font-size: 12px;
   overflow: hidden;
   font-family: "Apple LiGothic Medium", "Microsoft YaHei", "Wenquanyi Micro Hei", "Hiragino Sans GB", "ST Heiti", "WenQuanYi Zen Hei", sans-serif;
 }
@@ -153,9 +151,9 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer {
   position: relative;
-  height: 10em;
+  height: 100px;
   width: 100%;
-  padding: 1.5em 1em .5em 1em;
+  padding: 15px 10 5px 10px;
   background-color: #3ccee0;
   color: white;
   -webkit-box-sizing: border-box;
@@ -164,7 +162,7 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-group {
   position: relative;
-  font-size: 2.4em;
+  font-size: 24px;
   line-height: 32px;
   height: 32px;
   z-index: 100;
@@ -175,7 +173,7 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-title {
   position: relative;
-  font-size: 1.8em;
+  font-size: 18px;
   line-height: 24px;
   height: 24px;
   z-index: 100;
@@ -186,7 +184,7 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-footer p.entry-time-location {
   position: relative;
-  font-size: 1.4em;
+  font-size: 14px;
   line-height: 24px;
   height: 24px;
   z-index: 100;
@@ -199,7 +197,7 @@ img {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 10em;
+  height: 100px;
   -webkit-transition: all 0.1s ease;
   transition: all 0.1s ease;
 }
@@ -220,7 +218,7 @@ img {
   height: 4px;
   margin-left: 50%;
   left: -22px;
-  margin-top: .5em;
+  margin-top: 5px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -230,10 +228,10 @@ img {
 }
 .mobile-detail-timeline-container .scroll-content .timeline-entry .entry-expand-box .expand-wrapper p.entry-description {
   position: relative;
-  font-size: 1.6em;
+  font-size: 16px;
   line-height: 1.5em;
   width: 100%;
-  padding: 1em;
+  padding: 16px;
   color: white;
   opacity: 0;
   visibility: hidden;
