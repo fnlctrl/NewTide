@@ -11,16 +11,18 @@
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<div id='book-container' class='ease'>
-		<div id='menu-icon'>
-			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
-			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+	<?php if(!$isMobile) :?>
+		<div id='book-container' class='ease'>
+			<div id='menu-icon'>
+				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
+				<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+			</div>
+			<div id='book-nav-next' class='book-nav-icon'></div>
+			<div id='book-nav-prev' class='book-nav-icon'></div>
+			<div id='book-loading-shade' class='ease'></div>
+			<div id='book-pages'></div>
 		</div>
-		<div id='book-nav-next' class='book-nav-icon'></div>
-		<div id='book-nav-prev' class='book-nav-icon'></div>
-		<div id='book-loading-shade' class='ease'></div>
-		<div id='book-pages'></div>
-	</div>
+	<?php endif; ?>
 	<div id='wp-wrapper'>
 		<?php
 		global $paged;

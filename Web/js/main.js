@@ -105,29 +105,9 @@ $(function(){
 				douban:'http://www.douban.com/share/service?name='+shareInfo.title+'&text='+shareInfo.text+'&image='+shareInfo.image+'&href='+shareInfo.href
 			};
 		},
-		search: (function() {
-			$searchWrapper.submit(function(e) {
-				var str = $(this).find('input').val();
-				sessionStorage.setItem('searchstr',str);
-				e.preventDefault();
-				e.stopPropagation();
-				if (str.length) {
-					location.href=location.origin+'/wordpress/?s='+str;
-				} else {
-					location.href=location.origin+'/wordpress';
-				}
-			});
-			if (/\?s=/.test(location.href)) { // on a search result page
-				if (sessionStorage.searchstr) {
-					$sidebarSearchInput[0].onblur='';
-					$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
-					$topbarSearchInput[0].onblur='';
-					$topbarSearchInput.val(sessionStorage.searchstr);
-					$topbarSearchWrapper.addClass('topbar-search-active');3
-					status.searchBar = true;
-				}
-			}
-		})(),
+		preventDefault: function(event) {
+			event.preventDefault();
+		},
 		cloneCanvas: function(oldCanvas) {
 			//create a new canvas
 			var newCanvas = document.createElement('canvas');
@@ -161,8 +141,9 @@ $(function(){
 			if (status.isMobile) {
 				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
-				$cover.css({opacity:0});
-				$sidebar.css({left:'-80%'});
+				$cover.css({opacity:0,'z-index':0});
+				$sidebar.css({left:'-75%'});
+				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(180deg)'});
@@ -180,7 +161,8 @@ $(function(){
 		show: function(needReflow) {
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
-				$cover.css({opacity:0.6});
+				$cover.css({opacity:0.6,'z-index':7});
+				document.body.addEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
@@ -623,5 +605,26 @@ $(function(){
 				book.reflow(book.getConfig(W));
 			}
 		});
+	}
+	$searchWrapper.submit(function(e) {
+		var str = $(this).find('input').val();
+		sessionStorage.setItem('searchstr',str);
+		e.preventDefault();
+		e.stopPropagation();
+		if (str.length) {
+			location.href=location.origin+'/wordpress/?s='+str;
+		} else {
+			location.href=location.origin+'/wordpress';
+		}
+	});
+	if (/\?s=/.test(location.href)) { // on a search result page
+		if (sessionStorage.searchstr) {
+			$sidebarSearchInput[0].onblur='';
+			$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
+			$topbarSearchInput[0].onblur='';
+			$topbarSearchInput.val(sessionStorage.searchstr);
+			$topbarSearchWrapper.addClass('topbar-search-active');3
+			status.searchBar = true;
+		}
 	}
 });
