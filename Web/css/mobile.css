@@ -537,6 +537,10 @@ body {
 #events-wrapper {
     display: none;
 }
+#timeline-mobileHome {
+    margin: 18px;
+    width: auto;
+}
 /*@media (max-width : 480px) {*/
 
 /*#user-head {*/

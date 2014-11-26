@@ -9,7 +9,7 @@
 			<input id='topbar-search-input' type='text' name='s' onblur="this.value=''"/>
 			<div id='topbar-search-icon'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 		</form>
-		<div id='topbar-menu' class='ease'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
+		<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
 		<a id='topbar-logo' href="<?php echo home_url();?>"><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>
 		<div id='topbar-title'></div>
 	</div>

@@ -19,7 +19,7 @@
     width: calc(50% - 210px);
     height: 100%;
 }
-h1 {
+#posts-wrapper h1 {
     margin: 50px 0 0 50px;
     color: #ed6d7f;
     line-height: 28px;

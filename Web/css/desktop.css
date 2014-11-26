@@ -623,8 +623,6 @@ body {
 /*    wp-contect    */
 #wp-wrapper {
     position: relative;
-    left: 45px;
-    top: 50px;
     z-index: 1;
     width: 50%;
     height: 100%;
