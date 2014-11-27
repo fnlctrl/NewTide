@@ -123,7 +123,7 @@ Template Name: 线下活动
 					<img class='intro-photo' src='<?php bloginfo('template_url');?>/img/events/音浪-2.jpg'/>
 				</div>
 			</div>
-			<div id='events-wrapper' class='book-page'>
+			<div id='events-wrapper'>
 				<h1 class='unselectable'>本学期活动时间表</h1>
 				<div id='timeline'></div>
 			</div>

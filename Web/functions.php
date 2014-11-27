@@ -15,7 +15,7 @@ remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that 
 show_admin_bar(false);
 
 // detect mobile browsers
-require_once 'Mobile_Detect.php';
+require_once 'php/Mobile_Detect.php';
 $mobileDetect = new Mobile_Detect;
 $isMobile = $mobileDetect->isMobile();
 

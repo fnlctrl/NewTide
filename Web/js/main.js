@@ -8,6 +8,7 @@ $(function(){
 		$topbarSearchWrapper = $('.topbar-search-wrapper'),
 		$topbarSearchInput = $('#topbar-search-input'),
 		$topbarSearchIcon = $('#topbar-search-icon'),
+		$topbarSearchReturn = $('#topbar-search-return'),
 		$sidebar = $('#sidebar'),
 		$cover = $('#cover'),
 		$bookContainer = $('#book-container'),
@@ -59,9 +60,14 @@ $(function(){
 		},
 		getNavURL: function() {
 			function parse() {
-				var url = this.find('a').attr('href');
+				var url;
+				if (this.find('a').length) {
+					url = this.find('a').attr('href');
+				} else {
+					url = this.attr('href');
+				}
 				if (url === undefined) {
-					url = this.html();
+					url = this.text();
 				}
 				return url;
 			}
@@ -141,7 +147,7 @@ $(function(){
 			if (status.isMobile) {
 				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
-				$cover.css({opacity:0,'z-index':0});
+				$cover.css({opacity:0});
 				$sidebar.css({left:'-75%'});
 				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
@@ -161,7 +167,7 @@ $(function(){
 		show: function(needReflow) {
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
-				$cover.css({opacity:0.6,'z-index':7});
+				$cover.css({opacity:0.6});
 				document.body.addEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -183,14 +189,7 @@ $(function(){
 			}
 		},
 		bind: (function() {
-			$menuIcon.click(function() {
-				toggleMenu.toggle();
-				localStorage.setItem('userClickedMenu','true');
-				localStorage.setItem('userMenuStatus',status.showingMenu);
-			});
-			$topbarMenu.click(function() {
-				toggleMenu.toggle();
-			});
+
 		})()
 	};
 
@@ -257,7 +256,8 @@ $(function(){
 					render(fixedContent);
 				}
 			} else {
-				flowedContent = $wpWrapper[0].innerHTML;
+				flowedContent = $wpWrapper.html();
+				console.log($wpWrapper.html());
 				fixedContent = '';
 				render(fixedContent);
 			}
@@ -495,6 +495,12 @@ $(function(){
 			util.showNotice('您正在使用微信内置浏览器，\n建议点击右上角菜单中的\n“在浏览器中打开”以获得最佳浏览体验。_(:з」∠)_',10000);
 			localStorage.setItem('showedSuggestion','true');
 		}
+		if (status.prevPageURL === '' || status.prevPageURL === location.href) {
+			$prevPageLink.css({display:'none'});
+		}
+		if (status.nextPageURL === '' || status.nextPageURL === location.href || $('.wp-item').length<60 ) {
+			$nextPageLink.css({display:'none'});
+		}
 		if ($wpEntryThumbnail.length) {
 			function handler() {
 				if ($wpEntryThumbnail.height() < 256) {
@@ -509,9 +515,8 @@ $(function(){
 		}
 		if ($('.sidebar-item-current').html()) {
 			var href = $('.sidebar-item-current').attr('href');
-			var text = $('.sidebar-item-current').text().trim()
+			var text = $('.sidebar-item-current').text().trim();
 			$topbarTitle.html('<a href="'+href+'">'+text+'</a>');
-			$bookContainer.remove();
 		}
 		if ($('.wp-entry-meta').length) { // on single entry page
 			$topbar.css({background:'rgba(16,198,215,0.5)'});
@@ -520,22 +525,19 @@ $(function(){
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
 		$('.wp-item').width(W-36);
-		$('#wp-reply-form').width(W-36);
+		//$('.wp-nologin-form').width(W-36);
 		$topbarSearchIcon.click(function() {
-			if (status.searchBar) {
-				$topbarSearchWrapper.removeClass('topbar-search-active');
-				status.searchBar = false;
-			} else {
-				$topbarSearchWrapper.addClass('topbar-search-active');
-				status.searchBar = true;
-				$topbarSearchInput.focus();
-			}
+			$topbarSearchWrapper.addClass('topbar-search-active');
+			$topbarSearchInput.focus();
+			$cover.css({opacity:0.2});
+			status.searchBar = true;
 		});
-		$topbarSearchInput.blur(function() {
+		$topbarSearchReturn.click(function() {
 			$topbarSearchWrapper.removeClass('topbar-search-active');
-			$topbarMenu.css({opacity:1})
-			$topbarTitle.css({opacity:1})
-		})
+			$topbarSearchInput.val('');
+			$cover.css({opacity:0});
+			status.searchBar = false;
+		});
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;
@@ -618,12 +620,22 @@ $(function(){
 	});
 	if (/\?s=/.test(location.href)) { // on a search result page
 		if (sessionStorage.searchstr) {
-			$sidebarSearchInput[0].onblur='';
-			$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
-			$topbarSearchInput[0].onblur='';
-			$topbarSearchInput.val(sessionStorage.searchstr);
-			$topbarSearchWrapper.addClass('topbar-search-active');3
-			status.searchBar = true;
+			if (status.isMobile) {
+				$topbarSearchInput.val(sessionStorage.searchstr);
+				$topbarSearchWrapper.addClass('topbar-search-active');
+				status.searchBar = true;
+			} else {
+				$sidebarSearchInput[0].onblur=null;
+				$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
+			}
 		}
 	}
+	$menuIcon.click(function() {
+		toggleMenu.toggle();
+		localStorage.setItem('userClickedMenu','true');
+		localStorage.setItem('userMenuStatus',status.showingMenu);
+	});
+	$topbarMenu.click(function() {
+		toggleMenu.toggle();
+	});
 });

@@ -746,9 +746,13 @@ a {
     line-height: 40px;
     margin: 10px 0 10px 0;
 }
+#wp-reply-form {
+    margin: 20px 0 0 0;
+    float: left;
+    width: 100%;
+}
 #wp-reply-form input, #wp-reply-form textarea {
     border: none;
-    background: none;
     outline: none;
     resize: none;
     background: #eee;
@@ -824,11 +828,6 @@ a {
     font-size: 12px;
     color: #999;
     margin: 0 0 5px 0;
-}
-#wp-reply-form {
-    margin: 0 0 20px 0;
-    float: left;
-    width: 100%;
 }
 /*    front page    */
 #timeline-desktop {

@@ -24,6 +24,7 @@
 		</div>
 	<?php endif; ?>
 	<div id='wp-wrapper'>
+		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
 		global $paged;
 		if( get_query_var('paged') ) {
@@ -37,7 +38,6 @@
 			'posts_per_page'   => 60,
 			'orderby' => 'post_date',
 			'order' => 'DESC',
-			'category'=> -get_cat_ID('设计品'),
 			'post_type' => 'post',
 			'post_status' => 'publish',
 			'paged' => $paged,
@@ -46,13 +46,11 @@
 		foreach ( $myposts as $post ) : setup_postdata( $post );?>
 			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-
 				<?php
 				if ( has_post_thumbnail() ) {
 					the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 				}
 				?>
-
 				<div class='wp-item-text'>
 					<h3><?php the_title(); ?></h3>
 					<div class='wp-item-metadata'>
@@ -65,8 +63,7 @@
 			</div>
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
-		<div id='wp-nav-prev'><?php echo get_previous_posts_page_link()?></div>
-		<div id='wp-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<a id='wp-nav-next' class='wp-nav' href="<?php echo get_next_posts_page_link()?>">下一页</a>
 	</div>
 </body>
 </html>

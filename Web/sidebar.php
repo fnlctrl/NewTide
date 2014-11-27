@@ -5,14 +5,14 @@
 ?>
 <?php if ($isMobile):?>
 	<div id='topbar' class='fixed'>
-		<form class='topbar-search-wrapper topbar-search-active search-wrapper ease'>
-			<input id='topbar-search-input' type='text' name='s' onblur="this.value=''"/>
-			<div id='topbar-search-return'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
-		</form>
 		<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
 		<div id='topbar-search-icon'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 		<a id='topbar-logo' href="<?php echo home_url();?>"><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>
 		<div id='topbar-title'></div>
+		<form class='topbar-search-wrapper search-wrapper ease'>
+			<input id='topbar-search-input' type='text' name='s' placeholder='搜索'/>
+			<div id='topbar-search-return'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/return.svg'/></div>
+		</form>
 	</div>
 	<div id='cover' class='ease'></div>
 <?php else:?>

@@ -12,18 +12,19 @@
 <body>
 	<?php get_sidebar(); ?>
 	<?php if(!$isMobile) :?>
-	<div id='book-container' class='ease'>
-		<div id='menu-icon'>
-			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
-			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+		<div id='book-container' class='ease'>
+			<div id='menu-icon'>
+				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
+				<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+			</div>
+			<div id='book-nav-next' class='book-nav-icon'></div>
+			<div id='book-nav-prev' class='book-nav-icon'></div>
+			<div id='book-loading-shade' class='ease'></div>
+			<div id='book-pages'></div>
 		</div>
-		<div id='book-nav-next' class='book-nav-icon'></div>
-		<div id='book-nav-prev' class='book-nav-icon'></div>
-		<div id='book-loading-shade' class='ease'></div>
-		<div id='book-pages'></div>
-	</div>
 	<?php endif; ?>
 	<div id='wp-wrapper'>
+		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
 		preg_match('/.*category\/(.*)\//',$_SERVER["REQUEST_URI"],$result);
 		global $paged;
@@ -34,6 +35,7 @@
 		} else{
 			$paged = 1;
 		}
+
 		$args = array(
 			'posts_per_page'   => 60,
 			'orderby' => 'post_date',
@@ -64,8 +66,7 @@
 			</div>
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
-		<div id='wp-nav-prev'><?php echo get_previous_posts_page_link()?></div>
-		<div id='wp-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<a id='wp-nav-next' class='wp-nav' href='<?php echo get_next_posts_page_link()?>'>下一页</a>
 	</div>
 </body>
 </html>
