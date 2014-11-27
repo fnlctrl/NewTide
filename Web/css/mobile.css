@@ -9,7 +9,6 @@ a {
 body {
     background: #eee;
     height: auto;
-    /*overflow: hidden;*/
 }
 /*    topbar    */
 #topbar {
@@ -103,7 +102,7 @@ body {
     width: 80%;
     font-size: 18px;
     color: #808080;
-    height: 56px;
+    height: 53px;
     background: none;
 }
 #topbar-search-return {
@@ -263,17 +262,15 @@ body {
     padding: 0 0 30px 0;
 }
 .wp-item {
-	height: 96px;
-	margin: 5px 18px 0 18px;
-	background-color: #FFF;
+    height: 96px;
+    margin: 0 0 5px 0;
+    background-color: #FFF;
     box-shadow: inset -3px 0px 0px 0px rgba(16,198,220,1);
     border-radius: 2px;
     position: relative;
     overflow: hidden;
     color: #10C6DC;
-}
-.wp-item:first-of-type {
-    margin-top: 18px;
+    width: 100%;
 }
 .wp-item:active {
     background: #BDE4FF;
@@ -479,12 +476,12 @@ body {
 	display	: none;
 }
 .wp-nav {
-    display: block;
+    display: none;
     position: relative;
     height: 32px;
     line-height: 32px;
     width: auto;
-    margin: 18px;
+    margin: 18px 0;
     background: #ED6D7F;
     border-radius: 3px;
     border-bottom: 3px inset rgba(0,0,0,0.2);
@@ -517,35 +514,21 @@ body {
 }
 /*    front page    */
 #timeline-mobileHome {
-    margin: 0 18px 18px 18px;
-    width: auto;
+    width: 100%;
     z-index: 1;
 }
 #events-wrapper {
-    position: relative;
-    top: 0;
-    left: 0;
     width: 100%;
     min-height: 300px;
-    overflow: hidden;
+    padding: 18px;
+    box-sizing: border-box;
     z-index: 1;
 }
-#timeline {
-    position: relative;
-    height: 250px;
-    width: auto;
-    margin: 0 18px 0 18px;
-    left: 0;
-    bottom: 0;
+#events-wrapper h1 {
+    color: #999;
+    font-size: 18px;
 }
-#posts-wrapper {
-    position: relative;
-    height: auto;
-    width: 100%;
-    left: 0;
-    margin: 0;
-}
-#events-wrapper h1, #posts-wrapper h1 {
+.posts-wrapper h1 {
     margin: 10px 18px 0 18px;
     color: #999;
     font-size: 18px;
@@ -558,6 +541,8 @@ body {
     height: auto;
     overflow: hidden;
     margin: 0 0 20px 0;
+    padding: 18px;
+    box-sizing: border-box;
 }
 .more {
     color: #999;

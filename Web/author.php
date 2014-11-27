@@ -15,7 +15,7 @@
 		<div id='book-container' class='ease'>
 			<div id='menu-icon'>
 				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
-				<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+				<img classposts-wrapper='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 			</div>
 			<div id='book-nav-next' class='book-nav-icon'></div>
 			<div id='book-nav-prev' class='book-nav-icon'></div>
@@ -24,6 +24,7 @@
 		</div>
 	<?php endif; ?>
 	<div id='wp-wrapper'>
+		<?php if($isMobile) :?><div class='posts-container'><?php endif; ?>
 		<div id='wp-nav-prev'><?php echo get_previous_posts_page_link()?></div>
 		<?php
 		global $paged;
@@ -65,6 +66,7 @@
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
 		<div id='wp-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<?php if($isMobile) :?></div><?php endif; ?>
 	</div>
 </body>
 </html>

@@ -495,11 +495,11 @@ $(function(){
 			util.showNotice('您正在使用微信内置浏览器，\n建议点击右上角菜单中的\n“在浏览器中打开”以获得最佳浏览体验。_(:з」∠)_',10000);
 			localStorage.setItem('showedSuggestion','true');
 		}
-		if (status.prevPageURL === '' || status.prevPageURL === location.href) {
-			$prevPageLink.css({display:'none'});
+		if (status.prevPageURL !== '' && status.prevPageURL !== location.href) {
+			$prevPageLink.css({display:'block'});
 		}
-		if (status.nextPageURL === '' || status.nextPageURL === location.href || $('.wp-item').length<60 ) {
-			$nextPageLink.css({display:'none'});
+		if (status.nextPageURL !== '' && status.nextPageURL !== location.href && $('.wp-item').length===60 ) {
+			$nextPageLink.css({display:'block'});
 		}
 		if ($wpEntryThumbnail.length) {
 			function handler() {
@@ -524,8 +524,6 @@ $(function(){
 		if (/event/.test(location.href)) { // on events page
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
-		$('.wp-item').width(W-36);
-		//$('.wp-nologin-form').width(W-36);
 		$topbarSearchIcon.click(function() {
 			$topbarSearchWrapper.addClass('topbar-search-active');
 			$topbarSearchInput.focus();

@@ -88,6 +88,13 @@ add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 // change login form logo
 function my_login_logo() { ?>
 	<style type="text/css">
+		#login {
+			padding: 0;
+			top: 50%;
+			left: 50%;
+			margin: -250px 0 0 -160px;
+			position: absolute;
+		}
 		#login h1 a {
 			width: 200px !important;
 			height: 65px;

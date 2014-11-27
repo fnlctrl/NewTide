@@ -12,7 +12,7 @@ $(function(){
 	} else {
 		var $firstLoadHintWrapper = $('#hint-wrapper'),
 			$ignoreButton = $('#hint-ignore-button'),
-			$postsWrapper = $('#posts-wrapper');
+			$postsWrapper = $('.posts-wrapper');
 		if (localStorage.firstLoad === 'false') {
 			$firstLoadHintWrapper.remove();
 			$postsWrapper.css({left:0,width:'50%'});

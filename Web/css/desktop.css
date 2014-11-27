@@ -844,14 +844,14 @@ a {
     width: 50%;
     z-index: 0;
 }
-#posts-wrapper {
+.posts-wrapper {
     position: absolute;
     left: 210px;
     z-index: 2;
     width: calc(50% - 210px);
     height: 100%;
 }
-#posts-wrapper h1, #events-wrapper h1 {
+.posts-wrapper h1, #events-wrapper h1 {
     margin: 50px 0 0 50px;
     color: #ed6d7f;
     line-height: 28px;

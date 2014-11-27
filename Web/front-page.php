@@ -60,7 +60,7 @@ Template Name: 主页
 				<div id='timeline-mobileHome'></div>
 			</div>
 	<?php endif?>
-			<div id='posts-wrapper' class='ease'>
+			<div class='posts-wrapper ease'>
 				<h1>编辑精选　<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a></h1>
 				<div class='posts-container'>
 					<?php
