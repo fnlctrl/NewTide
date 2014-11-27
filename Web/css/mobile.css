@@ -61,13 +61,16 @@ body {
 #topbar-title {
     position: absolute;
     left: 165px;
-	display			: block;
-	font-size		: 18px;
-	line-height		: 56px;
-	color			: #FFF;
+	font-size: 18px;
+	height: 56px;
+	color: #FFF;
 }
 #topbar-title a {
     color: #fff;
+    font-size: 18px;
+    line-height: 56px;
+    height: 56px;
+    display: block;
 }
 #topbar-search-icon {
     width: 56px;
@@ -87,12 +90,11 @@ body {
     opacity: 0;
     pointer-events: none;
     z-index: 0;
-    /*display: none;*/
 }
 .topbar-search-active {
     opacity: 1;
     pointer-events: auto;
-    z-index: 2;
+    z-index: 3;
 }
 #topbar-search-input {
     border: none;
@@ -102,7 +104,7 @@ body {
     width: 80%;
     font-size: 18px;
     color: #808080;
-    height: 53px;
+    height: 56px;
     background: none;
 }
 #topbar-search-return {
@@ -372,6 +374,7 @@ body {
 	display		: block;
 	font-size	: 18px;
 	line-height	: 28px;
+    text-indent: 2em;
 }
 .wp-entry-content img {
     margin: 18px 0 18px 0;
@@ -520,16 +523,17 @@ body {
 #events-wrapper {
     width: 100%;
     min-height: 300px;
-    padding: 18px;
+    padding: 18px 18px 0 18px;
     box-sizing: border-box;
     z-index: 1;
 }
 #events-wrapper h1 {
     color: #999;
     font-size: 18px;
+    margin: 0;
 }
 .posts-wrapper h1 {
-    margin: 10px 18px 0 18px;
+    margin: 10px 18px -15px 18px;
     color: #999;
     font-size: 18px;
 }
@@ -540,7 +544,7 @@ body {
     top: 6px;
     height: auto;
     overflow: hidden;
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
     padding: 18px;
     box-sizing: border-box;
 }

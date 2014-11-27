@@ -98,7 +98,3 @@ h1 {
 .intro-photo:nth-child(2) {
     z-index:1
 }
-/*  mobile  */
-body {
-    height: 102%;
-}

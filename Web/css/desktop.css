@@ -743,12 +743,12 @@ a {
 #wp-comments-form-title {
     color: #4585b5;
     font-size: 24px;
-    line-height: 40px;
-    margin: 10px 0 10px 0;
+    line-height: 24px;
+    height: 24px;
+    margin: 12px 0 12px 0;
 }
 #wp-reply-form {
     margin: 20px 0 0 0;
-    float: left;
     width: 100%;
 }
 #wp-reply-form input, #wp-reply-form textarea {
@@ -770,7 +770,6 @@ a {
 }
 #wp-reply-form textarea {
     height: 100px;
-    float: left;
     width: calc(100% - 60px);
 }
 #wp-reply-form button[name='submit'] {
