@@ -245,4 +245,3 @@ function remove_gravatar( $avatar ) {
 	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);
 }
 add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
-?>

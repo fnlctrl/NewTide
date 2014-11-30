@@ -31,7 +31,7 @@ $(function(){
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
 			'backgroundColor': '#fff',
-			'debounce': 300
+			'debounce': 350
 		});
 	}
 });

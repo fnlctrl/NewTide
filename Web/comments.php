@@ -40,7 +40,5 @@
 			<div class='wp-comment-content'><?php echo $comment->comment_content; ?></div>
 		</div>
 	</div>
-<?php
-endforeach;
-?>
+<?php endforeach; ?>
 
