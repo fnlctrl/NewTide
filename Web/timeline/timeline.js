@@ -12,7 +12,7 @@ var defaultOptions = {
     'siteUrl': 'http://tide.myqsc.com/wp/',
     'startDate': 'nearest',
     'debounce': 200,
-    'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/newtide/img/default-poster.svg'
+    'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg'
 };
 
 var Timeline = function() {
@@ -22,8 +22,8 @@ Timeline.prototype.start = function ( container, options ) {
     var _this = this;
     _this.container = container;
     _this.config = defaultOptions;
-    if (typeof options != 'undefined') {    
-        $.each(options, function (key, value) {    
+    if (typeof options != 'undefined') {
+        $.each(options, function (key, value) {
             if (_this.config[key]) {
                 _this.config[key] = options[key];
             }
