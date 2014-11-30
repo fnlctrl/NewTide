@@ -30,7 +30,7 @@ Timeline.prototype.start = function ( container, options ) {
         });
     }
     $.getJSON(_this.config.dataLocation)
-    .done(function ( jsonData ) {
+    .done(function ( jsonData ) { 
         console.log(jsonData);
         _this.data = jsonData;
         _this.count = jsonData.length;
@@ -59,12 +59,9 @@ Timeline.prototype.parseDateTime = function() {
     $.each(_this.data, function (i, entry) {
         var date = entry.date.split(','),
             year = date[0],
-            ye = Math.ceil(year / 100),
-            ar = year % 100,
             month = date[1],
             day = date[2],
-            weekday = (day + Math.floor(2.6 * month - 0.2) - 2 * ye + ar +
-                Math.floor(ye / 4) + Math.floor(ar / 4)) % 7;
+            weekday = new Date(year, month, day).getDay;
         entry.parsedDate = {
             'year': parseInt(year),
             'yearStr': ('0' + year).substr(-4),
@@ -84,8 +81,8 @@ Timeline.prototype.parseDateTime = function() {
         if (entry.time === '') {
             entry.hasTime = false;
         } else {
-            // var time = entry.time.split('-');
             entry.hasTime = true;
+            // var time = entry.time.split('-');
             // entry.parsedTime = {
             //     'beginHour': time[0].split(':')[0],
             //     'beginHourStr': ('0' + time[0].split(':')[0]).substr(-2),
@@ -129,7 +126,7 @@ MobileHome.prototype.resize = function() {
     _this.elementWidth = Math.floor((_this.width - _this.elementMargin) / 2);
     _this.elementFullWidth = _this.elementWidth + _this.elementMargin;
     _this.elementHeight = Math.floor(_this.elementWidth * 3 / 2);
-    _this.height = _this.elementHeight + 8;
+    _this.height = _this.elementHeight + 6;
     _this.container.height(_this.height);
     $('div.timeline-entry').height(_this.elementHeight)
         .width(_this.elementWidth)
