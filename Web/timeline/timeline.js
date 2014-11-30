@@ -32,7 +32,7 @@ Timeline.prototype.start = function ( container, options ) {
     $.get(_this.config.dataLocation)
     .done(function ( data ) { 
         console.log(data);
-        _this.data = JSON.parse($(data.responseText).text());
+        _this.data = JSON.parse($(data).text());
         localStorage.setItem('timelineData', JSON.stringify(_this.data));
         _this.count = _this.data.length;
         _this.parseDateTime();
