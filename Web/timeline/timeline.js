@@ -62,7 +62,7 @@ Timeline.prototype.parseDateTime = function() {
             year = date[0],
             month = date[1],
             day = date[2],
-            weekday = new Date(year, month, day).getDay;
+            weekday = new Date(year, month, day).getDay();
         entry.parsedDate = {
             'year': parseInt(year),
             'yearStr': ('0' + year).substr(-4),
