@@ -5,7 +5,7 @@
 var weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
 var defaultOptions = {
-    'dataLocation': 'timeline.json',
+    'dataLocation': 'http://tide.myqsc.com/wp/json/',
     'maxEntryNumber': 999,
     'switchInterval': 10000,
     'backgroundColor': '#FFF',
@@ -29,22 +29,24 @@ Timeline.prototype.start = function ( container, options ) {
             }
         });
     }
-    $.getJSON(_this.config.dataLocation)
-    .done(function ( jsonData ) { 
-        console.log(jsonData);
-        _this.data = jsonData;
-        _this.count = jsonData.length;
+    $.get(_this.config.dataLocation)
+    .done(function ( data ) { 
+        console.log(data);
+        _this.data = (typeof data.responseText === 'undefined') ?
+            data : JSON.parse($(data.responseText).text());
+        localStorage.setItem('timelineData', JSON.stringify(_this.data));
+        _this.count = _this.data.length;
         _this.parseDateTime();
         _this.container.empty();
         _this.render();
     })
     .fail(function ( data ) {
-        var jsonData = JSON.parse($(data.responseText).text());
-	    _this.data = jsonData;
-	    _this.count = jsonData.length;
-	    _this.parseDateTime();
-	    _this.container.empty();
-	    _this.render();
+        var localData = localStorage.getItem('timelineData');
+        _this.data = JSON.parse(localData);
+        _this.count = _this.data.length;
+        _this.parseDateTime();
+        _this.container.empty();
+        _this.render();
     });
 };
 
