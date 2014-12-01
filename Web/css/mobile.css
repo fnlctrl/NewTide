@@ -560,6 +560,9 @@ body {
     font-size: 18px;
     margin: 0;
 }
+.posts-wrapper {
+    position: relative;
+}
 .posts-wrapper h1 {
     margin: 18px 18px -18px 18px;
     color: #999;
@@ -576,7 +579,19 @@ body {
     box-sizing: border-box;
 }
 .more {
-    color: #999;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    background: #ED6D7F;
+    border-radius: 3px;
+    border-bottom: 3px inset rgba(0,0,0,0.2);
+    color: #fff;
+    text-align: center;
+    bottom: 0;
+    margin: 5px 0 0 0;
+    box-sizing: border-box;
 }
 /*    Message    */
 .message-block {
