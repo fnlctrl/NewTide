@@ -33,7 +33,7 @@ function scripts_init () {
 		'siteurl' => get_site_url().'/',
 		'ajaxurl' => admin_url('admin-ajax.php'),
 		'redirecturl' => get_permalink(),
-		'jsonurl' => get_site_url().'/json',
+		'jsonurl' => get_site_url().'/json/',
 	));
 	if ($isMobile) {
 		wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
