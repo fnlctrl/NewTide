@@ -28,9 +28,9 @@ Template Name: 主页
 				<div id='hint'>
 					<div id='hint-title'>欢迎来到全新的</div>
 					<img id='hint-logo' class='svg' src='<?php bloginfo('template_url');?>/img/hint-logo.svg'/>
-					<div id='text'>
+					<div id='hint-text'>
 						<p>
-						　　你好，我们是水朝夕工作室，因为共同爱好而聚在一起的一群人。现在你看到的，是我们尝试与有爱的大家联系的窗口<br/>
+						　　你好，我们是水朝夕工作室，因为共同爱好而聚在一起的一群人。我们有关于电影，音乐，书籍的线下活动和一年一度的浙大青年电影节和潮汐音乐节——我们希望找一群趣味相投的人，一起聊天，一起玩。<br/>
 						</p>
 						<hr>
 						<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>

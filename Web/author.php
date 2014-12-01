@@ -25,7 +25,7 @@
 	<?php endif; ?>
 	<div id='wp-wrapper'>
 		<?php if($isMobile) :?><div class='posts-container'><?php endif; ?>
-		<div id='wp-nav-prev'><?php echo get_previous_posts_page_link()?></div>
+		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
 		global $paged;
 		if( get_query_var('paged') ) {
@@ -65,7 +65,7 @@
 			</div>
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
-		<div id='wp-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<a id='wp-nav-next' class='wp-nav' href='<?php echo get_next_posts_page_link()?>'>下一页</a>
 		<?php if($isMobile) :?></div><?php endif; ?>
 	</div>
 </body>

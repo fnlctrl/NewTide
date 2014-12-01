@@ -148,7 +148,7 @@ $(function(){
 				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
 				$cover.css({opacity:0});
-				$sidebar.css({left:'-75%'});
+				$sidebar.css({left:'-75%','box-shadow':''});
 				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -169,16 +169,17 @@ $(function(){
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
 				$cover.css({opacity:0.6});
 				document.body.addEventListener('touchmove', util.preventDefault);
+				$sidebar.css({left:'0px','box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'});
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
 				$bookContainer.css({left:200});
+				$sidebar.css({left:'0px'});
 				if (W>1200 && needReflow) {
 					$bookContainer.css({width:W-200});
 					book.reflow(book.getConfig(W-200));
 				}
 			}
-			$sidebar.css({left:'0px'});
 			status.showingMenu = true;
 		},
 		toggle: function () {
@@ -527,15 +528,19 @@ $(function(){
 		$topbarSearchIcon.click(function() {
 			$topbarSearchWrapper.addClass('topbar-search-active');
 			$topbarSearchInput.focus();
+			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1
 			$cover.css({opacity:0.2});
 			status.searchBar = true;
 		});
 		$topbarSearchReturn.click(function() {
 			$topbarSearchWrapper.removeClass('topbar-search-active');
 			$topbarSearchInput.val('');
+			$topbarMenu.css({'z-index':4}); // fix pointer-events:none not working for svgs on android 4.1
 			$cover.css({opacity:0});
 			status.searchBar = false;
 		});
+		$('#events-wrapper').css({'height':$window.width()*0.8});
+		$('#sidebar-top').css({'background':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;

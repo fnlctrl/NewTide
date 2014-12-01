@@ -944,9 +944,9 @@ a {
 #logo:hover path {
     fill: #d4eeff;
 }
-#text {
+#hint-text {
     position: absolute;
-    top: 130px;
+    top: 100px;
     font-size: 14px;
     width: 100%;
 }
@@ -984,7 +984,7 @@ a {
 }
 #hint-wave-wrapper {
     position: absolute;
-    top: 150px;
+    top: 130px;
     width: 210px;
     height: 20px;
     overflow: hidden;

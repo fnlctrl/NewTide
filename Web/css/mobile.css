@@ -21,6 +21,7 @@ body {
     z-index: 10;
     background-color: #10C6D7;
     box-shadow: 0 0 10px 3px rgba(0,0,0,0.2);
+    overflow: hidden;
 }
 #topbar:before {
     content: '';
@@ -33,11 +34,11 @@ body {
     z-index: 10;
 }
 #topbar-menu {
-    position: absolute;
-    width: 56px;
-    height: 56px;
-    z-index: 1;
-}
+     position: absolute;
+     width: 56px;
+     height: 56px;
+     z-index: 4;
+ }
 #topbar-menu:active {
     background: rgba(255,255,255,0.5);
 }
@@ -53,7 +54,7 @@ body {
     top: 0;
     left: 56px;
     display: block;
-    height: 100%;
+    height: 56px;
 }
 #topbar-logo:active {
     background: rgba(255,255,255,0.5);
@@ -77,7 +78,6 @@ body {
     height: 56px;
     position: absolute;
     right: 0;
-    pointer-events: none;
 }
 #topbar-search-icon:active {
     background: rgba(255,255,255,0.5);
@@ -104,15 +104,18 @@ body {
     width: 80%;
     font-size: 18px;
     color: #808080;
-    height: 56px;
+    height: 18px;
     background: none;
+    padding: 0;
+    line-height: 18px;
+    top: 50%;
+    margin-top: -9px;
 }
 #topbar-search-return {
     position: absolute;
     height: 56px;
     width: 56px;
     left: 0;
-    pointer-events: none;
 }
 #topbar-search-return *{
     pointer-events: none;
@@ -120,6 +123,7 @@ body {
 #topbar-search-return:active {
     background: #ECECEC;
 }
+/*    sidebar    */
 #sidebar {
     height: 100%;
     width: 75%;
@@ -127,17 +131,28 @@ body {
     position: fixed;
     z-index: 8;
     background-color: #FFF;
-    top: 56px;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
+    margin-top: 56px;
+    box-sizing: border-box;
 }
 #sidebar-external-links {
 	display	: none;
 }
 #sidebar-top {
-	display				: block;
-	width				: 100%;
-	height				: 96px;
-	background-color	: #4585B5;
+	width: 100%;
+	height: 96px;
+	background: #4585B5;
+    background-size: 200%;
+    position: relative;
+    overflow: hidden;
+}
+#sidebar-top:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 100%;
+    box-shadow: 0 0 150px 0 rgba(0,0,0,0.9);
+    z-index: 0;
 }
 #sidebar-logo {
 	display	: none;
@@ -154,7 +169,8 @@ body {
     pointer-events: none;
 }
 #user-head {
-    position: absolute;
+    position: relative;
+    float: left;
     width: 64px;
     height: 64px;
     top: 16px;
@@ -258,13 +274,14 @@ body {
 #wp-wrapper {
     width: 100%;
     position: absolute;
-    top: 56px;
+    padding-top: 56px;
     left: 0;
     background: #eee;
     margin: 0;
     height: auto;
     min-height: 100%;
     z-index: 1;
+    box-sizing: border-box;
 }
 .wp-item {
     height: 96px;
@@ -332,7 +349,7 @@ body {
     height: 256px;
     width: 100%;
     position: absolute;
-    top: -56px;
+    top: 0;
     overflow: hidden;
 }
 #wp-entry-meta-text {
@@ -349,6 +366,9 @@ body {
     top: 150%;
     box-shadow: 0 0 150px 70px rgba(0,0,0,0.8);
     z-index: -1;
+}
+.wp-entry-meta + .wp-entry-content {
+    margin-top: 200px;
 }
 .wp-entry-title {
     position: relative;
@@ -371,7 +391,6 @@ body {
     padding: 18px;
     background-color: #FFF;
     border-bottom: 1px solid #eee;
-    margin-top: 200px;
 }
 .wp-entry-content p {
 	display		: block;
@@ -412,7 +431,8 @@ body {
     margin: 0;
 }
 #wp-reply-form textarea {
-    height: 200px;
+    height: 250px;
+    border-bottom: 1px solid #eee;
 }
 #wp-reply-form button {
     border: none;
@@ -446,7 +466,7 @@ body {
 .wp-comment-item {
     width: 100%;
     height: auto;
-    border-bottom: 1px solid #CCC;
+    border-bottom: 1px solid #eee;
     clear: both;
     padding: 18px;
     box-sizing: border-box;
@@ -527,7 +547,7 @@ body {
 }
 #events-wrapper {
     width: 100%;
-    min-height: 300px;
+    min-height: 80vw;
     padding: 18px 18px 0 18px;
     box-sizing: border-box;
     z-index: 1;
@@ -538,7 +558,7 @@ body {
     margin: 0;
 }
 .posts-wrapper h1 {
-    margin: 10px 18px -15px 18px;
+    margin: 18px 18px -18px 18px;
     color: #999;
     font-size: 18px;
 }
@@ -578,4 +598,19 @@ body {
     height: auto;
     padding: 20px;
     top: 0;
+}
+/*    fix layout for iPhone 4 and older    */
+@media (max-height: 480px) {
+    #sidebar-top {
+        height: 60px;
+    }
+    #user-head {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+    }
+    #user-id {
+        margin-top: 12px;
+        left: 72px;
+    }
 }

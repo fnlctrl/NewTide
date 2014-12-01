@@ -36,9 +36,11 @@ Template Name: 留言板
 	<div id='wp-wrapper'>
 		<?php if (have_posts()) { while(have_posts()) { the_post();?>
 			<div class='wp-entry-content'>
-				<h1 class='wp-entry-title'>
-					<?php the_title(); ?>
-				</h1>
+				<?php if(!isMobile): ?>
+					<h1 class='wp-entry-title'>
+						<?php the_title(); ?>
+					</h1>
+				<?php endif;?>
 				<?php the_content(); ?>
 			</div>
 			<div class='wp-entry-comments'>

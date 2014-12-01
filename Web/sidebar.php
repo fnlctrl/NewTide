@@ -13,6 +13,7 @@
 			<input id='topbar-search-input' type='text' name='s' placeholder='搜索'/>
 			<div id='topbar-search-return'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/return.svg'/></div>
 		</form>
+		&nbsp; <!-- a nasty, hacky fix for blurry position:fixed images on android browser 4.1 and older -->
 	</div>
 	<div id='cover' class='ease'></div>
 <?php else:?>
