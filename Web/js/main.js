@@ -504,7 +504,7 @@ $(function(){
 		if ($wpEntryThumbnail.length) {
 			function handler() {
 				if ($wpEntryThumbnail.height() < 256) {
-					$wpEntryThumbnail.css({height:'100%',width:'auto'});
+					$wpEntryThumbnail.css({height:'256px',width:'auto'});
 				}
 			}
 			if ($wpEntryThumbnail[0].complete) {
