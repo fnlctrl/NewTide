@@ -97,12 +97,12 @@
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-event.svg'/>
 			</a>
 			<a class='sidebar-item <?php if(is_category('设计品')||in_category('设计品')&&!is_home()&&!is_category('编辑精选')&&!is_page('搜索结果')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/category/designs/'; ?>">　设计品
-				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-onepage.svg'/>
+				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-designs.svg'/>
 			</a>
 		</div>
 		<div class='sidebar-section'><a class='sidebar-section-title'>关于</a><hr>
 			<a class='sidebar-item <?php if(is_page('留言板')) echo 'sidebar-item-current';?>' href="<?php echo home_url().'/leave-message/'; ?>">　留言
-				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-comment.svg'/>
+				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-message.svg'/>
 			</a>
 			<a class='sidebar-item' href="<?php echo home_url().'/wp-admin'; ?>">　投稿
 				<img class='sidebar-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/>

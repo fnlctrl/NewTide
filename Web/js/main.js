@@ -148,7 +148,12 @@ $(function(){
 				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
 				$cover.css({opacity:0});
-				$sidebar.css({left:'-75%','box-shadow':''});
+				//$sidebar.css({left:'-75%','box-shadow':''});
+				$sidebar.css({
+					transform:'translate3d(-100%, 0, 0)',
+					'-webkit-transform':'translate3d(-100%, 0, 0)',
+					'box-shadow':''
+				});
 				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -169,7 +174,11 @@ $(function(){
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
 				$cover.css({opacity:0.6});
 				document.body.addEventListener('touchmove', util.preventDefault);
-				$sidebar.css({left:'0px','box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'});
+				$sidebar.css({
+					transform:'translate3d(0, 0, 0)',
+					'-webkit-transform':'translate3d(0, 0, 0)',
+					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
+				});
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
@@ -526,6 +535,7 @@ $(function(){
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
 		$topbarSearchIcon.click(function() {
+			toggleMenu.hide();
 			$topbarSearchWrapper.addClass('topbar-search-active');
 			$topbarSearchInput.focus();
 			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1

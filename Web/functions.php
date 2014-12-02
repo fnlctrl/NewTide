@@ -242,6 +242,6 @@ add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
 
 // replace all gravatar with local default image
 function remove_gravatar( $avatar ) {
-	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);
+	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.svg', $avatar);
 }
 add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
