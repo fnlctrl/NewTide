@@ -142,9 +142,10 @@ body {
     box-sizing: border-box;
     transform: translate3d(-100%, 0, 0);
     -webkit-transform: translate3d(-100%, 0, 0);
-    transition: transform 0.3s ease !important;
-    -webkit-transition: -webkit-transform 0.3s ease !important;
-
+    transition: transform 0.3s ease-out !important;
+    transition: -webkit-transform 0.3s ease-out !important;
+    -webkit-transition: transform 0.3s ease-out !important;
+    -webkit-transition: -webkit-transform 0.3s ease-out !important;
 }
 #sidebar-external-links {
 	display	: none;

@@ -38,7 +38,8 @@ $(function(){
 		numColumns: 1,
 		LineHeight: 18,
 		qrcode: null,
-		searchBar: false
+		searchBar: false,
+		lockPopstate: false
 	};
 
 	var util = {
@@ -140,20 +141,28 @@ $(function(){
 			status.qrcode = util.cloneCanvas(canvas);
 			$('#sidebar-qrcode').append(util.cloneCanvas(canvas));
 		},
+		timer: null,
+		preventPopstate: function(duration) {
+			status.lockPopstate = true;
+			clearTimeout(util.timer);
+			util.timer = setTimeout(function() {
+				status.lockPopstate = false;
+			},duration);
+		},
 	};
 
 	var toggleMenu = {
 		hide: function(needReflow) {
 			if (status.isMobile) {
-				$topbarMenu.css({'background':''});
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
 				$cover.css({opacity:0});
-				//$sidebar.css({left:'-75%','box-shadow':''});
 				$sidebar.css({
 					transform:'translate3d(-100%, 0, 0)',
 					'-webkit-transform':'translate3d(-100%, 0, 0)',
 					'box-shadow':''
 				});
+				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				history.back();
 				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -173,12 +182,14 @@ $(function(){
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
 				$cover.css({opacity:0.6});
-				document.body.addEventListener('touchmove', util.preventDefault);
 				$sidebar.css({
 					transform:'translate3d(0, 0, 0)',
 					'-webkit-transform':'translate3d(0, 0, 0)',
 					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
 				});
+				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				location.hash='menu';
+				document.body.addEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
@@ -199,7 +210,15 @@ $(function(){
 			}
 		},
 		bind: (function() {
-
+			$menuIcon.click(function() {
+				toggleMenu.toggle();
+				localStorage.setItem('userClickedMenu','true');
+				localStorage.setItem('userMenuStatus',status.showingMenu);
+			});
+			$topbarMenu.click(function() {
+				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				toggleMenu.toggle();
+			});
 		})()
 	};
 
@@ -501,9 +520,46 @@ $(function(){
 	if (status.isMobile) {
 		status.needBook = false;
 		book = null;
-		if (/MicroMessenger/i.test(navigator.userAgent) && (localStorage.showedSuggestion !== 'true')) {
-			util.showNotice('您正在使用微信内置浏览器，\n建议点击右上角菜单中的\n“在浏览器中打开”以获得最佳浏览体验。_(:з」∠)_',10000);
-			localStorage.setItem('showedSuggestion','true');
+		if (!!(window.history && history.pushState)) { // detect support for html5 history api, http://stackoverflow.com/questions/9446281/
+			// it's still very buggy, a total refactoring is necessary in the future.
+			window.onpopstate = function() {
+				if (status.lockPopstate) {
+					return;
+				}
+				alert('fired');
+				if (!/menu/.test(location.hash) && status.showingMenu) { // hide menu when user presses back
+					alert('hide menu');
+					toggleMenu.hide();
+					return;
+				}
+				if (location.href === siteInfo.siteurl) { // prevent redirect on home page
+					return;
+				}
+				if (status.isListPage || /event/.test(location.href)) { // redirect to home if pressed back on events page or category page
+					alert('redirecting home');
+					location.href = siteInfo.siteurl;
+					return;
+				}
+				if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
+					alert('redirecting to category');
+					var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
+					location.href = siteInfo.siteurl+'category/'+category+'/';
+					return;
+				}
+			};
+		} else {
+			if (!/event/.test(location.href)) { // clear location.hash except on events page
+				util.preventPopstate(20);
+				location.hash = '';
+			}
+			window.onhashchange = function() {
+				if (!status.showingMenu) {
+					return;
+				}
+				if (location.hash === '') {
+					toggleMenu.hide();
+				}
+			};
 		}
 		if (status.prevPageURL !== '' && status.prevPageURL !== location.href) {
 			$prevPageLink.css({display:'block'});
@@ -528,7 +584,7 @@ $(function(){
 			var text = $('.sidebar-item-current').text().trim();
 			$topbarTitle.html('<a href="'+href+'">'+text+'</a>');
 		}
-		if ($('.wp-entry-meta').length) { // on single entry page
+		if ($wpEntryMeta.length) { // on single entry page
 			$topbar.css({background:'rgba(16,198,215,0.5)'});
 		}
 		if (/event/.test(location.href)) { // on events page
@@ -550,7 +606,7 @@ $(function(){
 			status.searchBar = false;
 		});
 		$('#events-wrapper').css({'height':$window.width()*0.8});
-		$('#sidebar-top').css({'background':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
+		$('#sidebar-top').css({'background-image':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;
@@ -643,12 +699,4 @@ $(function(){
 			}
 		}
 	}
-	$menuIcon.click(function() {
-		toggleMenu.toggle();
-		localStorage.setItem('userClickedMenu','true');
-		localStorage.setItem('userMenuStatus',status.showingMenu);
-	});
-	$topbarMenu.click(function() {
-		toggleMenu.toggle();
-	});
 });

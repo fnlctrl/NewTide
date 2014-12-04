@@ -34,7 +34,10 @@ Template Name: 主页
 						</p>
 						<hr>
 						<p><span class='hint-subtitle'>· 开放投稿啦！</span><br/>
-							请点击左侧 <b>投稿</b> <img class='hint-icon svg' src='<?php bloginfo('template_url');?>/img/sidebar-icon-contribute.svg'/><br/>
+							请点击左侧 <b>投稿</b>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+								<path fill="#fff" d="M12,0H3.5C2.7,0,2,0.7,2,1.5v17C2,19.3,2.7,20,3.5,20h13c0.8,0,1.5-0.7,1.5-1.5V6C15.6,3.6,14.3,2.3,12,0z M11.5,6.5v-5l5,5H11.5z"></path>
+							</svg>
 						</p>
 						<p><span class='hint-subtitle'>· 分页阅读</span><br/>
 							在文章页面可以通过单击页面边缘、使用←→键、鼠标滚轮、滑动屏幕来翻页
