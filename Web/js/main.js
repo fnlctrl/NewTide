@@ -544,7 +544,7 @@ $(function(){
 					if (location.href === siteInfo.siteurl) { // prevent redirect on home page
 						return;
 					}
-					if (status.isListPage || /event/.test(location.href)) { // redirect to home if pressed back on events page or category page
+					if (status.isListPage || /event/.test(location.href) || /message/.test(location.href)) { // redirect to home if pressed back on events page or category page or leave-message page
 						//alert('redirecting home');
 						location.href = siteInfo.siteurl;
 						return;
