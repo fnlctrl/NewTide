@@ -162,7 +162,9 @@ $(function(){
 					'box-shadow':''
 				});
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
-				history.back();
+				if (/menu/.test(location.hash)) {
+					history.back();
+				}
 				document.body.removeEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -188,7 +190,7 @@ $(function(){
 					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
 				});
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
-				location.hash='menu';
+				location.hash = 'menu';
 				document.body.addEventListener('touchmove', util.preventDefault);
 			} else {
 				var W = $window.width();
@@ -522,34 +524,41 @@ $(function(){
 		book = null;
 		if (!!(window.history && history.pushState)) { // detect support for html5 history api, http://stackoverflow.com/questions/9446281/
 			// it's still very buggy, a total refactoring is necessary in the future.
-			window.onpopstate = function() {
-				if (status.lockPopstate) {
-					return;
-				}
-				alert('fired');
+			if (location.href===siteInfo.siteurl) {
+				history.replaceState('', document.title, location.pathname);
+			} else {
+				history.pushState('', document.title, location.pathname);
+			}
+			window.onhashchange = function() {
+				util.preventPopstate(20);
 				if (!/menu/.test(location.hash) && status.showingMenu) { // hide menu when user presses back
-					alert('hide menu');
 					toggleMenu.hide();
-					return;
 				}
-				if (location.href === siteInfo.siteurl) { // prevent redirect on home page
-					return;
-				}
-				if (status.isListPage || /event/.test(location.href)) { // redirect to home if pressed back on events page or category page
-					alert('redirecting home');
-					location.href = siteInfo.siteurl;
-					return;
-				}
-				if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
-					alert('redirecting to category');
-					var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
-					location.href = siteInfo.siteurl+'category/'+category+'/';
-					return;
-				}
+			}
+			window.onpopstate = function() {
+				setTimeout(function(){
+					if (status.lockPopstate) {
+						return
+					}
+					//alert('fired');
+					if (location.href === siteInfo.siteurl) { // prevent redirect on home page
+						return;
+					}
+					if (status.isListPage || /event/.test(location.href)) { // redirect to home if pressed back on events page or category page
+						//alert('redirecting home');
+						location.href = siteInfo.siteurl;
+						return;
+					}
+					if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
+						//alert('redirecting to category');
+						var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
+						location.href = siteInfo.siteurl+'category/'+category+'/';
+						return;
+					}
+				},10)
 			};
 		} else {
 			if (!/event/.test(location.href)) { // clear location.hash except on events page
-				util.preventPopstate(20);
 				location.hash = '';
 			}
 			window.onhashchange = function() {
@@ -591,7 +600,9 @@ $(function(){
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
 		$topbarSearchIcon.click(function() {
-			toggleMenu.hide();
+			if (status.showingMenu) {
+				toggleMenu.hide();
+			}
 			$topbarSearchWrapper.addClass('topbar-search-active');
 			$topbarSearchInput.focus();
 			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1
