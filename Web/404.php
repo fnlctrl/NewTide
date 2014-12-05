@@ -46,23 +46,27 @@
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<div id='book-container' class='ease'>
-		<div id='menu-icon'>
-			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
-			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
-		</div>
-		<div id='book-loading-shade' class='ease'></div>
-		<div id='message'>
-			<div id='subtitle'>
-				404 NOT FOUND
+	<?php if(!$isMobile): ?>
+		<div id='book-container' class='ease'>
+			<div id='menu-icon'>
+				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
+				<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
 			</div>
-			<div id='title'>
-				找不到了噜
+			<div id='book-loading-shade' class='ease'></div>
+	<?php else: ?>
+		<div id='wp-wrapper'>
+	<?php endif; ?>
+			<div id='message'>
+				<div id='subtitle'>
+					404 NOT FOUND
+				</div>
+				<div id='title'>
+					找不到了噜
+				</div>
+				<a id='goback' href="<?php bloginfo('url'); ?>">回到主页</a>
 			</div>
-			<a id='goback' href="<?php bloginfo('url'); ?>">回到主页</a>
+			<img id='akarin' src='<?php bloginfo('template_url');?>/img/akarin.png'/>
 		</div>
-		<img id='akarin' src='<?php bloginfo('template_url');?>/img/akarin.png'/>
-	</div>
 </body>
 </html>
 

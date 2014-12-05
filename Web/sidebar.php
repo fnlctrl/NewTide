@@ -4,7 +4,7 @@
 	$isMobile = $mobileDetect->isMobile();
 ?>
 <?php if ($isMobile):?>
-	<div id='topbar' class='fixed'>
+	<div id='topbar' class='unselectable'>
 		<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
 		<div id='topbar-search-icon'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
 		<a id='topbar-logo' href="<?php echo home_url();?>"><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/logo.svg'/></a>

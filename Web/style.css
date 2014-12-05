@@ -16,6 +16,7 @@ Description: Designed and developed by fnlCtrl in 2014. Mobile version developed
 }
 .notransition {
     transition: none !important;
+    -webkit-transition: none !important;
 }
 a {
     text-decoration: none;

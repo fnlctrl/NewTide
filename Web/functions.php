@@ -245,3 +245,10 @@ function remove_gravatar( $avatar ) {
 	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.svg', $avatar);
 }
 add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
+
+// prevent loading open-sans from google
+function remove_open_sans() {
+	wp_deregister_style( 'open-sans' );
+	wp_register_style( 'open-sans', false );
+}
+add_action( 'wp_enqueue_scripts', 'remove_open_sans', 100 );
