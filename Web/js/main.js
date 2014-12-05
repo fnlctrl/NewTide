@@ -710,4 +710,60 @@ $(function(){
 			}
 		}
 	}
+
+	/*setInterval(function () {
+		var boundary = parseInt($window.width()) * 0.75,
+			new_x = -parseInt($sidebar.css('transform').split('(')[1].split(',')[4]);
+		console.log(boundary);
+		console.log(new_x);
+	}, 1000);*/
+	var $click_x = 0, $click_y = 0;
+	$body.bind("mousedown", function (event) {
+		$click_x = event.pageX;
+		$click_y = event.pageY;
+	});
+
+	if (status.isMobile) {
+		var direction = 0;
+		var element = $body[0];
+		var $mobileHammer = new Hammer(element);
+
+		$mobileHammer.on('pan', function (event) {
+			if (status.showingMenu || $click_x < 20) {
+				var boundary = parseInt($cover.width()) * 0.75,
+					new_x = Math.min(Math.max(-parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + event.deltaX, 0), boundary);
+				$topbarMenuIcon.css({'transform' : 'rotateZ(' + (90 - new_x / boundary * 90) + 'deg)'});
+				$sidebar.addClass('notransition').css({
+					transform:('translate3d(' + -new_x + ', 0, 0)'),
+					'-webkit-transform':('translate3d(' + -new_x + ', 0, 0)'),
+					'box-shadow':'0 0 20px 0 rgba(0,0,0,' + new_x / boundary * 0.5 + ')'
+				});
+				$cover.css('opacity', 0.6 - new_x / boundary * 0.6);
+				direction = event.deltaX < 0;
+			} else {
+				var newURL = null;
+				if (event.deltaX < 0) {
+					newURL = status.nextPageURL;
+				} else {
+					newURL = status.prevPageURL;
+				}
+				if (newURL) {
+					window.location = newURL;
+				}
+			}
+		});
+		$mobileHammer.on('panend', function () {
+			if (status.showingMenu || $click_x < 20) {
+				$topbarMenuIcon.css({'transform' : 'rotateZ(' + (direction ? 0 : 90) + 'deg)'});
+				$sidebar.removeClass('notransition').css({
+					transform:(direction ? 'translate3d(-100%, 0, 0)' : 'translate3d(0, 0, 0)'),
+					'-webkit-transform':(direction ? 'translate3d(-100%, 0, 0)' : 'translate3d(0, 0, 0)'),
+					'box-shadow':'0 0 20px 0' + (direction ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.5)')
+				});
+				//$sidebar.css({'-webkit-transform': (direction ? 'translate3d(-100%, 0px, 0px)' : 'translate3d(0px, 0px, 0px)')});
+				$cover.css('opacity', direction ? 0 : 0.6);
+				status.showingMenu = direction === false;
+			}
+		});
+	}
 });

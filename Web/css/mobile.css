@@ -212,6 +212,8 @@ body {
     top: 64px;
 }
 .sidebar-section-title {
+    width: 14px;
+    background-color: white;
     float: right;
     color: #9e9e9e;
     line-height: 14px;
@@ -219,6 +221,15 @@ body {
     font-size: 14px;
     position: relative;
     z-index: 1;
+}
+.sidebar-section:nth-child(1) .sidebar-section-title {
+    padding: 86px 13px;
+}
+.sidebar-section:nth-child(2) .sidebar-section-title {
+    padding: 26px 13px;
+}
+.sidebar-section:nth-child(3) .sidebar-section-title {
+    padding: 26px 13px;
 }
 .sidebar-section:nth-child(1) .sidebar-section-title:active {
     background: rgba(51,173,241,0.9);
