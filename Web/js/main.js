@@ -221,6 +221,9 @@ $(function(){
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
 				toggleMenu.toggle();
 			});
+			$cover.click(function() {
+				toggleMenu.toggle();
+			});
 		})()
 	};
 
