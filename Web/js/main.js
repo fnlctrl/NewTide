@@ -522,6 +522,7 @@ $(function(){
 	if (status.isMobile) {
 		status.needBook = false;
 		book = null;
+		util.preventPopstate(2000); // prevent popstate on first load
 		if (!!(window.history && history.pushState)) { // detect support for html5 history api, http://stackoverflow.com/questions/9446281/
 			// it's still very buggy, a total refactoring is necessary in the future.
 			if (location.href===siteInfo.siteurl) {
@@ -538,7 +539,7 @@ $(function(){
 			window.onpopstate = function() {
 				setTimeout(function(){
 					if (status.lockPopstate) {
-						return
+						return;
 					}
 					//alert('fired');
 					if (location.href === siteInfo.siteurl) { // prevent redirect on home page

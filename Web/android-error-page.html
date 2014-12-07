@@ -105,13 +105,19 @@
 			left: 80%;
 		}
 	</style>
+	<script>
+		window.onload = function() {
+			var x = document.getElementById('retry');
+			x.href = decodeURIComponent(location.search.replace(/^\?reload=/,''));
+		}
+	</script>
 </head>
 <body>
 	<div id='container'>
 		<div id='message'>
 			网络连接失败
 		</div>
-		<a id='retry' href='http://tide.myqsc.com'>重试</a>
+		<a id='retry' href='javascript:history.back()'>重试</a>
 		<div id='logo'>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 450 150" enable-background="new 0 0 450 150" xml:space="preserve">
 				<path fill="#1767A3" d="M185.2,84.2h-8.6v4c0,0.9-0.2,1.5-0.5,1.8c-0.3,0.3-1.4,0.9-3.2,1.7c-1.8,0.8-4.1,1.6-6.9,2.2
