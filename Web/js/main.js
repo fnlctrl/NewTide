@@ -694,9 +694,9 @@ $(function(){
 		e.preventDefault();
 		e.stopPropagation();
 		if (str.length) {
-			location.href=location.origin+'/wordpress/?s='+str;
+			location.href=siteInfo.siteurl+'?s='+str;
 		} else {
-			location.href=location.origin+'/wordpress';
+			location.href=siteInfo.siteurl;
 		}
 	});
 	if (/\?s=/.test(location.href)) { // on a search result page
