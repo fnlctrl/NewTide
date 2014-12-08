@@ -33,7 +33,7 @@ Timeline.prototype.start = function ( container, options ) {
     $.get(_this.config.dataLocation)
     .done(function ( data ) { 
         console.log(data);
-        if (typeof data == String) {
+        if (typeof data === 'string') {
             _this.data = JSON.parse($(data).text());
         } else {
             _this.data = data;
