@@ -694,7 +694,7 @@ $(function(){
 		e.preventDefault();
 		e.stopPropagation();
 		if (str.length) {
-			location.href=siteInfo.siteurl+'?s='+str;
+			location.href=siteInfo.siteurl+'?s='+encodeURIComponent(str);
 		} else {
 			location.href=siteInfo.siteurl;
 		}

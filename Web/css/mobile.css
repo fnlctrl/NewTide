@@ -75,9 +75,10 @@ body {
 #topbar-title a {
     color: #fff;
     font-size: 18px;
-    line-height: 56px;
-    height: 56px;
+    line-height: 18px;
+    height: 18px;
     display: block;
+    margin: 19px 0;
 }
 #topbar-search-icon {
     width: 56px;
