@@ -12,7 +12,8 @@ var defaultOptions = {
     'siteUrl': 'http://tide.myqsc.com/wp/',
     'startDate': 'nearest',
     'debounce': 200,
-    'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg'
+    'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg',
+    'initialImage': 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 };
 
 var Timeline = function() {
@@ -32,7 +33,11 @@ Timeline.prototype.start = function ( container, options ) {
     $.get(_this.config.dataLocation)
     .done(function ( data ) { 
         console.log(data);
-        _this.data = JSON.parse($(data).text());
+        if (typeof data == String) {
+            _this.data = JSON.parse($(data).text());
+        } else {
+            _this.data = data;
+        }
         localStorage.setItem('timelineData', JSON.stringify(_this.data));
         _this.count = _this.data.length;
         _this.parseDateTime();
@@ -115,6 +120,7 @@ Timeline.prototype.cleanTextFormat = function (clearTag, clearBr, content) {
 var MobileHome = function() {
     var _this = this;
     _this.entryInView = 2;
+    _this.cycle = true;
 };
 
 MobileHome.prototype = new Timeline();
@@ -147,6 +153,8 @@ MobileHome.prototype.render = function () {
         .css('background-color', _this.config.backgroundColor);
     _this.scrollWrapper = $('<div></div>')
         .addClass('scroll-content');
+    _this.data.unshift(_this.data[0]);
+    _this.data.push(_this.data[_this.count]);
     $.each(_this.data, function(i, entry) {
         var newElement = {};
         newElement.parent = $('<div></div>')
@@ -169,7 +177,8 @@ MobileHome.prototype.render = function () {
         }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
-            .attr('src', entry.media)
+            // .attr('src', entry.media)
+            .attr('src', _this.config.initialImage)
             .attr('alt', entry.title)
             .appendTo(newElement.parent);
         newElement.footer = $('<div></div>')
@@ -184,8 +193,6 @@ MobileHome.prototype.render = function () {
         });
         _this.data[i].dom = newElement;
     });
-    _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
-    _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     _this.scrollWrapper.appendTo(_this.container);
     if (_this.config.startDate === 'nearest') {
         _this.currentPosition = _this.nearestEntry + 1;
@@ -216,24 +223,50 @@ MobileHome.prototype.render = function () {
     });
 };
 
+MobileHome.prototype.loadMedia = function() {
+    var _this = this;
+    _this.data[_this.currentPosition - 1].dom.cover
+        .attr('src', _this.data[_this.currentPosition - 1].media);
+    _this.data[_this.currentPosition - 0].dom.cover
+        .attr('src', _this.data[_this.currentPosition - 0].media);
+    _this.data[_this.currentPosition + 1].dom.cover
+        .attr('src', _this.data[_this.currentPosition + 1].media);
+    _this.data[_this.currentPosition + 2].dom.cover
+        .attr('src', _this.data[_this.currentPosition + 2].media);
+    if (_this.currentPosition === 0) {
+        _this.data[_this.count].dom.cover
+            .attr('src', _this.data[_this.count].media);
+        _this.data[_this.count + 1].dom.cover
+            .attr('src', _this.data[_this.count + 1].media);        
+    }
+    if (_this.currentPosition == _this.count) {
+        _this.data[0].dom.cover
+            .attr('src', _this.data[0].media);
+        _this.data[1].dom.cover
+            .attr('src', _this.data[1].media);
+    }
+};
+
 MobileHome.prototype.movePosition = function ( pos ) {
     var _this = this;
     _this.currentPosition = pos;
+    _this.loadMedia();
     _this.scrollWrapper.removeClass('scroll-transition');
-    _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
+    _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
 };
 
 MobileHome.prototype.moveLeft = function () {
     var _this = this;
     if (_this.currentPosition == _this.count) {
         _this.scrollWrapper.removeClass('scroll-transition');
-        _this.scrollWrapper.css('left', 0);
+        _this.scrollWrapper.css('transform', 'translate(0, 0)');
         _this.currentPosition = 0;
     }
     setTimeout(function () {
         _this.currentPosition = _this.currentPosition + 1;
+        _this.loadMedia();
         _this.scrollWrapper.addClass('scroll-transition');
-        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
     }, 0);
 };
 
@@ -241,19 +274,21 @@ MobileHome.prototype.moveRight = function () {
     var _this = this;
     if (_this.currentPosition === 0) {
         _this.scrollWrapper.removeClass('scroll-transition');
-        _this.scrollWrapper.css('left', (- _this.count) * _this.elementFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.count) * _this.elementFullWidth + 'px, 0)');
         _this.currentPosition = _this.count;
     }
     setTimeout(function () {
         _this.currentPosition = _this.currentPosition - 1;
+        _this.loadMedia();
         _this.scrollWrapper.addClass('scroll-transition');
-        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
     }, 0);
 };
 
 var MobileDetail = function () {
     var _this = this;
     _this.entryInView = 1;
+    _this.cycle = true;
 };
 
 MobileDetail.prototype = new Timeline();
@@ -285,6 +320,8 @@ MobileDetail.prototype.render = function () {
         .css('background-color', _this.config.backgroundColor);
     _this.scrollWrapper = $('<div></div>').addClass('scroll-content');
     _this.scrollWrapper.appendTo(_this.container);
+    _this.data.unshift(_this.data[0]);
+    _this.data.push(_this.data[_this.count]);
     $.each(_this.data, function(i, entry) {
         var newElement = {};
         newElement.parent = $('<div></div>')
@@ -295,7 +332,8 @@ MobileDetail.prototype.render = function () {
         }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
-            .attr('src', entry.media)
+            // .attr('src', entry.media)
+            .attr('src', _this.config.initialImage)
             .attr('alt', entry.title)
             .appendTo(newElement.parent);
         newElement.footer = $('<div></div>')
@@ -340,8 +378,6 @@ MobileDetail.prototype.render = function () {
         });
         _this.data[i].dom = newElement;
     });
-    _this.data[0].dom.parent.clone().appendTo(_this.scrollWrapper);
-    _this.data[_this.count - 1].dom.parent.clone().prependTo(_this.scrollWrapper);
     if (window.location.hash) {
         _this.currentPosition = parseInt(window.location.hash.substr(1));
     } else {
@@ -376,7 +412,7 @@ MobileDetail.prototype.render = function () {
 
 MobileDetail.prototype.expand = function () {
     var _this = this,
-        entry = _this.data[_this.currentPosition - 1];
+        entry = _this.data[_this.currentPosition];
     if (!entry.expanded) {
         entry.expanded = true;
         setTimeout(function () {
@@ -391,7 +427,7 @@ MobileDetail.prototype.expand = function () {
 
 MobileDetail.prototype.collapse = function () {
     var _this = this,
-        entry = _this.data[_this.currentPosition - 1];
+        entry = _this.data[_this.currentPosition];
     if (entry.expanded) {
         entry.expanded = false;
         entry.dom.description.css('opacity', 0);
@@ -402,14 +438,37 @@ MobileDetail.prototype.collapse = function () {
     }
 };
 
+MobileDetail.prototype.loadMedia = function() {
+    var _this = this;
+    _this.data[_this.currentPosition - 1].dom.cover
+        .attr('src', _this.data[_this.currentPosition - 1].media);
+    _this.data[_this.currentPosition - 0].dom.cover
+        .attr('src', _this.data[_this.currentPosition - 0].media);
+    _this.data[_this.currentPosition + 1].dom.cover
+        .attr('src', _this.data[_this.currentPosition + 1].media);
+    if (_this.currentPosition === 1) {
+        _this.data[_this.count].dom.cover
+            .attr('src', _this.data[_this.count].media);
+        _this.data[_this.count + 1].dom.cover
+            .attr('src', _this.data[_this.count + 1].media);        
+    }
+    if (_this.currentPosition == _this.count) {
+        _this.data[0].dom.cover
+            .attr('src', _this.data[0].media);
+        _this.data[1].dom.cover
+            .attr('src', _this.data[1].media);
+    }
+};
+
 MobileDetail.prototype.movePosition = function ( pos ) {
     var _this = this;
     if (!_this.moveLock) {
         _this.moveLock = true;
         _this.collapse();
         _this.currentPosition = pos;
+        _this.loadMedia();
         _this.scrollWrapper.removeClass('scroll-transition');
-        _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
         _this.moveLock = false;
         window.location.hash = _this.currentPosition;
     }
@@ -422,14 +481,15 @@ MobileDetail.prototype.moveLeft = function () {
         _this.collapse();
         if (_this.currentPosition == _this.count) {
             _this.scrollWrapper.removeClass('scroll-transition');
-            _this.scrollWrapper.css('left', 0);
+            _this.scrollWrapper.css('transform', 'translate(0, 0)');
             _this.currentPosition = 0;
         }
         console.log(_this.scrollWrapper.css('left'));
         setTimeout(function () {
             _this.currentPosition = _this.currentPosition + 1;
+            _this.loadMedia();
             _this.scrollWrapper.addClass('scroll-transition');
-            _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+            _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
             window.location.hash = _this.currentPosition;
         }, 50);
         _this.moveLock = false;
@@ -439,19 +499,19 @@ MobileDetail.prototype.moveLeft = function () {
 MobileDetail.prototype.moveRight = function () {
     var _this = this;
     if (!_this.moveLock) {
-        console.log('not locked');
         _this.moveLock = true;
         _this.collapse();
         if (_this.currentPosition === 1) {
             _this.scrollWrapper.removeClass('scroll-transition');
-            _this.scrollWrapper.css('left', (- 1 - _this.count) * _this.elementFullWidth);
+            _this.scrollWrapper.css('transform', 'translate(' + (- 1 - _this.count) * _this.elementFullWidth + 'px, 0)');
             _this.currentPosition = _this.count + 1;
         }
         console.log(_this.scrollWrapper.css('left'));
         setTimeout(function () {
             _this.currentPosition = _this.currentPosition - 1;
+            _this.loadMedia();
             _this.scrollWrapper.addClass('scroll-transition');
-            _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
+            _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
             window.location.hash = _this.currentPosition;
         }, 50);
         _this.moveLock = false;
@@ -459,6 +519,9 @@ MobileDetail.prototype.moveRight = function () {
 };
 
 var DesktopTimeline = function () {
+    var _this = this;
+    _this.entryInView = 1;
+    _this.cycle = false;
 };
 
 DesktopTimeline.prototype = new Timeline();
@@ -543,7 +606,8 @@ DesktopTimeline.prototype.render = function () {
         }
         newElement.cover = $('<img>')
             .addClass('entry-cover')
-            .attr('src', entry.media)
+            // .attr('src', entry.media)
+            .attr('src', _this.config.initialImage)
             .attr('alt', entry.title)
             .appendTo(newElement.parent);
         newElement.description = $('<p></p>')
@@ -618,12 +682,27 @@ DesktopTimeline.prototype.render = function () {
     });
 };
 
+DesktopTimeline.prototype.loadMedia = function() {
+    var _this = this;
+    if (_this.currentPosition !== 0) {    
+        _this.data[_this.currentPosition - 1].dom.cover
+            .attr('src', _this.data[_this.currentPosition - 1].media);
+    }
+    _this.data[_this.currentPosition - 0].dom.cover
+        .attr('src', _this.data[_this.currentPosition - 0].media);
+    if (_this.currentPosition != _this.count - 1) {
+        _this.data[_this.currentPosition + 1].dom.cover
+            .attr('src', _this.data[_this.currentPosition + 1].media);
+    }
+};
+
 DesktopTimeline.prototype.movePosition = function ( pos ) {
     var _this = this;
     if (!_this.moveLock) {
         _this.moveLock = true;
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = pos;
+        _this.loadMedia();
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
             _this.panelRight.addClass('disabled');
@@ -636,9 +715,9 @@ DesktopTimeline.prototype.movePosition = function ( pos ) {
             _this.panelLeft.removeClass('disabled');
         }
 
-        _this.scrollWrapper.css('left', (- pos) * _this.elementFullWidth);
-        _this.scrollInfo.css('left', (- pos) * _this.infoFullWidth);
-        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
+        _this.scrollInfo.css('transform', 'translate(' + (- _this.currentPosition) * _this.infoFullWidth + 'px, 0)');
+        _this.scrollDate.css('transform', 'translate(' + (_this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth) + 'px, 0)');
         _this.moveLock = false;
     }
 };
@@ -655,14 +734,15 @@ DesktopTimeline.prototype.moveLeft = function () {
         _this.panelLeft.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition + 1;
+        _this.loadMedia();
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition == _this.count - 1) {
             _this.panelRight.addClass('disabled');
         }
 
-        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
-        _this.scrollInfo.css('left', (- _this.currentPosition) * _this.infoFullWidth);
-        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
+        _this.scrollInfo.css('transform', 'translate(' + (- _this.currentPosition) * _this.infoFullWidth + 'px, 0)');
+        _this.scrollDate.css('transform', 'translate(' + (_this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth) + 'px, 0)');
         _this.moveLock = false;
     }
 };
@@ -677,14 +757,15 @@ DesktopTimeline.prototype.moveRight = function () {
         _this.panelRight.removeClass('disabled');
         _this.data[_this.currentPosition].dom.entryDate.removeClass('highlight');
         _this.currentPosition = _this.currentPosition - 1;
+        _this.loadMedia();
         _this.data[_this.currentPosition].dom.entryDate.addClass('highlight');
         if (_this.currentPosition === 0) {
             _this.panelLeft.addClass('disabled');
         }
 
-        _this.scrollWrapper.css('left', (- _this.currentPosition) * _this.elementFullWidth);
-        _this.scrollInfo.css('left', (- _this.currentPosition) * _this.infoFullWidth);
-        _this.scrollDate.css('left', _this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth);
+        _this.scrollWrapper.css('transform', 'translate(' + (- _this.currentPosition) * _this.elementFullWidth + 'px, 0)');
+        _this.scrollInfo.css('transform', 'translate(' + (- _this.currentPosition) * _this.infoFullWidth + 'px, 0)');
+        _this.scrollDate.css('transform', 'translate(' + (_this.dateStartPos + (- _this.currentPosition) * _this.dateFullWidth) + 'px, 0)');
         _this.moveLock = false;
     }
 };
