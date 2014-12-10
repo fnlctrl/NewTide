@@ -78,8 +78,6 @@ $(function(){
 			if ($nextPageLink.length) {
 				status.nextPageURL = parse.call($nextPageLink);
 			}
-			console.log(status.prevPageURL);
-			console.log(status.nextPageURL);
 		},
 		clearNotice: function($obj) {
 			return function() {
@@ -155,7 +153,7 @@ $(function(){
 		hide: function(needReflow) {
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
-				$cover.css({opacity:0});
+				$cover.css({width:20, opacity:0});
 				$sidebar.css({
 					transform:'translate3d(-100%, 0, 0)',
 					'-webkit-transform':'translate3d(-100%, 0, 0)',
@@ -183,7 +181,7 @@ $(function(){
 		show: function(needReflow) {
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
-				$cover.css({opacity:0.6});
+				$cover.css({width:'100%', opacity:0.6});
 				$sidebar.css({
 					transform:'translate3d(0, 0, 0)',
 					'-webkit-transform':'translate3d(0, 0, 0)',
@@ -609,14 +607,14 @@ $(function(){
 			$topbarSearchWrapper.addClass('topbar-search-active');
 			$topbarSearchInput.focus();
 			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1
-			$cover.css({opacity:0.2});
+			$cover.css({width:'100%', opacity:0.2, pointerEvents:'none'});
 			status.searchBar = true;
 		});
 		$topbarSearchReturn.click(function() {
 			$topbarSearchWrapper.removeClass('topbar-search-active');
 			$topbarSearchInput.val('');
 			$topbarMenu.css({'z-index':4}); // fix pointer-events:none not working for svgs on android 4.1
-			$cover.css({opacity:0});
+			$cover.css({width:20, opacity:0, pointerEvents:'auto'});
 			status.searchBar = false;
 		});
 		$('#events-wrapper').css({'height':$window.width()*0.8});
@@ -714,59 +712,51 @@ $(function(){
 		}
 	}
 
-	/*setInterval(function () {
-		var boundary = parseInt($window.width()) * 0.75,
-			new_x = -parseInt($sidebar.css('transform').split('(')[1].split(',')[4]);
-		console.log(boundary);
-		console.log(new_x);
-	}, 1000);*/
-	var $click_x = 0, $click_y = 0;
+	var click_x = 0, boundary = parseInt($window.width()) * 0.75, start_x = 0;
 	$body.bind("mousedown", function (event) {
-		$click_x = event.pageX;
-		$click_y = event.pageY;
+		click_x = event.pageX;
+		start_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + boundary;
 	});
-
-	if (status.isMobile) {
-		var direction = 0;
-		var element = $body[0];
-		var $mobileHammer = new Hammer(element);
-
-		$mobileHammer.on('pan', function (event) {
-			if (status.showingMenu || $click_x < 20) {
-				var boundary = parseInt($cover.width()) * 0.75,
-					new_x = Math.min(Math.max(-parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + event.deltaX, 0), boundary);
-				$topbarMenuIcon.css({'transform' : 'rotateZ(' + (90 - new_x / boundary * 90) + 'deg)'});
-				$sidebar.addClass('notransition').css({
-					transform:('translate3d(' + -new_x + ', 0, 0)'),
-					'-webkit-transform':('translate3d(' + -new_x + ', 0, 0)'),
-					'box-shadow':'0 0 20px 0 rgba(0,0,0,' + new_x / boundary * 0.5 + ')'
-				});
-				$cover.css('opacity', 0.6 - new_x / boundary * 0.6);
-				direction = event.deltaX < 0;
+	
+	function onPan(event) {
+		if (status.showingMenu || click_x < 20) {
+			var new_x = Math.min(Math.max(start_x + event.deltaX, 0), boundary);
+			$topbarMenuIcon.css({'transform' : 'rotateZ(' + new_x / boundary * 90 + 'deg)'});
+			$sidebar.css({
+				transform:'translateX(' + (new_x - boundary) + 'px)',
+				'-webkit-transform':'translateX(' + (new_x - boundary) + 'px)',
+				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + new_x / boundary * 0.5 + ')'
+			});
+			$cover.css({width:'100%', opacity:new_x / boundary * 0.6});
+		} else {
+			var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+			if (new_URL) {
+				window.location.href = new_URL;
 			} else {
-				var newURL = null;
-				if (event.deltaX < 0) {
-					newURL = status.nextPageURL;
-				} else {
-					newURL = status.prevPageURL;
-				}
-				if (newURL) {
-					window.location = newURL;
-				}
+				util.showNotice('这个分类下已经没有更新的文章了~');
 			}
-		});
-		$mobileHammer.on('panend', function () {
-			if (status.showingMenu || $click_x < 20) {
-				$topbarMenuIcon.css({'transform' : 'rotateZ(' + (direction ? 0 : 90) + 'deg)'});
-				$sidebar.removeClass('notransition').css({
-					transform:(direction ? 'translate3d(-100%, 0, 0)' : 'translate3d(0, 0, 0)'),
-					'-webkit-transform':(direction ? 'translate3d(-100%, 0, 0)' : 'translate3d(0, 0, 0)'),
-					'box-shadow':'0 0 20px 0' + (direction ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.5)')
-				});
-				//$sidebar.css({'-webkit-transform': (direction ? 'translate3d(-100%, 0px, 0px)' : 'translate3d(0px, 0px, 0px)')});
-				$cover.css('opacity', direction ? 0 : 0.6);
-				status.showingMenu = direction === false;
-			}
-		});
+		}
+	}
+	function onPanend(event) {
+		if (status.showingMenu || click_x < 20) {
+			var new_x = Math.min(Math.max(start_x + event.deltaX, 0), boundary),
+				flag = new_x > boundary * 0.5;
+			$topbarMenuIcon.css({'transform' : 'rotateZ(' + (flag ? 0 : 90) + 'deg)'});
+			$sidebar.css({
+				transform:('translateX(' + (flag ? '-100%' : 0) +')'),
+				'-webkit-transform':('translateX(' + (flag ? '-100%' : 0) +')'),
+				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + (flag ? 0 : 0.5) + ')'
+			});
+			$cover.css({width:flag ? 20 : '100%', opacity:flag ? 0 : 0.6});
+			status.showingMenu = flag === false;
+		}
+	}
+	if (status.isMobile) {
+		var coverHammer = new Hammer($cover[0]);
+		var wpHammer = new Hammer($wpWrapper[0]);
+
+		coverHammer.on('pan', onPan);
+		coverHammer.on('panend', onPanend);
+		wpHammer.on('pan', onPan);
 	}
 });
