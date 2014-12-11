@@ -90,14 +90,62 @@
 	},
 
 	{
+		"date":"2014,11,30",
+		"time":"14:00",
+		"location":"白沙综合楼 爱享吧",
+		"eventTitle":"莫迪亚诺",
+		"eventGroup":"白夜读书会",
+		"text":"你说得对，在生活中重要的不是未来，而是过去。",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/海报_莫迪亚诺-424x600.png"
+	},
+
+	{
+		"date":"2014,12,5",
+		"time":"18:30-20:30",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"生活它摔了一跤 1/3 《晚春》",
+		"eventGroup":"潮声潮影",
+		"text":"日本电影大师，最纯粹的东方导演，小津安二郎用悠长而细腻的镜头描绘出上世纪五十年代最真实的日式生活",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/12/141204143824439d12629b42d4.jpg"
+	},
+
+	{
+		"date":"2014,12,7",
+		"time":"18:30-21:30",
+		"location":"紫金港 小剧场",
+		"eventTitle":"《Her》",
+		"eventGroup":"求是电影课",
+		"text":"她是他逃不掉的孤独。",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/%E6%B5%B7%E6%8A%A5_her-423x600.jpg"
+	},
+
+	{
+		"date":"2014,12,12",
+		"time":"18:30-20:30",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"生活它摔了一跤 2/3 《速成沼泽》",
+		"eventGroup":"潮声潮影",
+		"text":"无论生活多么窘迫，先来一杯巧克力牛奶吧！",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/12/141204143824439d12629b42d4.jpg"
+	},
+
+	{
+		"date":"2014,12,19",
+		"time":"18:30-20:30",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"生活它摔了一跤 3/3 《弗兰西斯哈》",
+		"eventGroup":"潮声潮影",
+		"text":"就这样笨拙而真诚地活着",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/12/141204143824439d12629b42d4.jpg"
+	},
+
+	{
 		"date":"2014,12,31",
 		"time":"",
 		"location":"",
-		"eventTitle":"更多活动<br/>待更新",
+		"eventTitle":"更多活动\n待更新",
 		"eventGroup":"",
 		"text":"",
-		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/11/default_poster.jpg"
+		"media":""
 	}
 ]
-
-

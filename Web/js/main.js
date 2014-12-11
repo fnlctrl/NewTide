@@ -523,6 +523,7 @@ $(function(){
 	if (status.isMobile) {
 		status.needBook = false;
 		book = null;
+		//util.preventPopstate(2000); // prevent popstate on first load
 		if (!!(window.history && history.pushState)) { // detect support for html5 history api, http://stackoverflow.com/questions/9446281/
 			// it's still very buggy, a total refactoring is necessary in the future.
 			if (location.href===siteInfo.siteurl) {
@@ -536,28 +537,28 @@ $(function(){
 					toggleMenu.hide();
 				}
 			}
-			window.onpopstate = function() {
-				setTimeout(function(){
-					if (status.lockPopstate) {
-						return
-					}
-					//alert('fired');
-					if (location.href === siteInfo.siteurl) { // prevent redirect on home page
-						return;
-					}
-					if (status.isListPage || /event/.test(location.href)) { // redirect to home if pressed back on events page or category page
-						//alert('redirecting home');
-						location.href = siteInfo.siteurl;
-						return;
-					}
-					if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
-						//alert('redirecting to category');
-						var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
-						location.href = siteInfo.siteurl+'category/'+category+'/';
-						return;
-					}
-				},10)
-			};
+			//window.onpopstate = function() {
+			//	setTimeout(function(){
+			//		if (status.lockPopstate) {
+			//			return;
+			//		}
+			//		//alert('fired');
+			//		if (location.href === siteInfo.siteurl) { // prevent redirect on home page
+			//			return;
+			//		}
+			//		if (status.isListPage || /event/.test(location.href) || /message/.test(location.href)) { // redirect to home if pressed back on events page or category page or leave-message page
+			//			//alert('redirecting home');
+			//			location.href = siteInfo.siteurl;
+			//			return;
+			//		}
+			//		if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
+			//			//alert('redirecting to category');
+			//			var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
+			//			location.href = siteInfo.siteurl+'category/'+category+'/';
+			//			return;
+			//		}
+			//	},10)
+			//};
 		} else {
 			if (!/event/.test(location.href)) { // clear location.hash except on events page
 				location.hash = '';
@@ -694,9 +695,9 @@ $(function(){
 		e.preventDefault();
 		e.stopPropagation();
 		if (str.length) {
-			location.href=location.origin+'/wordpress/?s='+str;
+			location.href=siteInfo.siteurl+'?s='+encodeURIComponent(str);
 		} else {
-			location.href=location.origin+'/wordpress';
+			location.href=siteInfo.siteurl;
 		}
 	});
 	if (/\?s=/.test(location.href)) { // on a search result page
