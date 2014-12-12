@@ -14,6 +14,9 @@ Template Name: 线下活动
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/events.css' media='screen' />
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
 	<script>
+		window._config = {
+			pageType: 'events'
+		};
 		var imgSrcs = [
 			[
 				"<?php bloginfo('template_url');?>/img/events/音浪-1.jpg",

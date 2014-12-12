@@ -520,57 +520,13 @@ $(function(){
 	util.isMobile();
 	var W = $window.width();
 	if (status.isMobile) {
-		status.needBook = false;
 		book = null;
-		//util.preventPopstate(2000); // prevent popstate on first load
-		if (!!(window.history && history.pushState)) { // detect support for html5 history api, http://stackoverflow.com/questions/9446281/
-			// it's still very buggy, a total refactoring is necessary in the future.
-			if (location.href===siteInfo.siteurl) {
-				history.replaceState('', document.title, location.pathname);
-			} else {
-				history.pushState('', document.title, location.pathname);
+		var pageType = window._config.pageType;
+		// hide menu on back pressed
+		window.onhashchange = function() {
+			if (!/menu/.test(location.hash) && status.showingMenu) { // hide menu when user presses back
+				toggleMenu.hide();
 			}
-			window.onhashchange = function() {
-				util.preventPopstate(20);
-				if (!/menu/.test(location.hash) && status.showingMenu) { // hide menu when user presses back
-					toggleMenu.hide();
-				}
-			}
-
-			//window.onpopstate = function() {
-			//	setTimeout(function(){
-			//		if (status.lockPopstate) {
-			//			return;
-			//		}
-			//		//alert('fired');
-			//		if (location.href === siteInfo.siteurl) { // prevent redirect on home page
-			//			return;
-			//		}
-			//		if (status.isListPage || /event/.test(location.href) || /message/.test(location.href)) { // redirect to home if pressed back on events page or category page or leave-message page
-			//			//alert('redirecting home');
-			//			location.href = siteInfo.siteurl;
-			//			return;
-			//		}
-			//		if ($('.wp-entry-content').length) { // redirect to category page if pressed back on single entry page
-			//			//alert('redirecting to category');
-			//			var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
-			//			location.href = siteInfo.siteurl+'category/'+category+'/';
-			//			return;
-			//		}
-			//	},10)
-			//};
-		} else {
-			if (!/event/.test(location.href)) { // clear location.hash except on events page
-				location.hash = '';
-			}
-			window.onhashchange = function() {
-				if (!status.showingMenu) {
-					return;
-				}
-				if (location.hash === '') {
-					toggleMenu.hide();
-				}
-			};
 		}
 		if (status.prevPageURL !== '' && status.prevPageURL !== location.href) {
 			$prevPageLink.css({display:'block'});
@@ -578,6 +534,7 @@ $(function(){
 		if (status.nextPageURL !== '' && status.nextPageURL !== location.href && $('.wp-item').length===60 ) {
 			$nextPageLink.css({display:'block'});
 		}
+		// adjust entry thumbnail height on load
 		if ($wpEntryThumbnail.length) {
 			function handler() {
 				if ($wpEntryThumbnail.height() < 256) {
@@ -590,17 +547,33 @@ $(function(){
 				$wpEntryThumbnail.load(handler);
 			}
 		}
-		if ($('.sidebar-item-current').html()) {
-			var href = $('.sidebar-item-current').attr('href');
-			var text = $('.sidebar-item-current').text().trim();
-			$topbarTitle.html('<a href="'+href+'">'+text+'</a>');
+		// set top title
+		// all pageTypes: index,front-page,single,category,author,events,search,404,message
+		if (pageType === 'author' ) {
+			$topbarTitle.html(location.href.split(/.*author\/(.*)\//)[1]);
+		} else if (pageType === '404' ) {
+			$topbarTitle.html('404');
+		} else if (pageType === 'search' ) {
+			$topbarTitle.html('搜索');
+		} else if (/editors-picks/.test(location.href)) {
+			$topbarTitle.html('编辑精选');
+		} else if (/all/.test(location.href)) {
+			$topbarTitle.html('全部文章');
+		} else {
+			if ($('.sidebar-item-current').html()) {
+				var href = $('.sidebar-item-current').attr('href');
+				var text = $('.sidebar-item-current').text().trim();
+				$topbarTitle.html('<a href="'+href+'">'+text+'</a>');
+			}
 		}
+		// change topbar background on load
 		if ($wpEntryMeta.length) { // on single entry page
 			$topbar.css({background:'rgba(16,198,215,0.5)'});
 		}
 		if (/event/.test(location.href)) { // on events page
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
+		// handle search button press
 		$topbarSearchIcon.click(function() {
 			if (status.showingMenu) {
 				toggleMenu.hide();
@@ -619,17 +592,27 @@ $(function(){
 			status.searchBar = false;
 		});
 		$('#events-wrapper').css({'height':$window.width()*0.8});
+		// set sidebar-top background
 		$('#sidebar-top').css({'background-image':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
 		// handle back press on android
 		if (typeof WebApp !== 'undefined'){
-			var WebAppCallbacks = {
+			window.WebAppCallbacks = {
 				onBackPressed : function() {
-
-					//
-					WebApp.finish();
+					if (status.showingMenu) { // let window.onhashchange hide menu first
+						return;
+					}
+					if (pageType === 'single') { // redirect to category page if pressed back on single entry page
+						var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
+						location.href = siteInfo.siteurl+'category/'+category+'/';
+					} else {
+						location.href = siteInfo.siteurl;
+						return;
+					}
+					if (pageType === 'index' || pageType === 'front-page') {
+						WebApp.finish();
+					}
 				}
 			}
-			window.WebAppCallbacks = WebAppCallbacks;
 		}
 	} else {
 		if ($wpWrapper.length) {
@@ -716,6 +699,7 @@ $(function(){
 			if (status.isMobile) {
 				$topbarSearchInput.val(sessionStorage.searchstr);
 				$topbarSearchWrapper.addClass('topbar-search-active');
+				$topbarMenu.css({'z-index':1});
 				status.searchBar = true;
 			} else {
 				$sidebarSearchInput[0].onblur=null;

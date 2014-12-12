@@ -8,6 +8,11 @@
 	<?php wp_head(); ?>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
+	<script>
+		window._config = {
+			pageType: 'single'
+		}
+	</script>
 </head>
 <body>
 	<?php get_sidebar(); ?>

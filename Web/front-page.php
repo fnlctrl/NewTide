@@ -14,6 +14,11 @@ Template Name: 主页
 	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/timeline/timeline.css' media='screen' />
 	<script src='<?php bloginfo('template_url');?>/timeline/timeline.js'></script>
 	<script src='<?php bloginfo('template_url');?>/js/front-page.js'></script>
+	<script>
+		window._config = {
+			pageType: 'front-page'
+		}
+	</script>
 </head>
 <body>
 	<?php get_sidebar(); ?>

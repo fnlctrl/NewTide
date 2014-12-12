@@ -15,7 +15,8 @@ Template Name: Search Page
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 	<script>
 		window._config = {
-			numColumns : 1
+			numColumns : 1,
+			pageType : 'search'
 		}
 	</script>
 </head>

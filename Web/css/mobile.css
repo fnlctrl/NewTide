@@ -65,6 +65,11 @@ body {
     left: 144px;
     font-size: 18px;
     height: 56px;
+    line-height: 56px;
+    max-width: 130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     color: #FFF;
     padding: 0 8px;
     text-align: center;
@@ -111,12 +116,12 @@ body {
     width: 80%;
     font-size: 18px;
     color: #808080;
-    height: 18px;
+    height: 20px;
     background: none;
     padding: 0;
-    line-height: 18px;
+    line-height: 20px;
     top: 50%;
-    margin-top: -9px;
+    margin-top: -10px;
 }
 #topbar-search-return {
     position: absolute;
