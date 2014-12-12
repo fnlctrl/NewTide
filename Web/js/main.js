@@ -595,22 +595,21 @@ $(function(){
 		// set sidebar-top background
 		$('#sidebar-top').css({'background-image':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
 		// handle back press on android
-		if (typeof WebApp !== 'undefined'){
-			window.WebAppCallbacks = {
-				onBackPressed : function() {
-					if (status.showingMenu) { // let window.onhashchange hide menu first
-						return;
-					}
-					if (pageType === 'single') { // redirect to category page if pressed back on single entry page
-						var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
-						location.href = siteInfo.siteurl+'category/'+category+'/';
-					} else {
-						location.href = siteInfo.siteurl;
-						return;
-					}
-					if (pageType === 'index' || pageType === 'front-page') {
-						WebApp.finish();
-					}
+		window.WebAppCallbacks = {
+			onBackPressed : function() {
+				if (status.showingMenu) { // let window.onhashchange hide menu first
+					return;
+				}
+				if (pageType === 'index' || pageType === 'front-page') {
+					WebApp.finish();
+					return;
+				}
+				if (pageType === 'single') { // redirect to category page if pressed back on single entry page
+					var category = location.href.split(siteInfo.siteurl)[1].split('/')[0]
+					location.href = siteInfo.siteurl+'category/'+category+'/';
+				} else {
+					location.href = siteInfo.siteurl;
+					return;
 				}
 			}
 		}
