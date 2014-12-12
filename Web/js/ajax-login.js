@@ -51,13 +51,19 @@ $(function(){
 				},
 				success: function(data){
 					$loginMessage.text(data.message);
-					if (data.loggedin == true){
+					if (data.loggedin){
 						document.location.href = siteInfo.redirecturl;
 					}
 				}
 			});
 		} else if (formType === 'register'){
 			$loginMessage.css({display:'block'}).text('正在注册...请稍候').append('<div class="spinner"></div>');
+			var pw = $('#password').val();
+			var pw2 = $('#confirm-password').val();
+				if (pw !== pw2) {
+				$loginMessage.css({display:'block'}).text('输入的密码不匹配');
+				return false;
+			}
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -65,11 +71,16 @@ $(function(){
 				data: {
 					'action': 'register_user',
 					'username': $('#username').val(),
+					'password': pw,
+					'confirm-password': pw2,
 					'email': $('#email').val(),
 					'security': $('#security').val()
 				},
 				success: function(data){
-					$loginMessage.css({display:'block'}).text(data.message);
+					$loginMessage.css({display:'block'}).html(data.message);
+					if (data.loggedin){
+						document.location.href = siteInfo.redirecturl;
+					}
 				}
 			});
 		} else if (formType === 'reset-password'){
@@ -85,7 +96,7 @@ $(function(){
 					'security': $('#security').val()
 				},
 				success: function(data){
-					$loginMessage.css({display:'block'}).text(data.message);
+					$loginMessage.css({display:'block'}).html(data.message);
 				}
 			});
 		}

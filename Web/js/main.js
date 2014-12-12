@@ -536,6 +536,7 @@ $(function(){
 					toggleMenu.hide();
 				}
 			}
+
 			//window.onpopstate = function() {
 			//	setTimeout(function(){
 			//		if (status.lockPopstate) {
@@ -619,6 +620,17 @@ $(function(){
 		});
 		$('#events-wrapper').css({'height':$window.width()*0.8});
 		$('#sidebar-top').css({'background-image':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
+		// handle back press on android
+		if (typeof WebApp !== 'undefined'){
+			var WebAppCallbacks = {
+				onBackPressed : function() {
+
+					//
+					WebApp.finish();
+				}
+			}
+			window.WebAppCallbacks = WebAppCallbacks;
+		}
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;
@@ -628,7 +640,7 @@ $(function(){
 				status.numColumns= window._config.numColumns;
 			}
 			if (window._config.needBook) {
-				status.numColumns= window._config.needBook;
+				status.needBook = window._config.needBook;
 			}
 		}
 		var pageW;

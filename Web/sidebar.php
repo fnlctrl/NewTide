@@ -24,6 +24,7 @@
 			<h3 id='login-form-title'>登录</h3>
 			<label for='username'>用户名</label><input id='username' type='text' name='username' class='login-form-input'/>
 			<label for='password'>密码</label><input id='password' type='password' name='password' class='login-form-input'/>
+			<label for='confirm-password'>确认密码</label><input id='confirm-password' type='password' name='confirm-password' class='login-form-input'/>
 			<label for='email'>电子邮件</label><input id='email' type='text' name='email' class='login-form-input'/>
 			<label for='email-or-id'>用户名或电子邮件地址：</label><input id='email-or-id' type='text' name='email-or-id' class='login-form-input'/>
 			<input class='login-submit' type='submit' value='确定' name='submit'/>

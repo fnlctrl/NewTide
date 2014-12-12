@@ -650,7 +650,7 @@ body {
     top: 0;
 }
 /*    fix layout for iPhone 4 and older    */
-@media (max-height: 480px) {
+@media (max-height: 520px) {
     #sidebar-top {
         height: 60px;
     }

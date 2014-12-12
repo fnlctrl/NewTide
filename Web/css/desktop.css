@@ -556,13 +556,13 @@ body {
 #login-form-reset-password {
     display: none;
 }
-#login-form[data-type='login'] label[for=email], #login-form[data-type='login'] input[name=email], #login-form[data-type='login'] label[for=email-or-id], #login-form[data-type='login'] input[name=email-or-id], #login-form[data-type='login'] #login-show-auth {
+#login-form[data-type='login'] label[for=email], #login-form[data-type='login'] input[name=email], #login-form[data-type='login'] label[for=email-or-id], #login-form[data-type='login'] input[name=email-or-id], #login-form[data-type='login'] #login-show-auth, #login-form[data-type='login'] input[name=confirm-password], #login-form[data-type='login']  label[for=confirm-password] {
     display: none;
 }
-#login-form[data-type='register'] label[for=password], #login-form[data-type='register'] input[name=password], #login-form[data-type='register'] label[for=email-or-id], #login-form[data-type='register'] input[name=email-or-id], #login-form[data-type='register'] #login-show-register {
+#login-form[data-type='register'] label[for=email-or-id], #login-form[data-type='register'] input[name=email-or-id], #login-form[data-type='register'] #login-show-register {
     display: none;
 }
-#login-form[data-type='reset-password'] label[for=username], #login-form[data-type='reset-password'] input[name=username], #login-form[data-type='reset-password'] label[for=email], #login-form[data-type='reset-password'] input[name=email], #login-form[data-type='reset-password'] label[for=password], #login-form[data-type='reset-password'] input[name=password], #login-form[data-type='reset-password'] #login-show-reset-password {
+#login-form[data-type='reset-password'] label[for=username], #login-form[data-type='reset-password'] input[name=username], #login-form[data-type='reset-password'] label[for=email], #login-form[data-type='reset-password'] input[name=email], #login-form[data-type='reset-password'] label[for=password], #login-form[data-type='reset-password'] input[name=password], #login-form[data-type='reset-password'] #login-show-reset-password, #login-form[data-type='reset-password'] input[name=confirm-password], #login-form[data-type='reset-password']  label[for=confirm-password] {
     display: none;
 }
 .spinner {
@@ -613,11 +613,20 @@ body {
     margin: 0;
     text-indent: 2em;
 }
-.cf-column strong {
+.cf-column span {
     font-size: 14px;
     line-height: 24px;
     margin: 0;
     text-indent: 2em;
+}
+.cf-column li {
+    line-height: 24px;
+    text-indent: 0;
+}
+.cf-column strong {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0;
 }
 .cf-column img {
     width: 100%;

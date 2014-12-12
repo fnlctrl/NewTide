@@ -134,26 +134,25 @@ if ( current_user_can('contributor') || current_user_can('author')) {
 }
 
 // Ajax login
+function auth_user_login($user_login, $password) {
+	$user_info = array(
+		'user_login' => $user_login,
+		'user_password' => $password,
+		'remember' => true
+	);
+	$user_signon = wp_signon( $user_info, false );
+	if ( is_wp_error($user_signon) ){
+		echo json_encode(array('loggedin' => false, 'message'=>'用户名或密码错误'));
+	} else {
+		wp_set_current_user($user_signon->ID);
+		echo json_encode(array('loggedin' => true, 'message'=>'登录成功'));
+	}
+	exit();
+}
 function ajax_login(){
 	// First check the nonce, if it fails the function will break
 	check_ajax_referer( 'ajax-login-nonce', 'security' );
-	$userinfo = array(
-		'user_login' => $_POST['username'],
-		'user_password' => $_POST['password'],
-		'remember' => true,
-	);
-	$user_signon = wp_signon( $userinfo, false );
-	if ( is_wp_error($user_signon) ){
-		echo json_encode(array(
-			'loggedin' => false,
-			'message'=> '用户名或密码错误'
-		));
-	} else {
-		echo json_encode(array(
-			'loggedin' => true,
-			'message'=> '登录成功'
-		));
-	}
+	auth_user_login($_POST['username'],  $_POST['password']);
 	exit();
 }
 add_action('wp_ajax_nopriv_ajaxlogin', 'ajax_login');
@@ -162,12 +161,45 @@ add_action('wp_ajax_nopriv_ajaxlogin', 'ajax_login');
 function ajax_register() {
 	// First check the nonce, if it fails the function will break
 	check_ajax_referer( 'ajax-login-nonce', 'security' );
-	$user_register = register_new_user($_POST['username'], $_POST['email']);
+	$pw = sanitize_text_field($_POST['password']);
+	$pw2 = sanitize_text_field($_POST['confirm-password']);
+	if ($pw !== $pw2) {
+		echo json_encode(array('message'=>'输入的密码不匹配'));
+		exit();
+	}
+	$user_info = array(
+		'user_login' => sanitize_user($_POST['username']),
+		'user_pass' => sanitize_text_field($_POST['password']),
+		'user_email' => apply_filters( 'user_registration_email', $_POST['email'])
+	);
+	// Check the username
+	if ( $user_info['user_login'] == '' ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: Please enter a username.')));
+		exit();
+	} elseif ( ! validate_username( $user_info['user_login'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.')));
+		exit();
+	} elseif ( username_exists( $user_info['user_login'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This username is already registered. Please choose another one.')));
+		exit();
+	}
+	// Check the e-mail address
+	if ( $user_info['user_email'] == '' ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: Please type your e-mail address.')));
+		exit();
+	} elseif ( ! is_email(  $user_info['user_email'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: The email address isn&#8217;t correct.')));
+		exit();
+	} elseif ( email_exists(  $user_info['user_email'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This email is already registered, please choose another one.')));
+		exit();
+	}
+	$user_register = wp_insert_user( $user_info );
 	if (!is_wp_error($user_register)) {
+		auth_user_login($user_info['user_login'], $user_info['user_pass']);
 		echo json_encode(array('message'=>'注册完成。请查收我们给您发的邮件。'));
 	} else {
-		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_register->get_error_message());
-		echo json_encode(array('message'=>$message));
+		echo json_encode(array('message'=>$user_register->get_error_messages()));
 	}
 	exit();
 }
@@ -247,8 +279,5 @@ function remove_gravatar( $avatar ) {
 add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 
 // prevent loading open-sans from google
-function remove_open_sans() {
-	wp_deregister_style( 'open-sans' );
-	wp_register_style( 'open-sans', false );
-}
-add_action( 'wp_enqueue_scripts', 'remove_open_sans', 100 );
+wp_deregister_style( 'open-sans' );
+wp_register_style( 'open-sans', false );
