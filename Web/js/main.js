@@ -639,8 +639,11 @@ $(function(){
 		// handle back press on android
 		window.WebAppCallbacks = {
 			onBackPressed : function() {
-				if (status.showingMenu) { // let window.onhashchange hide menu first
+				if (status.showingMenu) {
 					toggleMenu.hide();
+				}
+				if (status.showingSearch) {
+					toggleSearch.hide();
 				}
 				if (pageType === 'index' || pageType === 'front-page') {
 					WebApp.finish();
