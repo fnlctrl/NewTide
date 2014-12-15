@@ -224,6 +224,25 @@ $(function(){
 		})()
 	};
 
+	var toggleSearch = {
+		show: function() {
+
+		},
+		hide: function() {
+
+		},
+		toggle: function() {
+			if (status.searchBar) {
+				toggleSearch.hide();
+			} else {
+				toggleSearch.show();
+			}
+		},
+		bind: (function() {
+			
+		})()
+	}
+
 	var book = {
 		timer: null,
 		columnizer: null,
@@ -598,7 +617,7 @@ $(function(){
 		window.WebAppCallbacks = {
 			onBackPressed : function() {
 				if (status.showingMenu) { // let window.onhashchange hide menu first
-					return;
+					toggleMenu.hide();
 				}
 				if (pageType === 'index' || pageType === 'front-page') {
 					WebApp.finish();
