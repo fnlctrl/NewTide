@@ -10,7 +10,7 @@ $(function(){
 		$topbarSearchIcon = $('#topbar-search-icon'),
 		$topbarSearchReturn = $('#topbar-search-return'),
 		$sidebar = $('#sidebar'),
-		$cover = $('#cover'),
+		$cover = $('.cover'),
 		$bookContainer = $('#book-container'),
 		$bookLoadingShade = $('#book-loading-shade'),
 		$bookNavNext = $('#book-nav-next'),
@@ -28,6 +28,7 @@ $(function(){
 
 	var status = {
 		showingMenu: null,
+		showingSearch: false,
 		currentPage: 1,
 		numPages: 1,
 		prevPageURL:'',
@@ -38,7 +39,6 @@ $(function(){
 		numColumns: 1,
 		LineHeight: 18,
 		qrcode: null,
-		searchBar: false,
 		lockPopstate: false
 	};
 
@@ -152,10 +152,40 @@ $(function(){
 	};
 
 	var toggleMenu = {
+		show: function(needReflow) {
+			if (status.showingMenu) {
+				return;
+			}
+			if (status.isMobile) {
+				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
+				$cover.addClass('cover-active');
+				$sidebar.css({
+					transform:'translate3d(0, 0, 0)',
+					'-webkit-transform':'translate3d(0, 0, 0)',
+					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
+				});
+				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				location.hash = 'menu';
+				document.body.addEventListener('touchmove', util.preventDefault);
+			} else {
+				var W = $window.width();
+				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
+				$bookContainer.css({left:200});
+				$sidebar.css({left:'0px'});
+				if (W>1200 && needReflow) {
+					$bookContainer.css({width:W-200});
+					book.reflow(book.getConfig(W-200));
+				}
+			}
+			status.showingMenu = true;
+		},
 		hide: function(needReflow) {
+			if (!status.showingMenu) {
+				return;
+			}
 			if (status.isMobile) {
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
-				$cover.css({opacity:0});
+				$cover.removeClass('cover-active');
 				$sidebar.css({
 					transform:'translate3d(-100%, 0, 0)',
 					'-webkit-transform':'translate3d(-100%, 0, 0)',
@@ -180,30 +210,6 @@ $(function(){
 			}
 			status.showingMenu = false;
 		},
-		show: function(needReflow) {
-			if (status.isMobile) {
-				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
-				$cover.css({opacity:0.6});
-				$sidebar.css({
-					transform:'translate3d(0, 0, 0)',
-					'-webkit-transform':'translate3d(0, 0, 0)',
-					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
-				});
-				util.preventPopstate(320); // 320 is animation duration + 20ms margin
-				location.hash = 'menu';
-				document.body.addEventListener('touchmove', util.preventDefault);
-			} else {
-				var W = $window.width();
-				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
-				$bookContainer.css({left:200});
-				$sidebar.css({left:'0px'});
-				if (W>1200 && needReflow) {
-					$bookContainer.css({width:W-200});
-					book.reflow(book.getConfig(W-200));
-				}
-			}
-			status.showingMenu = true;
-		},
 		toggle: function () {
 			if (status.showingMenu) {
 				this.hide(true);
@@ -226,20 +232,48 @@ $(function(){
 
 	var toggleSearch = {
 		show: function() {
-
+			if (status.showingSearch) {
+				return;
+			}
+			if (status.showingMenu) {
+				location.hash='menu';
+				toggleMenu.hide();
+			}
+			$topbarSearchWrapper.addClass('topbar-search-active');
+			$topbarSearchInput.focus();
+			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1
+			$cover.addClass('cover-active');
+			setTimeout(function(){ // added setTimeout as a workaround of unfixed chromium bug: https://code.google.com/p/chromium/issues/detail?id=243066
+				location.hash = 'search';
+			},10)
+			status.showingSearch = true;
+			document.body.addEventListener('touchmove', util.preventDefault);
 		},
 		hide: function() {
-
-		},
-		toggle: function() {
-			if (status.searchBar) {
-				toggleSearch.hide();
-			} else {
-				toggleSearch.show();
+			if (!status.showingSearch) {
+				return;
 			}
+			$topbarSearchWrapper.removeClass('topbar-search-active');
+			$topbarSearchInput.val('');
+			$topbarMenu.css({'z-index':4}); // fix pointer-events:none not working for svgs on android 4.1
+			$cover.removeClass('cover-active');
+			if (/search/.test(location.hash)) {
+				history.back();
+			}
+			status.showingSearch = false;
+			document.body.removeEventListener('touchmove', util.preventDefault);
 		},
 		bind: (function() {
-			
+			$topbarSearchIcon.click(function() {
+				toggleSearch.show();
+			});
+			$topbarSearchReturn.click(function() {
+				toggleSearch.hide();
+			});
+			$cover.click(function() {
+				toggleMenu.hide();
+				toggleSearch.hide();
+			})
 		})()
 	}
 
@@ -541,16 +575,22 @@ $(function(){
 	if (status.isMobile) {
 		book = null;
 		var pageType = window._config.pageType;
-		// hide menu on back pressed
+		// hide menu or searchbar on back pressed
 		window.onhashchange = function() {
-			if (!/menu/.test(location.hash) && status.showingMenu) { // hide menu when user presses back
+			if (!/menu/.test(location.hash) && status.showingMenu) {
 				toggleMenu.hide();
 			}
+			setTimeout(function() {
+				if (!/search/.test(location.hash) && status.showingSearch) {
+					toggleSearch.hide();
+				}
+			},20); // location.hash = 'search' has a 10ms delay, so we use 20ms here.
+
 		}
-		if (status.prevPageURL !== '' && status.prevPageURL !== location.href) {
+		if (status.prevPageURL !== '' && status.prevPageURL !== location.href.replace(location.hash,"")) {
 			$prevPageLink.css({display:'block'});
 		}
-		if (status.nextPageURL !== '' && status.nextPageURL !== location.href && $('.wp-item').length===60 ) {
+		if (status.nextPageURL !== '' && status.nextPageURL !== location.href.replace(location.hash,"") && $('.wp-item').length===60 ) {
 			$nextPageLink.css({display:'block'});
 		}
 		// adjust entry thumbnail height on load
@@ -593,23 +633,6 @@ $(function(){
 			$topbar.css({background:'rgba(0,0,0,0.2)'});
 		}
 		// handle search button press
-		$topbarSearchIcon.click(function() {
-			if (status.showingMenu) {
-				toggleMenu.hide();
-			}
-			$topbarSearchWrapper.addClass('topbar-search-active');
-			$topbarSearchInput.focus();
-			$topbarMenu.css({'z-index':1}); // fix pointer-events:none not working for svgs on android 4.1
-			$cover.css({opacity:0.2});
-			status.searchBar = true;
-		});
-		$topbarSearchReturn.click(function() {
-			$topbarSearchWrapper.removeClass('topbar-search-active');
-			$topbarSearchInput.val('');
-			$topbarMenu.css({'z-index':4}); // fix pointer-events:none not working for svgs on android 4.1
-			$cover.css({opacity:0});
-			status.searchBar = false;
-		});
 		$('#events-wrapper').css({'height':$window.width()*0.8});
 		// set sidebar-top background
 		$('#sidebar-top').css({'background-image':'url('+siteInfo.siteurl+'wp-content/themes/NewTide/img/mobile/background/' + (Math.floor(Math.random()*24)+1) + '.jpg)'}) // 24 is the number of pics in the folder
@@ -712,17 +735,19 @@ $(function(){
 			location.href=siteInfo.siteurl;
 		}
 	});
-	if (/\?s=/.test(location.href)) { // on a search result page
+	if (window._config.pageType === 'search') { // on a search result page
 		if (sessionStorage.searchstr) {
 			if (status.isMobile) {
 				$topbarSearchInput.val(sessionStorage.searchstr);
 				$topbarSearchWrapper.addClass('topbar-search-active');
 				$topbarMenu.css({'z-index':1});
-				status.searchBar = true;
+				status.showingSearch = true;
 			} else {
 				$sidebarSearchInput[0].onblur=null;
 				$sidebarSearchInput.val(sessionStorage.searchstr).addClass('sidebar-search-active');
 			}
 		}
 	}
+
+	window._status = status;
 });

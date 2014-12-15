@@ -176,7 +176,7 @@ body {
 #sidebar-logo {
 	display	: none;
 }
-#cover {
+.cover {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -186,6 +186,10 @@ body {
     opacity: 0;
     background-color: #000;
     pointer-events: none;
+}
+.cover-active {
+    pointer-events: auto;
+    opacity: 0.6;
 }
 #user-head {
     position: relative;
