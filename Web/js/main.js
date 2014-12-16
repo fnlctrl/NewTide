@@ -567,6 +567,81 @@ $(function(){
 		}
 	};
 
+	var side_ctrl = {
+		click_x			: 0,
+		start_x			: 0,
+		new_x			: 0,
+		boundary		: parseInt($window.width()) * 0.75,
+		ticking			: false,
+		coverHammer		: null,
+		sidebarHammer	: null,
+		wpHammer		: null,
+
+		initialize : function () {
+			$body.bind("mousedown", function (event) {
+				side_ctrl.click_x = event.pageX;
+				side_ctrl.start_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
+			});
+
+			coverHammer = new Hammer($cover[0]);
+			sidebarHammer = new Hammer($sidebar[0]);
+			wpHammer = new Hammer($wpWrapper[0]);
+			setInterval(function () {
+				//if (ticking) {
+				//	console.log(new_x);
+				//	console.log(parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + boundary);
+				//}
+				var now_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
+				if (side_ctrl.ticking && (now_x === 0 || now_x === side_ctrl.boundary || now_x === side_ctrl.new_x)) {
+					side_ctrl.ticking = false;
+				}
+			}, 1000 / 60);
+			coverHammer.on('pan', side_ctrl.onPan);
+			coverHammer.on('panend', side_ctrl.onPanend);
+			sidebarHammer.on('pan', side_ctrl.onPan);
+			sidebarHammer.on('panend', side_ctrl.onPanend);
+			wpHammer.on('pan', side_ctrl.onPan);
+		},
+		getNewX : function (deltaX) {
+			return Math.min(Math.max(side_ctrl.start_x + deltaX, 0), side_ctrl.boundary);
+		},
+		updateSidebar : function (new_x) {
+			$topbarMenuIcon.css({'transform' : 'rotateZ(' + side_ctrl.new_x / side_ctrl.boundary * 90 + 'deg)'});
+			$sidebar.addClass('notransition').css({
+				transform:'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
+				'-webkit-transform':'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
+				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + side_ctrl.new_x / side_ctrl.boundary * 0.5 + ')'
+			});
+			$cover.css({width:'100%', opacity:(side_ctrl.new_x / side_ctrl.boundary * 0.6)});
+		},
+		onPan : function (event) {
+			if (status.showingMenu || side_ctrl.click_x < 20) {
+				if (!side_ctrl.ticking) {
+					side_ctrl.ticking = true;
+					side_ctrl.new_x = side_ctrl.getNewX(event.deltaX);
+					side_ctrl.updateSidebar(side_ctrl.new_x);
+				}
+			} else if (window._config.pageType === "single") {
+				var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+				if (new_URL) {
+					window.location.href = new_URL;
+				} else {
+					util.showNotice('这个分类下已经没有更新的文章了~');
+				}
+			}
+		},
+		onPanend : function (event) {
+			if (status.showingMenu || side_ctrl.click_x < 20) {
+				side_ctrl.ticking = true;
+				side_ctrl.new_x = side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5 ? 0 : side_ctrl.boundary;
+				console.log(side_ctrl.new_x);
+				side_ctrl.updateSidebar(side_ctrl.new_x);
+				status.showingMenu = side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5;
+				$sidebar.removeClass('notransition');
+			}
+		}
+	};
+
 	// initialize when page first loads
 	util.getNavURL();
 	util.isListPage();
@@ -660,6 +735,7 @@ $(function(){
 				}
 			}
 		}
+		side_ctrl.initialize();
 	} else {
 		if ($wpWrapper.length) {
 			status.needBook = true;

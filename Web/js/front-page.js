@@ -14,7 +14,7 @@ $(function(){
 			$ignoreButton = $('#hint-ignore-button'),
 			$postsWrapper = $('.posts-wrapper');
 		if (localStorage.firstLoad === 'false') {
-			$firstLoadHintWrapper.remove();
+			$firstLoadHintWrapper.css({display:'none'});
 			$postsWrapper.css({left:0,width:'50%'});
 		}
 		$ignoreButton.click(function() {

@@ -15,7 +15,7 @@
 		</form>
 		&nbsp; <!-- a nasty, hacky fix for blurry position:fixed images on android browser 4.1 and older -->
 	</div>
-	<div class='cover ease'></div>
+	<div class='cover'></div>
 <?php else:?>
 	<div id='login'>
 		<a id='login-logo' href="<?php bloginfo('url'); ?>"></a>
