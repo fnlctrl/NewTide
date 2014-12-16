@@ -323,7 +323,7 @@ $(function(){
 						$cover.removeAttr('style');
 					}
 				}
-			}, 1000 / 60);
+			}, 1000 / 30);
 			coverHammer.on('pan', side_ctrl.onPan);
 			coverHammer.on('panend', side_ctrl.onPanend);
 			sidebarHammer.on('pan', side_ctrl.onPan);
