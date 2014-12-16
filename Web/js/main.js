@@ -591,7 +591,19 @@ $(function(){
 			});
 
 			sidebarHammer = new Hammer($sidebar[0]);
-			wpHammer = new Hammer($wpWrapper[0]);
+			if ($wpWrapper.length) {
+				wpHammer = new Hammer($wpWrapper[0]);
+				wpHammer.on('pan', function () {
+					if (window._config.pageType === "single") {
+						var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+						if (new_URL) {
+							window.location.href = new_URL;
+						} else {
+							util.showNotice('这个分类下已经没有更新的文章了~');
+						}
+					}
+				});
+			}
 			setInterval(function () {
 				//if (ticking) {
 				//	console.log(new_x);
@@ -607,16 +619,6 @@ $(function(){
 			}, 1000 / 60);
 			sidebarHammer.on('pan', side_ctrl.onPan);
 			sidebarHammer.on('panend', side_ctrl.onPanend);
-			wpHammer.on('pan', function () {
-				if (window._config.pageType === "single") {
-					var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
-					if (new_URL) {
-						window.location.href = new_URL;
-					} else {
-						util.showNotice('这个分类下已经没有更新的文章了~');
-					}
-				}
-			});
 		},
 		getNewX : function (deltaX) {
 			return Math.min(Math.max(side_ctrl.start_x + deltaX, 0), side_ctrl.boundary);
