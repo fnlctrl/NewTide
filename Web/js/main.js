@@ -555,7 +555,7 @@ $(function(){
 		},
 		updateSidebar : function (new_x) {
 			$topbarMenuIcon.css({'transform' : 'rotateZ(' + side_ctrl.new_x / side_ctrl.boundary * 90 + 'deg)'});
-			$sidebar.css({
+			$sidebar.addClass('notransition').css({
 				transform:'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
 				'-webkit-transform':'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
 				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + side_ctrl.new_x / side_ctrl.boundary * 0.5 + ')'
@@ -569,7 +569,7 @@ $(function(){
 					side_ctrl.new_x = side_ctrl.getNewX(event.deltaX);
 					side_ctrl.updateSidebar(side_ctrl.new_x);
 				}
-			} else {
+			} else if (window._config.pageType === "single") {
 				var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
 				if (new_URL) {
 					window.location.href = new_URL;
@@ -585,6 +585,7 @@ $(function(){
 				console.log(side_ctrl.new_x);
 				side_ctrl.updateSidebar(side_ctrl.new_x);
 				status.showingMenu = side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5;
+				$sidebar.removeClass('notransition');
 			}
 		}
 	};
