@@ -641,9 +641,11 @@ $(function(){
 			onBackPressed : function() {
 				if (status.showingMenu) {
 					toggleMenu.hide();
+					return;
 				}
 				if (status.showingSearch) {
 					toggleSearch.hide();
+					return;
 				}
 				if (pageType === 'index' || pageType === 'front-page') {
 					WebApp.finish();
