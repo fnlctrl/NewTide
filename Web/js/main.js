@@ -302,19 +302,19 @@ $(function(){
 
 			coverHammer = new Hammer($cover[0]);
 			sidebarHammer = new Hammer($sidebar[0]);
-			if ($wpWrapper.length) {
-				wpHammer = new Hammer($wpWrapper[0]);
-				wpHammer.on('pan', function () {
-					if (window._config.pageType === "single") {
-						var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
-						if (new_URL) {
-							window.location.href = new_URL;
-						} else {
-							util.showNotice('这个分类下已经没有更新的文章了~');
-						}
-					}
-				});
-			}
+			//if ($wpWrapper.length) {
+			//	wpHammer = new Hammer($wpWrapper[0]);
+			//	wpHammer.on('pan', function () {
+			//		if (window._config.pageType === "single") {
+			//			var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+			//			if (new_URL) {
+			//				window.location.href = new_URL;
+			//			} else {
+			//				util.showNotice('这个分类下已经没有更新的文章了~');
+			//			}
+			//		}
+			//	});
+			//}
 			setInterval(function () {
 				var now_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 				if (side_ctrl.ticking && (now_x === 0 || now_x === side_ctrl.boundary || now_x === side_ctrl.new_x)) {
