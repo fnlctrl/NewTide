@@ -189,6 +189,7 @@ body {
     -moz-transition: opacity 0.3s;
     -o-transition: opacity 0.3s;
     transition: opacity 0.3s;
+    pointer-events: none;
 }
 .cover-active {
     pointer-events: auto;
@@ -284,6 +285,14 @@ body {
     top: 8px;
 	float	: left;
     margin: 0 30px 0 0;
+}
+#sidebar-dragger {
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 2;
 }
 #book-container {
     width: 100%;

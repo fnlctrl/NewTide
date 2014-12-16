@@ -271,8 +271,15 @@ $(function(){
 				toggleSearch.hide();
 			});
 			$cover.click(function() {
-				toggleMenu.hide();
-				toggleSearch.hide();
+				if (status.preventCoverClick) {
+					return;
+				}
+				if (status.showingMenu) {
+					toggleMenu.hide();
+				}
+				if (status.showingSearch) {
+					toggleSearch.hide();
+				}
 			})
 		})()
 	}
@@ -583,7 +590,6 @@ $(function(){
 				side_ctrl.start_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 			});
 
-			coverHammer = new Hammer($cover[0]);
 			sidebarHammer = new Hammer($sidebar[0]);
 			wpHammer = new Hammer($wpWrapper[0]);
 			setInterval(function () {
@@ -594,50 +600,73 @@ $(function(){
 				var now_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 				if (side_ctrl.ticking && (now_x === 0 || now_x === side_ctrl.boundary || now_x === side_ctrl.new_x)) {
 					side_ctrl.ticking = false;
+					if (now_x === 0 || now_x === side_ctrl.boundary) {
+						$cover.removeAttr('style');
+					}
 				}
 			}, 1000 / 60);
-			coverHammer.on('pan', side_ctrl.onPan);
-			coverHammer.on('panend', side_ctrl.onPanend);
 			sidebarHammer.on('pan', side_ctrl.onPan);
 			sidebarHammer.on('panend', side_ctrl.onPanend);
-			wpHammer.on('pan', side_ctrl.onPan);
+			wpHammer.on('pan', function () {
+				if (window._config.pageType === "single") {
+					var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+					if (new_URL) {
+						window.location.href = new_URL;
+					} else {
+						util.showNotice('这个分类下已经没有更新的文章了~');
+					}
+				}
+			});
 		},
 		getNewX : function (deltaX) {
 			return Math.min(Math.max(side_ctrl.start_x + deltaX, 0), side_ctrl.boundary);
 		},
 		updateSidebar : function (new_x) {
-			$topbarMenuIcon.css({'transform' : 'rotateZ(' + side_ctrl.new_x / side_ctrl.boundary * 90 + 'deg)'});
+			console.log(new_x);
+			$topbarMenuIcon.addClass('notransition').css({'transform':'rotateZ(' + new_x / side_ctrl.boundary * 90 + 'deg)'});
 			$sidebar.addClass('notransition').css({
-				transform:'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
-				'-webkit-transform':'translateX(' + (side_ctrl.new_x - side_ctrl.boundary) + 'px)',
-				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + side_ctrl.new_x / side_ctrl.boundary * 0.5 + ')'
+				transform:'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
+				'-webkit-transform':'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
+				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + new_x / side_ctrl.boundary * 0.5 + ')'
 			});
-			$cover.css({width:'100%', opacity:(side_ctrl.new_x / side_ctrl.boundary * 0.6)});
+			$cover.addClass('notransition').css({opacity:(new_x / side_ctrl.boundary * 0.6)});
 		},
 		onPan : function (event) {
+			console.log(status.showingMenu);
 			if (status.showingMenu || side_ctrl.click_x < 20) {
 				if (!side_ctrl.ticking) {
 					side_ctrl.ticking = true;
 					side_ctrl.new_x = side_ctrl.getNewX(event.deltaX);
 					side_ctrl.updateSidebar(side_ctrl.new_x);
 				}
-			} else if (window._config.pageType === "single") {
-				var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
-				if (new_URL) {
-					window.location.href = new_URL;
-				} else {
-					util.showNotice('这个分类下已经没有更新的文章了~');
-				}
 			}
 		},
 		onPanend : function (event) {
+			status.preventCoverClick = true;
+			setTimeout(function () {
+				status.preventCoverClick = false;
+			}, 10);
 			if (status.showingMenu || side_ctrl.click_x < 20) {
 				side_ctrl.ticking = true;
-				side_ctrl.new_x = side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5 ? 0 : side_ctrl.boundary;
+				var show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5) ? false : true;
+				if (show_menu) {
+					status.showingMenu = true;
+					side_ctrl.new_x = side_ctrl.boundary;
+					$cover.addClass('cover-active');
+					location.hash = 'menu';
+				} else {
+					status.showingMenu = false;
+					side_ctrl.new_x = 0;
+					$cover.removeClass('cover-active');
+					if (location.hash === '#menu') {
+						history.back();
+					}
+				}
 				console.log(side_ctrl.new_x);
 				side_ctrl.updateSidebar(side_ctrl.new_x);
-				status.showingMenu = side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5;
+				$topbarMenuIcon.removeClass('notransition');
 				$sidebar.removeClass('notransition');
+				$cover.removeClass('notransition');
 			}
 		}
 	};
