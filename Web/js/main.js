@@ -573,7 +573,6 @@ $(function(){
 			}
 		}
 	};
-
 	var side_ctrl = {
 		click_x			: 0,
 		start_x			: 0,
@@ -590,6 +589,7 @@ $(function(){
 				side_ctrl.start_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 			});
 
+			coverHammer = new Hammer($cover[0]);
 			sidebarHammer = new Hammer($sidebar[0]);
 			if ($wpWrapper.length) {
 				wpHammer = new Hammer($wpWrapper[0]);
@@ -605,10 +605,6 @@ $(function(){
 				});
 			}
 			setInterval(function () {
-				//if (ticking) {
-				//	console.log(new_x);
-				//	console.log(parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + boundary);
-				//}
 				var now_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 				if (side_ctrl.ticking && (now_x === 0 || now_x === side_ctrl.boundary || now_x === side_ctrl.new_x)) {
 					side_ctrl.ticking = false;
@@ -617,6 +613,8 @@ $(function(){
 					}
 				}
 			}, 1000 / 60);
+			coverHammer.on('pan', side_ctrl.onPan);
+			coverHammer.on('panend', side_ctrl.onPanend);
 			sidebarHammer.on('pan', side_ctrl.onPan);
 			sidebarHammer.on('panend', side_ctrl.onPanend);
 		},
@@ -624,17 +622,19 @@ $(function(){
 			return Math.min(Math.max(side_ctrl.start_x + deltaX, 0), side_ctrl.boundary);
 		},
 		updateSidebar : function (new_x) {
-			console.log(new_x);
 			$topbarMenuIcon.addClass('notransition').css({'transform':'rotateZ(' + new_x / side_ctrl.boundary * 90 + 'deg)'});
 			$sidebar.addClass('notransition').css({
 				transform:'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
 				'-webkit-transform':'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
-				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + new_x / side_ctrl.boundary * 0.5 + ')'
+				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + (new_x === 0 ? 0 : 0.5) + ')'
 			});
-			$cover.addClass('notransition').css({opacity:(new_x / side_ctrl.boundary * 0.6)});
+			if (new_x === side_ctrl.boundary) {
+				$cover.addClass('cover-active').addClass('notransition');
+			} else {
+				$cover.removeClass('cover-active').addClass('notransition').css({opacity:(new_x / side_ctrl.boundary * 0.6)});
+			}
 		},
 		onPan : function (event) {
-			console.log(status.showingMenu);
 			if (status.showingMenu || side_ctrl.click_x < 20) {
 				if (!side_ctrl.ticking) {
 					side_ctrl.ticking = true;
@@ -654,17 +654,14 @@ $(function(){
 				if (show_menu) {
 					status.showingMenu = true;
 					side_ctrl.new_x = side_ctrl.boundary;
-					$cover.addClass('cover-active');
 					location.hash = 'menu';
 				} else {
 					status.showingMenu = false;
 					side_ctrl.new_x = 0;
-					$cover.removeClass('cover-active');
 					if (location.hash === '#menu') {
 						history.back();
 					}
 				}
-				console.log(side_ctrl.new_x);
 				side_ctrl.updateSidebar(side_ctrl.new_x);
 				$topbarMenuIcon.removeClass('notransition');
 				$sidebar.removeClass('notransition');
