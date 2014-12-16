@@ -4,6 +4,8 @@
 	<meta charset='UTF-8'/>	
 	<title>水朝夕 | 404 Not Found</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script>
