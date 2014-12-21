@@ -14,39 +14,57 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link', 10, 0 ); // Display relatio
 remove_action( 'wp_head', 'wp_generator' ); // Display the XHTML generator that is generated on the wp_head hook, WP version
 show_admin_bar(false);
 
+// detect mobile browsers
+require_once 'php/Mobile_Detect.php';
+$mobileDetect = new Mobile_Detect;
+$isMobile = $mobileDetect->isMobile();
 
 // enqueue scripts
-function theme_scripts() {
+function scripts_init () {
+	global $isMobile;
+	wp_enqueue_style( 'global', get_stylesheet_uri());
 	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);
 	wp_enqueue_script( 'underscore-1.6.0', get_template_directory_uri() . '/js/underscore-1.6.0.min.js', array(), '1.6.0', false);
 	wp_enqueue_script( 'jquery-2.11', get_template_directory_uri() . '/js/jquery-2.1.1.min.js', array(), '2.1.1', false);
-	wp_enqueue_script( 'jquery.mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.min.js', array(), '3.1.12', false);
-	wp_enqueue_script( 'jquery.qrcode', get_template_directory_uri() . '/js/jquery.qrcode.min.js', array(), '1.0.0', false);
 	wp_enqueue_script( 'hammer', get_template_directory_uri() . '/js/hammer-2.0.4.min.js', array(), '2.0.4', false);
 	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array(), '1.0.0', false);
 	wp_enqueue_script( 'main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', false);
-	wp_enqueue_script('ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
-	wp_localize_script('ajax-login', 'ajaxLoginObject', array(
+	wp_localize_script( 'main', 'siteInfo', array(
+		'siteurl' => get_site_url().'/',
 		'ajaxurl' => admin_url('admin-ajax.php'),
 		'redirecturl' => get_permalink(),
+		'jsonurl' => get_site_url().'/json/',
 	));
+	if ($isMobile) {
+		wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
+	} else {
+		wp_enqueue_style( 'desktop', get_template_directory_uri() . '/css/desktop.css', array(), '1.0.0', false);
+		wp_enqueue_style( 'jquery.bookblock', get_template_directory_uri() . '/css/bookblock.css', array(), '1.0.0', false);
+		wp_enqueue_script( 'jquery.qrcode', get_template_directory_uri() . '/js/jquery.qrcode.min.js', array(), '1.0.0', false);
+		wp_enqueue_script( 'jquery.mousewheel', get_template_directory_uri() . '/js/jquery.mousewheel.min.js', array(), '3.1.12', false);
+		wp_enqueue_script( 'ajax-login', get_template_directory_uri() . '/js/ajax-login.js', array() );
+	}
 }
-add_action( 'wp_enqueue_scripts', 'theme_scripts',3);
+add_action( 'wp_enqueue_scripts', 'scripts_init' );
+
 // remove all <a>s wrapped around <img>s
 function filter_ptags_on_images( $content ){
    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '$2', $content);
 }
 add_filter('the_content', 'filter_ptags_on_images');
+
 // remove all attr of <img>s
 function filter_attr_on_images( $content ){
    return preg_replace('/(<img.*)class.*(title.*\/>)/iU', '$1$2', $content);
 }
 add_filter('the_content', 'filter_attr_on_images');
+
 // get just the src of avatar insted of <img> tag
 function get_avatar_url($get_avatar) {
 	preg_match("/src='(.*?)'/i", $get_avatar, $matches);
 	return $matches[1];
 }
+
 // remove height and width attr of imgs
 function remove_thumbnail_dimensions( $content ) {
     return preg_replace( '/(width|height)=\"\d*\"\s/', "", $content );
@@ -54,21 +72,31 @@ function remove_thumbnail_dimensions( $content ) {
 add_filter( 'post_thumbnail_html', 'remove_thumbnail_dimensions');
 add_filter( 'image_send_to_editor', 'remove_thumbnail_dimensions');
 add_filter( 'the_content', 'remove_thumbnail_dimensions');
+
 // change the excerpt more string to '...'
 function custom_excerpt_more( $more ) {
 	return '  .....';
 }
 add_filter( 'excerpt_more', 'custom_excerpt_more' );
+
 // change the excerpt length
 function custom_excerpt_length( $length ) {
 	return 60;
 }
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
+
 // change login form logo
 function my_login_logo() { ?>
 	<style type="text/css">
+		#login {
+			padding: 0;
+			top: 50%;
+			left: 50%;
+			margin: -250px 0 0 -160px;
+			position: absolute;
+		}
 		#login h1 a {
-			width: 200px;
+			width: 200px !important;
 			height: 65px;
 			background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/sidebar-logo.svg);
 			background-size: 100%;
@@ -76,62 +104,107 @@ function my_login_logo() { ?>
 	</style>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
 // change login form style
 function my_login_logo_url() {
     return home_url();
 }
 add_filter( 'login_headerurl', 'my_login_logo_url' );
+
 // change login title
 function my_login_logo_url_title() {
     return '水朝夕而至，曰潮';
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );
-// enable contributors to upload file
-function allow_contributor_uploads() {
+
+// enable contributors and authors to upload file and read unpublished posts
+function allow_upload_and_read() {
 	$contributor = get_role('contributor');
 	$contributor->add_cap('upload_files');
+	$contributor->add_cap('read_private_pages');
+	$contributor->add_cap('read_private_posts');
+	$contributor->add_cap('read_post');
+	$author = get_role('author');
+	$author->add_cap('read_private_pages');
+	$author->add_cap('read_post');
+	$author->add_cap('read_private_posts');
 }
-if ( current_user_can('contributor') && !current_user_can('upload_files') ) {
-	add_action('admin_init', 'allow_contributor_uploads');
+if ( current_user_can('contributor') || current_user_can('author')) {
+	add_action('admin_init', 'allow_upload_and_read');
 }
+
 // Ajax login
-function ajax_login(){
-	// First check the nonce, if it fails the function will break
-	check_ajax_referer( 'ajax-login-nonce', 'security' );
-	$userinfo = array(
-		'user_login' => $_POST['username'],
-		'user_password' => $_POST['password'],
-		'remember' => true,
+function auth_user_login($user_login, $password) {
+	$user_info = array(
+		'user_login' => $user_login,
+		'user_password' => $password,
+		'remember' => true
 	);
-	$user_signon = wp_signon( $userinfo, false );
+	$user_signon = wp_signon( $user_info, false );
 	if ( is_wp_error($user_signon) ){
-		echo json_encode(array(
-			'loggedin' => false,
-			'message'=> '用户名或密码错误'
-		));
+		echo json_encode(array('loggedin' => false, 'message'=>'用户名或密码错误'));
 	} else {
-		echo json_encode(array(
-			'loggedin' => true,
-			'message'=> '登录成功'
-		));
+		wp_set_current_user($user_signon->ID);
+		echo json_encode(array('loggedin' => true, 'message'=>'登录成功'));
 	}
 	exit();
 }
+function ajax_login(){
+	// First check the nonce, if it fails the function will break
+	check_ajax_referer( 'ajax-login-nonce', 'security' );
+	auth_user_login($_POST['username'],  $_POST['password']);
+	exit();
+}
 add_action('wp_ajax_nopriv_ajaxlogin', 'ajax_login');
+
 // Ajax registration
 function ajax_register() {
 	// First check the nonce, if it fails the function will break
 	check_ajax_referer( 'ajax-login-nonce', 'security' );
-	$user_register = register_new_user($_POST['username'], $_POST['email']);
+	$pw = sanitize_text_field($_POST['password']);
+	$pw2 = sanitize_text_field($_POST['confirm-password']);
+	if ($pw !== $pw2) {
+		echo json_encode(array('message'=>'输入的密码不匹配'));
+		exit();
+	}
+	$user_info = array(
+		'user_login' => sanitize_user($_POST['username']),
+		'user_pass' => sanitize_text_field($_POST['password']),
+		'user_email' => apply_filters( 'user_registration_email', $_POST['email'])
+	);
+	// Check the username
+	if ( $user_info['user_login'] == '' ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: Please enter a username.')));
+		exit();
+	} elseif ( ! validate_username( $user_info['user_login'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This username is invalid because it uses illegal characters. Please enter a valid username.')));
+		exit();
+	} elseif ( username_exists( $user_info['user_login'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This username is already registered. Please choose another one.')));
+		exit();
+	}
+	// Check the e-mail address
+	if ( $user_info['user_email'] == '' ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: Please type your e-mail address.')));
+		exit();
+	} elseif ( ! is_email(  $user_info['user_email'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: The email address isn&#8217;t correct.')));
+		exit();
+	} elseif ( email_exists(  $user_info['user_email'] ) ) {
+		echo json_encode(array('message'=>__('<strong>ERROR</strong>: This email is already registered, please choose another one.')));
+		exit();
+	}
+	$user_register = wp_insert_user( $user_info );
 	if (!is_wp_error($user_register)) {
+		auth_user_login($user_info['user_login'], $user_info['user_pass']);
 		echo json_encode(array('message'=>'注册完成。请查收我们给您发的邮件。'));
 	} else {
-		$message = preg_replace('/<strong>(.*)<\/strong>(.*)/','$1$2',$user_register->get_error_message());
-		echo json_encode(array('message'=>$message));
+		echo json_encode(array('message'=>$user_register->get_error_messages()));
 	}
 	exit();
 }
 add_action('wp_ajax_nopriv_register_user', 'ajax_register');
+
 // Ajax reset password
 function ajax_reset_password() {
 	// First check the nonce, if it fails the function will break
@@ -198,20 +271,13 @@ function ajax_reset_password() {
 	}
 }
 add_action('wp_ajax_nopriv_reset_user_pass', 'ajax_reset_password' );
+
 // replace all gravatar with local default image
-add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 function remove_gravatar( $avatar ) {
-	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.png', $avatar);}
-?>
+	return preg_replace('/http:\/\/.*gravatar\.com.*\b/',get_template_directory_uri().'/img/default-avatar.svg', $avatar);
+}
+add_filter( 'get_avatar' , 'remove_gravatar' , 1 , 4 );
 
-
-
-
-
-
-
-
-
-
-
-
+// prevent loading open-sans from google
+wp_deregister_style( 'open-sans' );
+wp_register_style( 'open-sans', false );

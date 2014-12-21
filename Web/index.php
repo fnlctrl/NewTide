@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset='UTF-8'/>	
+	<meta charset='UTF-8'/>
 	<title><?php bloginfo('name'); ?><?php wp_title(); ?></title>
-	<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0, user-scalable=no" />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/wp-content.css' media='screen' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/bookblock.css' media='screen' />
-	<link rel='stylesheet' type='text/css' media='all' href='<?php bloginfo( 'stylesheet_url' ); ?>' />
-	<link rel='stylesheet' href='<?php bloginfo('template_url');?>/css/mobile.css' media='screen' />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
+	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
+	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
+	<script>
+		window._config = {
+			pageType: 'index'
+		}
+	</script>
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<div id='book-container' class='ease'>
-		<div id='menu-icon'>
-			<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
-			<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+	<?php if(!$isMobile) :?>
+		<div id='book-container' class='ease'>
+			<div id='menu-icon'>
+				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
+				<img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon.svg'/>
+			</div>
+			<div id='book-nav-next' class='book-nav-icon'></div>
+			<div id='book-nav-prev' class='book-nav-icon'></div>
+			<div id='book-loading-shade' class='ease'></div>
+			<div id='book-pages'></div>
 		</div>
-		<div id='book-nav-next' class='book-nav-icon'></div>
-		<div id='book-nav-prev' class='book-nav-icon'></div>
-		<div id='book-loading-shade' class='ease'></div>
-		<div id='book-pages'></div>
-	</div>
+	<?php endif; ?>
 	<div id='wp-wrapper'>
+		<?php if($isMobile) :?><div class='posts-container'><?php endif; ?>
+		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
 		global $paged;
 		if( get_query_var('paged') ) {
@@ -37,7 +46,6 @@
 			'posts_per_page'   => 60,
 			'orderby' => 'post_date',
 			'order' => 'DESC',
-			'category'=> -get_cat_ID('设计品'),
 			'post_type' => 'post',
 			'post_status' => 'publish',
 			'paged' => $paged,
@@ -46,13 +54,11 @@
 		foreach ( $myposts as $post ) : setup_postdata( $post );?>
 			<?php //Begin Loop ?>
 			<div class='wp-item' onclick='location.href="<?php the_permalink(); ?>"'>
-
 				<?php
 				if ( has_post_thumbnail() ) {
 					the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
 				}
 				?>
-
 				<div class='wp-item-text'>
 					<h3><?php the_title(); ?></h3>
 					<div class='wp-item-metadata'>
@@ -65,10 +71,8 @@
 			</div>
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
-		<div id='wp-fake-nav-prev'><?php echo get_previous_posts_page_link()?></div>
-		<div id='wp-fake-nav-next'><?php echo get_next_posts_page_link()?></div>
+		<a id='wp-nav-next' class='wp-nav' href="<?php echo get_next_posts_page_link()?>">下一页</a>
+		<?php if($isMobile) :?></div><?php endif; ?>
 	</div>
-	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
-	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 </body>
 </html>

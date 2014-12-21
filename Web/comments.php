@@ -1,4 +1,3 @@
-<h2 id='wp-comments-form-title' class='keepwithnext'>评论</h2>
 <?php if ($post->comment_status == 'open') : ?>
 	<div id='wp-reply-form'>
 		<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
@@ -6,7 +5,7 @@
 		<?php else : ?>
 			<form id='wp-reply-form-content' action="<?php echo get_option('siteurl'); ?>/wp-comments-post.php" method='post'>
 				<?php if ( $user_ID ) : ?>
-					<div>你好,
+					<div id='wp-reply-userinfo'>你好,
 						<a href="<?php echo get_option('siteurl'); ?>/wp-admin/profile.php"><?php echo $user_identity; ?></a>
 						<a href="<?php echo wp_logout_url(get_permalink()); ?>" title="退出登录">(退出登录)</a>
 					</div>
@@ -22,13 +21,18 @@
 		<?php endif;?>
 	</div>
 <?php endif;?>
+<h2 id='wp-comments-form-title' class='keepwithnext'>评论</h2>
 <?php
-	$comments = get_comments(array('post_id'=>get_the_ID()));
+	$comments = get_comments(array(
+		'post_id'=> get_the_ID(),
+		'status'=> 'approve',
+		'order' => 'ASC',
+	));
 	foreach($comments as $comment) :
 	?>
 	<div class='wp-comment-item'>
 		<div class='wp-comment-avatar'>
-			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,50)); ?>'/>
+			<img src='<?php echo get_avatar_url(get_avatar( $comment->comment_author_email,150)); ?>'/>
 		</div>
 		<div class='wp-comment-text'>
 			<div class='wp-comment-author'><?php echo $comment->comment_author; ?></div>
@@ -36,7 +40,5 @@
 			<div class='wp-comment-content'><?php echo $comment->comment_content; ?></div>
 		</div>
 	</div>
-<?php
-endforeach;
-?>
+<?php endforeach; ?>
 
