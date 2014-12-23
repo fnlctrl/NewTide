@@ -168,6 +168,7 @@ $(function(){
 				side_ctrl.start_x = side_ctrl.boundary;
 				location.hash = 'menu';
 				document.body.addEventListener('touchmove', util.preventDefault);
+				$body.css({overflow:'hidden'});
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(0deg)'});
@@ -198,6 +199,7 @@ $(function(){
 					history.back();
 				}
 				document.body.removeEventListener('touchmove', util.preventDefault);
+				$body.css({overflow:'auto'});
 			} else {
 				var W = $window.width();
 				$menuIconArrow.css({'transform':'rotateZ(180deg)'});
@@ -250,6 +252,7 @@ $(function(){
 			},10)
 			status.showingSearch = true;
 			document.body.addEventListener('touchmove', util.preventDefault);
+			$body.css({overflow:'hidden'});
 		},
 		hide: function() {
 			if (!status.showingSearch) {
@@ -264,6 +267,7 @@ $(function(){
 			}
 			status.showingSearch = false;
 			document.body.removeEventListener('touchmove', util.preventDefault);
+			$body.css({overflow:'auto'});
 		},
 		bind: (function() {
 			$topbarSearchIcon.click(function() {
@@ -452,7 +456,7 @@ $(function(){
 		if (status.prevPageURL !== '' && status.prevPageURL !== location.href.replace(location.hash,"")) {
 			$prevPageLink.css({display:'block'});
 		}
-		if (status.nextPageURL !== '' && status.nextPageURL !== location.href.replace(location.hash,"") && $('.wp-item').length===60 ) {
+		if (status.nextPageURL !== '' && status.nextPageURL !== location.href.replace(location.hash,"") && $('.wp-item').length===16 ) {
 			$nextPageLink.css({display:'block'});
 		}
 		// adjust entry thumbnail height on load
