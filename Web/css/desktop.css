@@ -823,6 +823,9 @@ a {
     width: calc(100% - 85px);
     float: left;
 }
+.wp-comment-content {
+    white-space: pre-wrap;
+}
 .wp-comment-avatar {
     position: absolute;
     left: 0;
