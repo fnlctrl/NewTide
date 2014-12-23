@@ -1,7 +1,17 @@
 $(function(){
 	var $window = $(window),
 		$body = $('body'),
-		$topbar = $('#topbar'),
+		$sidebar = $('#sidebar'),
+		$wpEntryContent = $('.wp-entry-content'),
+		$wpWrapper = $('#wp-wrapper'),
+		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
+		$wpEntryMeta = $('.wp-entry-meta'),
+		$nextPageLink = $('#wp-nav-next'),
+		$prevPageLink = $('#wp-nav-prev'),
+		$searchWrapper = $('.search-wrapper');
+		$sidebarSearchInput = $('#sidebar-search-input');
+
+	var $topbar = $('#topbar'),
 		$topbarMenu = $('#topbar-menu'),
 		$topbarMenuIcon = $('#topbar-menu-icon'),
 		$topbarTitle = $('#topbar-title'),
@@ -9,22 +19,15 @@ $(function(){
 		$topbarSearchInput = $('#topbar-search-input'),
 		$topbarSearchIcon = $('#topbar-search-icon'),
 		$topbarSearchReturn = $('#topbar-search-return'),
-		$sidebar = $('#sidebar'),
-		$cover = $('.cover'),
-		$bookContainer = $('#book-container'),
+		$loadingShade = $('#loading-shade'),
+		$cover = $('.cover');
+
+	var $bookContainer = $('#book-container'),
 		$bookLoadingShade = $('#book-loading-shade'),
 		$bookNavNext = $('#book-nav-next'),
 		$bookNavPrev = $('#book-nav-prev'),
 		$menuIcon = $('#menu-icon'),
-		$menuIconArrow = $('#menu-icon-arrow'),
-		$wpEntryContent = $('.wp-entry-content'),
-		$wpWrapper = $('#wp-wrapper'),
-		$wpEntryThumbnail = $('.wp-entry-thumbnail'),
-		$nextPageLink = $('#wp-nav-next'),
-		$prevPageLink = $('#wp-nav-prev'),
-		$wpEntryMeta = $('.wp-entry-meta'),
-		$searchWrapper = $('.search-wrapper');
-		$sidebarSearchInput = $('#sidebar-search-input');
+		$menuIconArrow = $('#menu-icon-arrow');
 
 	var status = {
 		showingMenu: null,
@@ -440,6 +443,9 @@ $(function(){
 	util.isMobile();
 	var W = $window.width();
 	if (status.isMobile) {
+		$window.load(function() {
+			$loadingShade.css({opacity:0});
+		});
 		var pageType = window._config.pageType;
 		// hide menu or searchbar on back pressed
 		window.onhashchange = function() {
@@ -867,7 +873,6 @@ $(function(){
 				showOrHideMenuOnLoad(false);
 			}
 		}
-		$bookLoadingShade.css({opacity:1});
 		util.setupQRCode();
 		$window.load(function() {
 			book.init(pageW);

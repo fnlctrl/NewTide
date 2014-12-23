@@ -31,7 +31,9 @@ Template Name: 留言板
 			</div>
 			<div id='book-nav-next' class='book-nav-icon'></div>
 			<div id='book-nav-prev' class='book-nav-icon'></div>
-			<div id='book-loading-shade' class='ease'></div>
+			<div id='book-loading-shade' class='ease'>
+				<div id='book-loading-spinner'></div>
+			</div>
 			<div id='book-pages'></div>
 		</div>
 	<?php endif; ?>

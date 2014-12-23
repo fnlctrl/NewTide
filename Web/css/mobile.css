@@ -195,6 +195,34 @@ body {
     pointer-events: auto;
     opacity: 0.6;
 }
+#loading-shade {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9;
+    opacity: 1;
+    background: #eee;
+    pointer-events: none;
+}
+#loading-shade-spinner {
+    position: absolute;
+    height: 48px;
+    width: 48px;
+    left: 50%;
+    top: 50%;
+    margin: -24px 0 0 -24px;
+    -webkit-animation: rotation .6s infinite linear;
+    -moz-animation: rotation .6s infinite linear;
+    -o-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left: 6px solid rgba(16,198,215,.15);
+    border-right: 6px solid rgba(16,198,215,.15);
+    border-bottom: 6px solid rgba(16,198,215,.15);
+    border-top: 6px solid rgba(16,198,215,.8);
+    border-radius: 100%;
+}
 #user-head {
     position: relative;
     float: left;
@@ -293,22 +321,6 @@ body {
     top: 0;
     left: 100%;
     z-index: 2;
-}
-#book-container {
-    width: 100%;
-    position: relative;
-    top: 56px;
-    left: 0;
-    background: #eee;
-    margin: 0;
-    visibility: visible;
-    box-shadow: none;
-}
-#book-container:before {
-	display	: none;
-}
-#book-loading-shade {
-	display	: none;
 }
 
 /* Wordpress wrapper */
