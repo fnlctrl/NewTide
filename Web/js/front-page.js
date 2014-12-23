@@ -7,7 +7,9 @@ $(function(){
 			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 5000,
-			'backgroundColor': '#eee'
+			'backgroundColor': '#eee',
+			'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg',
+			'initialImage': 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 		});
 	} else {
 		var $firstLoadHintWrapper = $('#hint-wrapper'),

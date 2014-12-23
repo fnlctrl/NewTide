@@ -1,5 +1,4 @@
 $(function() {
-	window.scrollTo(0,1);
 	var timeline;
 	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		timeline = new MobileDetail();
@@ -8,7 +7,9 @@ $(function() {
 			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
-			'backgroundColor': '#eee'
+			'backgroundColor': '#eee',
+			'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg',
+			'initialImage': 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 		});
 		setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
 	} else {
@@ -56,7 +57,9 @@ $(function() {
 			'siteUrl': siteInfo.siteurl,
 			'maxEntryNumber': 999,
 			'switchInterval': 10000,
-			'backgroundColor': '#fff'
+			'backgroundColor': '#fff',
+			'defaultImage': 'http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/default-poster.svg',
+			'initialImage': 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 		});
 	}
 });

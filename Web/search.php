@@ -55,8 +55,13 @@ Template Name: Search Page
 			$query_split = explode("=", $string);
 			$search_query[$query_split[0]] = urldecode($query_split[1]);
 		}
+		if($isMobile) {
+			$posts_per_page = 16;
+		} else {
+			$posts_per_page = 60;
+		}
 		$args = array_merge($search_query,array(
-			'posts_per_page'   => 60,
+			'posts_per_page'   => $posts_per_page,
 			'orderby' => 'post_date',
 			'order' => 'DESC',
 			'post_status' => 'publish',

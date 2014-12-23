@@ -42,8 +42,13 @@
 		} else{
 			$paged = 1;
 		}
+		if($isMobile) {
+			$posts_per_page = 16;
+		} else {
+			$posts_per_page = 60;
+		}
 		$args = array(
-			'posts_per_page' => 60,
+			'posts_per_page' => $posts_per_page,
 			'orderby' => 'post_date',
 			'author' => get_the_author_meta( 'ID' ),
 			'order' => 'DESC',
