@@ -165,6 +165,7 @@ $(function(){
 					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
 				});
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				side_ctrl.start_x = side_ctrl.boundary;
 				location.hash = 'menu';
 				document.body.addEventListener('touchmove', util.preventDefault);
 			} else {
@@ -192,6 +193,7 @@ $(function(){
 					'box-shadow':''
 				});
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
+				side_ctrl.start_x = 0;
 				if (/menu/.test(location.hash)) {
 					history.back();
 				}
@@ -285,36 +287,20 @@ $(function(){
 	}
 
 	var side_ctrl = {
-		click_x			: 0,
 		start_x			: 0,
 		new_x			: 0,
 		boundary		: parseInt($window.width()) * 0.75,
 		ticking			: false,
 		coverHammer		: null,
 		sidebarHammer	: null,
-		wpHammer		: null,
 
 		initialize : function () {
-			$body.bind("mousedown", function (event) {
-				side_ctrl.click_x = event.pageX;
-				side_ctrl.start_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
-			});
-
-			coverHammer = new Hammer($cover[0]);
-			sidebarHammer = new Hammer($sidebar[0]);
-			//if ($wpWrapper.length) {
-			//	wpHammer = new Hammer($wpWrapper[0]);
-			//	wpHammer.on('pan', function () {
-			//		if (window._config.pageType === "single") {
-			//			var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
-			//			if (new_URL) {
-			//				window.location.href = new_URL;
-			//			} else {
-			//				util.showNotice('这个分类下已经没有更新的文章了~');
-			//			}
-			//		}
-			//	});
-			//}
+			side_ctrl.coverHammer = new Hammer($cover[0]);
+			side_ctrl.sidebarHammer = new Hammer($sidebar[0]);
+			side_ctrl.coverHammer.on('pan', side_ctrl.onPan);
+			side_ctrl.coverHammer.on('panend', side_ctrl.onPanend);
+			side_ctrl.sidebarHammer.on('pan', side_ctrl.onPan);
+			side_ctrl.sidebarHammer.on('panend', side_ctrl.onPanend);
 			setInterval(function () {
 				var now_x = parseInt($sidebar.css('transform').split('(')[1].split(',')[4]) + side_ctrl.boundary;
 				if (side_ctrl.ticking && (now_x === 0 || now_x === side_ctrl.boundary || now_x === side_ctrl.new_x)) {
@@ -324,10 +310,6 @@ $(function(){
 					}
 				}
 			}, 1000 / 30);
-			coverHammer.on('pan', side_ctrl.onPan);
-			coverHammer.on('panend', side_ctrl.onPanend);
-			sidebarHammer.on('pan', side_ctrl.onPan);
-			sidebarHammer.on('panend', side_ctrl.onPanend);
 		},
 		getNewX : function (deltaX) {
 			return Math.min(Math.max(side_ctrl.start_x + deltaX, 0), side_ctrl.boundary);
@@ -346,12 +328,10 @@ $(function(){
 			}
 		},
 		onPan : function (event) {
-			if (status.showingMenu || side_ctrl.click_x < 20) {
-				if (!side_ctrl.ticking) {
-					side_ctrl.ticking = true;
-					side_ctrl.new_x = side_ctrl.getNewX(event.deltaX);
-					side_ctrl.updateSidebar(side_ctrl.new_x);
-				}
+			if (!side_ctrl.ticking) {
+				side_ctrl.ticking = true;
+				side_ctrl.new_x = side_ctrl.getNewX(event.deltaX);
+				side_ctrl.updateSidebar(side_ctrl.new_x);
 			}
 		},
 		onPanend : function (event) {
@@ -359,24 +339,93 @@ $(function(){
 			setTimeout(function () {
 				status.preventCoverClick = false;
 			}, 10);
-			if (status.showingMenu || side_ctrl.click_x < 20) {
-				side_ctrl.ticking = true;
-				var show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5) ? false : true;
-				if (show_menu) {
-					status.showingMenu = true;
-					side_ctrl.new_x = side_ctrl.boundary;
-					location.hash = 'menu';
-				} else {
-					status.showingMenu = false;
-					side_ctrl.new_x = 0;
-					if (location.hash === '#menu') {
-						history.back();
-					}
+			side_ctrl.ticking = true;
+			var show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5) ? false : true;
+			if (show_menu) {
+				status.showingMenu = true;
+				side_ctrl.new_x = side_ctrl.boundary;
+				location.hash = 'menu';
+			} else {
+				status.showingMenu = false;
+				side_ctrl.new_x = 0;
+				if (location.hash === '#menu') {
+					history.back();
 				}
-				side_ctrl.updateSidebar(side_ctrl.new_x);
-				$topbarMenuIcon.removeClass('notransition');
-				$sidebar.removeClass('notransition');
-				$cover.removeClass('notransition');
+			}
+			side_ctrl.start_x = side_ctrl.new_x;
+			side_ctrl.updateSidebar(side_ctrl.new_x);
+			$topbarMenuIcon.removeClass('notransition');
+			$sidebar.removeClass('notransition');
+			$cover.removeClass('notransition');
+		}
+	};
+	var wp_ctrl = {
+		deltaX		: 0,
+		boundary	: parseInt($window.width() * 0.33),
+		ticking		: false,
+		wpHammer	: null,
+
+		initialize : function () {
+			$wpWrapper.css({
+				transform:'translateX(0)',
+				'-webkit-transform':'translateX(0)'
+			});
+			if ($wpWrapper[0]) {
+				wpHammer = new Hammer($wpWrapper[0]);
+				wpHammer.on('pan', wp_ctrl.onPan);
+				wpHammer.on('panend', wp_ctrl.onPanend);
+				setInterval(function () {
+					if (wp_ctrl.ticking) {
+						var now_x = parseInt($wpWrapper.css('transform').split('(')[1].split(',')[4]);
+						if (now_x === wp_ctrl.deltaX) {
+							wp_ctrl.ticking = false;
+							$wpWrapper.removeClass('ease');
+						}
+					}
+				}, 1000 / 30);
+			}
+		},
+		updateWP : function (new_x) {
+			$wpWrapper.css({
+				transform:'translateX(' + new_x + 'px)',
+				'-webkit-transform':'translateX(' + new_x + 'px)'
+			});
+		},
+		onPan : function (event) {
+			if (!wp_ctrl.ticking && window._config.pageType === "single") {
+				wp_ctrl.ticking = true;
+				if (Math.abs(event.deltaX) < 20) {
+					return;
+				}
+				if (Math.abs(event.deltaX) < wp_ctrl.boundary) {
+					wp_ctrl.deltaX = event.deltaX;
+				} else {
+					wp_ctrl.deltaX = event.deltaX < 0 ? -wp_ctrl.boundary : wp_ctrl.boundary;
+				}
+				wp_ctrl.updateWP(wp_ctrl.deltaX);
+			}
+		},
+		onPanend : function (event) {
+			if (window._config.pageType === "single") {
+				$wpWrapper.addClass('ease');
+				if (Math.abs(event.deltaX) < wp_ctrl.boundary) {
+					wp_ctrl.deltaX = 0;
+					wp_ctrl.updateWP(0);
+					return;
+				}
+				var new_URL = event.deltaX < 0 ? status.nextPageURL : status.prevPageURL;
+				if (new_URL) {
+					if (event.deltaX < 0) {
+						wp_ctrl.deltaX = -parseInt($window.width());
+					} else {
+						wp_ctrl.deltaX = +parseInt($window.width());
+					}
+					window.location.href = new_URL;
+				} else {
+					wp_ctrl.deltaX = 0;
+					util.showNotice('这个分类下已经没有更新的文章了~');
+				}
+				wp_ctrl.updateWP(wp_ctrl.deltaX);
 			}
 		}
 	};
@@ -475,6 +524,7 @@ $(function(){
 			}
 		}
 		side_ctrl.initialize();
+		wp_ctrl.initialize();
 	} else {
 		var book = {
 			timer: null,
