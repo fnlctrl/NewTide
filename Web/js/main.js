@@ -436,7 +436,6 @@ $(function(){
 	util.isMobile();
 	var W = $window.width();
 	if (status.isMobile) {
-		book = null;
 		var pageType = window._config.pageType;
 		// hide menu or searchbar on back pressed
 		window.onhashchange = function() {
@@ -718,16 +717,17 @@ $(function(){
 			setUpEvents: function() {
 				$bookContainer.click(function(e) {
 					var offset = $bookContainer.offset();
+					var W = $bookContainer.width();
 					if (e.pageY>50 && e.pageY<90 && e.pageX>offset.left && e.pageX<offset.left+25) { // prevent fireing when clicked on menu icon
 						return;
 					}
-					if (e.pageX < offset.left+65) {
+					if (e.pageX < offset.left+0.04*W) {
 						book.turn.call(book.renderArea,'left');
-					} else if (e.pageX > offset.left+$bookContainer.width()-65) {
+					} else if (e.pageX > offset.left+$bookContainer.width()-0.04*W) {
 						book.turn.call(book.renderArea,'right');
 					}
 				});
-				$window.keydown(function(e) {
+				var onKeyDown = function(e) {
 					var keyCode = e.keyCode || e.which;
 					switch (keyCode) {
 						case 37: //left
@@ -739,7 +739,13 @@ $(function(){
 						default:
 							break;
 					}
-				});
+				}
+				$window.keydown(onKeyDown);
+				$('input, textarea').focus(function(){
+					$window.unbind('keydown')
+				}).blur(function(){
+					$window.keydown(onKeyDown);
+				})
 				if (!status.isMobile) {
 					$window.on('mousewheel', function(event) {
 						if (event.deltaY < 0){
