@@ -140,6 +140,26 @@
 	},
 
 	{
+		"date":"2014,12,21",
+		"time":"15:30",
+		"location":"紫金港 小剧场B座209",
+		"eventTitle":"Rihanna",
+		"eventGroup":"音浪罗曼史",
+		"text":"Rebell felur叛逆之花",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/12/海报_Rihanna.jpg"
+	},
+
+	{
+		"date":"2014,12,26",
+		"time":"14:00",
+		"location":"紫金港 安中大楼 建工之家",
+		"eventTitle":"包法利夫人",
+		"eventGroup":"白夜读书会",
+		"text":"包法利夫人就是我，是模仿我的。",
+		"media":"http://tide.myqsc.com/wp/wp-content/uploads/2014/12/海报_包法利夫人-424x600.jpg"
+	},
+
+	{
 		"date":"2014,12,31",
 		"time":"",
 		"location":"",
