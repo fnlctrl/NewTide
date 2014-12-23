@@ -19,7 +19,7 @@ $(function(){
 		$topbarSearchInput = $('#topbar-search-input'),
 		$topbarSearchIcon = $('#topbar-search-icon'),
 		$topbarSearchReturn = $('#topbar-search-return'),
-		$loadingShade = $('#loading-shade'),
+		$loadingSpinner = $('#loading-spinner'),
 		$cover = $('.cover');
 
 	var $bookContainer = $('#book-container'),
@@ -444,7 +444,7 @@ $(function(){
 	var W = $window.width();
 	if (status.isMobile) {
 		$window.load(function() {
-			$loadingShade.css({opacity:0});
+			$loadingSpinner.css({opacity:0});
 		});
 		var pageType = window._config.pageType;
 		// hide menu or searchbar on back pressed

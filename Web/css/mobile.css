@@ -195,24 +195,17 @@ body {
     pointer-events: auto;
     opacity: 0.6;
 }
-#loading-shade {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 9;
-    opacity: 1;
-    background: #eee;
-    pointer-events: none;
-}
-#loading-shade-spinner {
+#loading-spinner {
     position: absolute;
     height: 48px;
     width: 48px;
     left: 50%;
     top: 50%;
     margin: -24px 0 0 -24px;
+    z-index: 9;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    -webkit-transition: opacity 0.3s ease;
     -webkit-animation: rotation .6s infinite linear;
     -moz-animation: rotation .6s infinite linear;
     -o-animation: rotation .6s infinite linear;

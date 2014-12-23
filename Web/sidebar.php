@@ -16,9 +16,7 @@
 		&nbsp; <!-- a nasty, hacky fix for blurry position:fixed images on android browser 4.1 and older -->
 	</div>
 	<div class='cover'></div>
-	<div id='loading-shade' class='ease'>
-		<div id='loading-shade-spinner'></div>
-	</div>
+	<div id='loading-spinner'></div>
 <?php else:?>
 	<div id='login'>
 		<a id='login-logo' href="<?php bloginfo('url'); ?>"></a>
