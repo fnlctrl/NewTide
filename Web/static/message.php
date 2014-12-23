@@ -13,7 +13,8 @@ Template Name: 留言板
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script>
 		window._config = {
-			pageType: 'message'
+			pageType: 'message',
+			numColumns: '1'
 		}
 	</script>
 	<?php wp_head(); ?>
