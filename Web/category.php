@@ -34,7 +34,7 @@
 		<?php if($isMobile) :?><div class='posts-container'><?php endif; ?>
 		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
-		preg_match('/.*category\/(.*)\//',$_SERVER["REQUEST_URI"],$result);
+		preg_match('/.*category\/(\w*)\/.*/',$_SERVER["REQUEST_URI"],$result);
 		global $paged;
 		if( get_query_var('paged') ) {
 			$paged = get_query_var('paged');
