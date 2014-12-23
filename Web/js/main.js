@@ -386,7 +386,6 @@ $(function(){
 						var now_x = parseInt($wpWrapper.css('transform').split('(')[1].split(',')[4]);
 						if (now_x === wp_ctrl.deltaX) {
 							wp_ctrl.ticking = false;
-							$wpWrapper.removeClass('ease');
 						}
 					}
 				}, 1000 / 30);
@@ -446,6 +445,9 @@ $(function(){
 		$window.load(function() {
 			$loadingSpinner.css({opacity:0});
 		});
+		window.onbeforeunload = function() {
+			$loadingSpinner.css({opacity:1});
+		}
 		var pageType = window._config.pageType;
 		// hide menu or searchbar on back pressed
 		window.onhashchange = function() {
