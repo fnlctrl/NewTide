@@ -153,8 +153,9 @@ MobileHome.prototype.render = function () {
         .css('background-color', _this.config.backgroundColor);
     _this.scrollWrapper = $('<div></div>')
         .addClass('scroll-content');
-    _this.data.unshift(_this.data[0]);
-    _this.data.push(_this.data[_this.count]);
+    _this.data.push($.extend(true, {}, _this.data[0]));
+    _this.data.unshift($.extend(true, {}, _this.data[_this.count - 1]));
+    console.log(_this.data);
     $.each(_this.data, function(i, entry) {
         var newElement = {};
         newElement.parent = $('<div></div>')
@@ -225,25 +226,35 @@ MobileHome.prototype.render = function () {
 
 MobileHome.prototype.loadMedia = function() {
     var _this = this;
-    _this.data[_this.currentPosition - 1].dom.cover
-        .attr('src', _this.data[_this.currentPosition - 1].media);
     _this.data[_this.currentPosition - 0].dom.cover
         .attr('src', _this.data[_this.currentPosition - 0].media);
     _this.data[_this.currentPosition + 1].dom.cover
         .attr('src', _this.data[_this.currentPosition + 1].media);
-    _this.data[_this.currentPosition + 2].dom.cover
-        .attr('src', _this.data[_this.currentPosition + 2].media);
     if (_this.currentPosition === 0) {
-        _this.data[_this.count].dom.cover
-            .attr('src', _this.data[_this.count].media);
+        _this.data[_this.count - 1].dom.cover
+            .attr('src', _this.data[_this.count - 1].media);
+        _this.data[_this.count + 0].dom.cover
+            .attr('src', _this.data[_this.count + 0].media);
         _this.data[_this.count + 1].dom.cover
-            .attr('src', _this.data[_this.count + 1].media);        
+            .attr('src', _this.data[_this.count + 1].media);
+        _this.data[_this.currentPosition + 2].dom.cover
+            .attr('src', _this.data[_this.currentPosition + 2].media);
+    } else {
+        _this.data[_this.currentPosition - 1].dom.cover
+            .attr('src', _this.data[_this.currentPosition - 1].media);
     }
     if (_this.currentPosition == _this.count) {
         _this.data[0].dom.cover
             .attr('src', _this.data[0].media);
         _this.data[1].dom.cover
             .attr('src', _this.data[1].media);
+        _this.data[2].dom.cover
+            .attr('src', _this.data[2].media);
+        _this.data[_this.currentPosition - 1].dom.cover
+            .attr('src', _this.data[_this.currentPosition - 1].media);
+    } else {
+        _this.data[_this.currentPosition + 2].dom.cover
+            .attr('src', _this.data[_this.currentPosition + 2].media);
     }
 };
 
