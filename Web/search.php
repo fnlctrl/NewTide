@@ -11,6 +11,8 @@ Template Name: Search Page
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="manifest" href='<?php bloginfo('template_url');?>/manifest.json'>
+	<link rel="apple-touch-icon" href="<?php bloginfo('template_url');?>/img/icon-android.png">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>

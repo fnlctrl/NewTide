@@ -196,7 +196,7 @@ body {
     opacity: 0.6;
 }
 #loading-spinner {
-    position: absolute;
+    position: fixed;
     height: 48px;
     width: 48px;
     left: 50%;

@@ -1,0 +1,14 @@
+{
+	"name": "水朝夕",
+	"icons": [
+		{
+			"src": "http://tide.myqsc.com/wp/wp-content/themes/NewTide/img/icon-android.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"density": "4.0"
+		}
+	],
+	"start_url": "http://tide.myqsc.com/wp",
+	"display": "standalone",
+	"orientation": "portrait"
+}

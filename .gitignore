@@ -219,7 +219,7 @@ pip-log.txt
 ## PhpStorm
 #############
 .idea
-
+*.ai
 
 #############
 ## Adobe
