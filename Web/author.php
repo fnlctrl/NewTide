@@ -14,7 +14,9 @@
 	<script src='<?php bloginfo('template_url');?>/js/jquery.bookblock.min.js'></script>
 	<script>
 		window._config = {
-			pageType: 'author'
+			pageType: 'author',
+			author: '<?php echo get_the_author_meta( 'display_name' )?>',
+			authorLink: encodeURI('<?php echo get_author_posts_url(get_the_author_meta( 'ID' ))?>')
 		}
 	</script>
 </head>

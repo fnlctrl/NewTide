@@ -459,7 +459,6 @@ $(function(){
 					toggleSearch.hide();
 				}
 			},20); // location.hash = 'search' has a 10ms delay, so we use 20ms here.
-
 		}
 		if (status.prevPageURL !== '' && status.prevPageURL !== location.href.replace(location.hash,"")) {
 			$prevPageLink.css({display:'block'});
@@ -480,10 +479,16 @@ $(function(){
 				$wpEntryThumbnail.load(handler);
 			}
 		}
+		// show hint to swipe left or right on events page
+		if (/event/.test(location.href)) {
+			util.showNotice('小提示:左右滑动可以切换活动哦',3000)
+		}
 		// set top title
 		// all pageTypes: index,front-page,single,category,author,events,search,404,message
 		if (pageType === 'author' ) {
-			$topbarTitle.html(location.href.split(/.*author\/(.*)\//)[1]);
+			var author = window._config.author,
+				authorLink = window._config.authorLink;
+			$topbarTitle.html('<a href="'+authorLink+'">'+author+'</a>');
 		} else if (pageType === '404' ) {
 			$topbarTitle.html('404');
 		} else if (pageType === 'search' ) {

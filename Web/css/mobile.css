@@ -654,12 +654,12 @@ body {
 }
 /*    Message    */
 .message-block {
-    width: 300px;
+    width: 280px;
     height: auto;
-    background-color: rgba(0,140,206,0.8);
-    border-radius: 3px;
+    background-color: rgba(16,198,220,0.8);
+    border-radius: 30px;
     position: fixed;
-    margin: -100px 0 0 -150px;
+    margin: -100px 0 0 -140px;
     top: 50%;
     left: 50%;
     z-index: 99;
