@@ -75,7 +75,7 @@ Template Name: 主页
 			</div>
 	<?php endif?>
 			<div class='posts-wrapper ease'>
-				<h1>编辑精选 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?></h1>
+				<h1>最新投稿 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?></h1>
 				<div class='posts-container'>
 					<?php
 					$args1 = array(
@@ -83,44 +83,10 @@ Template Name: 主页
 						'orderby' => 'post_date',
 						'order' => 'DESC',
 						'post_type' => 'post',
-						'cat' => get_cat_ID('编辑精选'),
-						'post_status' => 'publish',
-					);
-					$query_editors_picks = new WP_Query( $args1 );
-					foreach ( $query_editors_picks->get_posts() as $post ) : setup_postdata( $post );?>
-						<?php //Begin Loop ?>
-						<div class='wp-item wp-item-frontpage' onclick='location.href="<?php the_permalink(); ?>"'>
-							<?php
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
-							}
-							?>
-							<div class='wp-item-text wp-item-text-frontpage'>
-								<h3><?php the_title(); ?></h3>
-								<div class='wp-item-metadata'>
-									文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
-									@ <?php the_category(' &gt; ');?>
-									, <?php the_date('Y-m-d');?>
-								</div>
-								<div class='wp-item-excerpt wp-item-excerpt-frontpage'><?php echo get_the_excerpt();?></div>
-							</div>
-						</div>
-						<?php //End Loop  ?>
-					<?php endforeach; wp_reset_postdata();?>
-					<?php if($isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?>
-				</div>
-				<h1>最新投稿 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?></h1>
-				<div class='posts-container'>
-					<?php
-					$args2 = array(
-						'posts_per_page'   => 8,
-						'orderby' => 'post_date',
-						'order' => 'DESC',
-						'post_type' => 'post',
 						'category__not_in'=> array(get_cat_ID('设计品'),get_cat_ID('编辑精选')),
 						'post_status' => 'publish',
 					);
-					$query_latest = new WP_Query( $args2 );
+					$query_latest = new WP_Query( $args1 );
 					foreach ( $query_latest->get_posts() as $post ) : setup_postdata( $post );?>
 						<?php //Begin Loop ?>
 						<div class='wp-item wp-item-frontpage' onclick='location.href="<?php the_permalink(); ?>"'>
@@ -142,6 +108,40 @@ Template Name: 主页
 						<?php //End Loop  ?>
 					<?php endforeach; wp_reset_postdata();?>
 					<?php if($isMobile): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?>
+				</div>
+				<h1>编辑精选 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?></h1>
+				<div class='posts-container'>
+					<?php
+					$args2 = array(
+						'posts_per_page'   => 8,
+						'orderby' => 'post_date',
+						'order' => 'DESC',
+						'post_type' => 'post',
+						'cat' => get_cat_ID('编辑精选'),
+						'post_status' => 'publish',
+					);
+					$query_editors_picks = new WP_Query( $args2 );
+					foreach ( $query_editors_picks->get_posts() as $post ) : setup_postdata( $post );?>
+						<?php //Begin Loop ?>
+						<div class='wp-item wp-item-frontpage' onclick='location.href="<?php the_permalink(); ?>"'>
+							<?php
+							if ( has_post_thumbnail() ) {
+								the_post_thumbnail(array(300,300),array('class' => 'wp-entrylist-thumbnail'));
+							}
+							?>
+							<div class='wp-item-text wp-item-text-frontpage'>
+								<h3><?php the_title(); ?></h3>
+								<div class='wp-item-metadata'>
+									文/ <a href='<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>'><?php the_author(); ?></a>
+									@ <?php the_category(' &gt; ');?>
+									, <?php the_date('Y-m-d');?>
+								</div>
+								<div class='wp-item-excerpt wp-item-excerpt-frontpage'><?php echo get_the_excerpt();?></div>
+							</div>
+						</div>
+						<?php //End Loop  ?>
+					<?php endforeach; wp_reset_postdata();?>
+					<?php if($isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?>
 				</div>
 			</div>
 		</div>
