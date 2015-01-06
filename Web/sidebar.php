@@ -1,8 +1,6 @@
 <?php
 	$user = wp_get_current_user();
-	$isMobile = $mobileDetect->isMobile();
-	$isTablet = $mobileDetect->isTablet();
-	$isPhone = $isMobile && !$isTablet;
+	global $isPhone;
 ?>
 <?php if ($isPhone):?>
 	<div id='topbar' class='unselectable'>

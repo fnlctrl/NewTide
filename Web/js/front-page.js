@@ -1,6 +1,7 @@
 $(function(){
 	var timeline;
-	if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	var mobileDetect = new MobileDetect(window.navigator.userAgent);
+	if (mobileDetect.mobile() && !mobileDetect.tablet()) {
 		timeline = new MobileHome();
 		timeline.start($('#timeline-mobileHome'),{
 			'dataLocation': siteInfo.jsonurl,

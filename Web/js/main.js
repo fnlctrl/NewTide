@@ -37,7 +37,8 @@ $(function(){
 		prevPageURL:'',
 		nextPageURL:'',
 		needBook: false,
-		isMobile: false,
+		isPhone: false,
+		isTablet: false,
 		isListPage: undefined,
 		numColumns: 1,
 		LineHeight: 18,
@@ -47,9 +48,14 @@ $(function(){
 
 	var util = {
 		isMobile: function() {
-			if (/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				status.isMobile = true;
+			var mobileDetect = new MobileDetect(window.navigator.userAgent);
+			if (mobileDetect.mobile() && !mobileDetect.tablet()) {
+				status.isPhone = true;
 			}
+			if (mobileDetect.tablet()) {
+				status.isPhone = false;
+				status.isTablet = true;
+			};
 		},
 		isListPage: function() {
 			if ($wpWrapper.find('.wp-item').length) {
@@ -159,7 +165,7 @@ $(function(){
 			if (status.showingMenu) {
 				return;
 			}
-			if (status.isMobile) {
+			if (status.isPhone) {
 				$topbarMenuIcon.css({'transform':'rotateZ(90deg)'});
 				$cover.addClass('cover-active');
 				$sidebar.css({
@@ -188,7 +194,7 @@ $(function(){
 			if (!status.showingMenu) {
 				return;
 			}
-			if (status.isMobile) {
+			if (status.isPhone) {
 				$topbarMenuIcon.css({'transform':'rotateZ(0deg)'});
 				$cover.removeClass('cover-active');
 				$sidebar.css({
@@ -441,7 +447,7 @@ $(function(){
 	util.isListPage();
 	util.isMobile();
 	var W = $window.width();
-	if (status.isMobile) {
+	if (status.isPhone) {
 		$window.load(function() {
 			$loadingSpinner.css({opacity:0});
 		});
@@ -763,7 +769,7 @@ $(function(){
 				}).blur(function(){
 					$window.keydown(onKeyDown);
 				})
-				if (!status.isMobile) {
+				if (!status.isPhone) {
 					$window.on('mousewheel', function(event) {
 						if (event.deltaY < 0){
 							book.turn.call(book.renderArea,'right');
@@ -772,7 +778,7 @@ $(function(){
 						}
 					});
 				}
-				if (status.isMobile || /iPad/i.test(navigator.userAgent)) {
+				if (status.isTablet) {
 					var hammertime = new Hammer($bookContainer[0]);
 					hammertime.on('swipeleft', function(e) {
 						book.turn.call(book.renderArea,'right');
@@ -894,9 +900,6 @@ $(function(){
 					toggleMenu.hide(true);
 				}
 			}
-			if (status.isMobile) {
-				return;
-			}
 			if (status.showingMenu) {
 				$bookContainer.width(W-200);
 				book.reflow(book.getConfig(W-200));
@@ -919,7 +922,7 @@ $(function(){
 	});
 	if (window._config.pageType === 'search') { // on a search result page
 		if (sessionStorage.searchstr) {
-			if (status.isMobile) {
+			if (status.isPhone) {
 				$topbarSearchInput.val(sessionStorage.searchstr);
 				$topbarSearchWrapper.addClass('topbar-search-active');
 				$topbarMenu.css({'z-index':1});
@@ -930,6 +933,4 @@ $(function(){
 			}
 		}
 	}
-
-	window._status = status;
 });
