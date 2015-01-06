@@ -12,11 +12,11 @@ Template Name: 留言板
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="manifest" href='<?php bloginfo('template_url');?>/manifest.json'>
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php bloginfo('template_url');?>/img/app-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php bloginfo('template_url');?>/img/app-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php bloginfo('template _url');?>/img/app-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_url');?>/img/app-icon-180x180.png">
-	<link rel="icon" sizes="192x192" href="<?php bloginfo('template_url');?>/img/app-icon-192x192.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php bloginfo('template _url');?>/img/mobile/app-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-180x180.png">
+	<link rel="icon" sizes="192x192" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-192x192.png">
 	<meta name="apple-mobile-web-app-status-bar-style" content="white">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<script>
