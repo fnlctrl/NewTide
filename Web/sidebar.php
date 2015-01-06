@@ -1,9 +1,10 @@
 <?php
 	$user = wp_get_current_user();
-	$mobileDetect = new Mobile_Detect;
 	$isMobile = $mobileDetect->isMobile();
+	$isTablet = $mobileDetect->isTablet();
+	$isPhone = $isMobile && !$isTablet;
 ?>
-<?php if ($isMobile):?>
+<?php if ($isPhone):?>
 	<div id='topbar' class='unselectable'>
 		<div id='topbar-menu'><div id='topbar-menu-icon' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/menu.svg'/></div></div>
 		<div id='topbar-search-icon'><img class='svg' src='<?php bloginfo('template_url');?>/img/mobile/search.svg'/></div>
@@ -37,7 +38,7 @@
 	</div>
 <?php endif;?>
 <div id='sidebar' class='unselectable ease'>
-	<?php if ($isMobile):?>
+	<?php if ($isPhone):?>
 		<div id='sidebar-dragger'></div>
 		<div id='sidebar-top'>
 			<img id='user-head' src='<?php echo get_avatar_url(get_avatar(  $user->user_email,150)); ?>'/>
@@ -112,7 +113,7 @@
 			</a>
 		</div>
 	</div>
-	<?php if (!$isMobile):?>
+	<?php if (!$isPhone):?>
 	<div id='sidebar-copyright'>© 2001 - 2014 <br/> 浙江大学求是潮</div>
 	<?php endif; ?>
 	<!-- Piwik -->

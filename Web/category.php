@@ -20,7 +20,7 @@
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<?php if(!$isMobile) :?>
+	<?php if(!$isPhone) :?>
 		<div id='book-container' class='ease'>
 			<div id='menu-icon'>
 				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
@@ -35,7 +35,7 @@
 		</div>
 	<?php endif; ?>
 	<div id='wp-wrapper'>
-		<?php if($isMobile) :?><div class='posts-container'><?php endif; ?>
+		<?php if($isPhone) :?><div class='posts-container'><?php endif; ?>
 		<a id='wp-nav-prev' class='wp-nav' href='<?php echo get_previous_posts_page_link()?>'>上一页</a>
 		<?php
 		preg_match('/.*category\/(\w*)\/.*/',$_SERVER["REQUEST_URI"],$result);
@@ -47,7 +47,7 @@
 		} else{
 			$paged = 1;
 		}
-		if($isMobile) {
+		if($isPhone) {
 			$posts_per_page = 16;
 		} else {
 			$posts_per_page = 60;
@@ -83,7 +83,7 @@
 			<?php //End Loop  ?>
 		<?php endforeach; wp_reset_postdata();?>
 		<a id='wp-nav-next' class='wp-nav' href='<?php echo get_next_posts_page_link()?>'>下一页</a>
-		<?php if($isMobile) :?></div><?php endif; ?>
+		<?php if($isPhone) :?></div><?php endif; ?>
 	</div>
 </body>
 </html>

@@ -53,7 +53,7 @@ Template Name: 线下活动
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<?php if(!$isMobile) :?>
+	<?php if(!$isPhone) :?>
 		<div id='book-container' class='ease'>
 			<div id='menu-icon'>
 				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>

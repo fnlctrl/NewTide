@@ -26,7 +26,7 @@ Template Name: 主页
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<?php if(!$isMobile) :?>
+	<?php if(!$isPhone) :?>
 		<div id='book-container' class='ease'>
 			<div id='menu-icon'>
 				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
@@ -75,7 +75,7 @@ Template Name: 主页
 			</div>
 	<?php endif?>
 			<div class='posts-wrapper ease'>
-				<h1>最新投稿 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?></h1>
+				<h1>最新投稿 <?php if(!$isPhone): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?></h1>
 				<div class='posts-container'>
 					<?php
 					$args1 = array(
@@ -107,9 +107,9 @@ Template Name: 主页
 						</div>
 						<?php //End Loop  ?>
 					<?php endforeach; wp_reset_postdata();?>
-					<?php if($isMobile): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?>
+					<?php if($isPhone): ?>	<a class='more' href="<?php echo home_url().'/all'?>">更多...</a><?php endif;?>
 				</div>
-				<h1>编辑精选 <?php if(!$isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?></h1>
+				<h1>编辑精选 <?php if(!$isPhone): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?></h1>
 				<div class='posts-container'>
 					<?php
 					$args2 = array(
@@ -141,7 +141,7 @@ Template Name: 主页
 						</div>
 						<?php //End Loop  ?>
 					<?php endforeach; wp_reset_postdata();?>
-					<?php if($isMobile): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?>
+					<?php if($isPhone): ?>	<a class='more' href="<?php echo home_url().'/category/editors-picks'?>">更多...</a><?php endif;?>
 				</div>
 			</div>
 		</div>

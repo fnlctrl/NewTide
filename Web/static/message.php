@@ -26,7 +26,7 @@ Template Name: 留言板
 </head>
 <body>
 	<?php get_sidebar(); ?>
-	<?php if(!$isMobile) :?>
+	<?php if(!$isPhone) :?>
 		<div id='book-container' class='ease'>
 			<div id='menu-icon'>
 				<div id='menu-icon-arrow' class='ease'><img class='svg' src='<?php bloginfo('template_url');?>/img/menu-icon-arrow.svg'/></div>
@@ -43,7 +43,7 @@ Template Name: 留言板
 	<div id='wp-wrapper'>
 		<?php if (have_posts()) { while(have_posts()) { the_post();?>
 			<div class='wp-entry-content'>
-				<?php if(!isMobile): ?>
+				<?php if(!$isPhone): ?>
 					<h1 class='wp-entry-title'>
 						<?php the_title(); ?>
 					</h1>
