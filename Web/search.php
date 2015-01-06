@@ -17,7 +17,6 @@ Template Name: Search Page
 	<link rel="apple-touch-icon" sizes="152x152" href="<?php bloginfo('template _url');?>/img/mobile/app-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-180x180.png">
 	<link rel="icon" sizes="192x192" href="<?php bloginfo('template_url');?>/img/mobile/app-icon-192x192.png">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<link rel='shortcut icon' href='<?php echo get_stylesheet_directory_uri(); ?>/favicon.png' />
 	<?php wp_head(); ?>
 	<script src='<?php bloginfo('template_url');?>/js/FTColumnflow.min.js'></script>
