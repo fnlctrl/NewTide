@@ -18,10 +18,12 @@ show_admin_bar(false);
 require_once 'php/Mobile_Detect.php';
 $mobileDetect = new Mobile_Detect;
 $isMobile = $mobileDetect->isMobile();
+$isTablet = $mobileDetect->isTablet();
 
 // enqueue scripts
 function scripts_init () {
 	global $isMobile;
+	global $isTablet;
 	wp_enqueue_style( 'global', get_stylesheet_uri());
 	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.custom.js', array(), '1.0.0', false);
 	wp_enqueue_script( 'underscore-1.6.0', get_template_directory_uri() . '/js/underscore-1.6.0.min.js', array(), '1.6.0', false);
@@ -35,7 +37,7 @@ function scripts_init () {
 		'redirecturl' => get_permalink(),
 		'jsonurl' => get_site_url().'/json/',
 	));
-	if ($isMobile) {
+	if ($isMobile && !$isTablet) {
 		wp_enqueue_style( 'mobile', get_template_directory_uri() . '/css/mobile.css', array(), '1.0.0', false);
 	} else {
 		wp_enqueue_style( 'desktop', get_template_directory_uri() . '/css/desktop.css', array(), '1.0.0', false);
