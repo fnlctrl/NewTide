@@ -448,6 +448,11 @@ $(function(){
 	util.isMobile();
 	var W = $window.width();
 	if (status.isPhone) {
+		// fix status bar appearance on iOS, it's a hack found on http://blog.flinto.com/how-to-get-black-status-bars.html
+		if (window.navigator.standalone) {
+			$("meta[name='apple-mobile-web-app-status-bar-style']").remove();
+		}
+		// show loading     spinner
 		$window.load(function() {
 			$loadingSpinner.css({opacity:0});
 		});
