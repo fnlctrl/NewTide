@@ -492,7 +492,7 @@ $(function(){
 		}
 		// show hint to swipe left or right on events page
 		if (/event/.test(location.href)) {
-			util.showNotice('小提示:左右滑动可以切换活动,轻触或拖动·····展开活动信息',3000);
+			util.showNotice('小提示:左右滑动可以切换活动,轻触或拖动·····展开活动信息',10000);
 		}
 		// set top title
 		// all pageTypes: index,front-page,single,category,author,events,search,404,message
