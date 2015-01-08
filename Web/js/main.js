@@ -504,9 +504,9 @@ $(function(){
 			$topbarTitle.html('404');
 		} else if (pageType === 'search' ) {
 			$topbarTitle.html('搜索');
-		} else if (/editors-picks/.test(location.href)) {
+		} else if (/editors-picks/.test(location.pathname)) {
 			$topbarTitle.html('编辑精选');
-		} else if (/wp\/all/.test(location.href)) {
+		} else if (/all/.test(location.pathname)) {
 			$topbarTitle.html('全部文章');
 		} else {
 			if ($('.sidebar-item-current').html()) {
