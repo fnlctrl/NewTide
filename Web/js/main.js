@@ -506,7 +506,7 @@ $(function(){
 			$topbarTitle.html('搜索');
 		} else if (/editors-picks/.test(location.href)) {
 			$topbarTitle.html('编辑精选');
-		} else if (/all/.test(location.href)) {
+		} else if (/wp\/all/.test(location.href)) {
 			$topbarTitle.html('全部文章');
 		} else {
 			if ($('.sidebar-item-current').html()) {
