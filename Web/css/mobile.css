@@ -228,11 +228,19 @@ body {
 .sidebar-section-title {
     float: right;
     color: #9e9e9e;
+    background: rgb(255,255,255);
     line-height: 14px;
     padding: 13px;
     font-size: 14px;
     position: relative;
     z-index: 1;
+}
+.sidebar-section:nth-child(1) .sidebar-section-title {
+    height: 174px;
+}
+.sidebar-section:nth-child(2) .sidebar-section-title,
+.sidebar-section:nth-child(3) .sidebar-section-title {
+    height: 54px;
 }
 .sidebar-section:nth-child(1) .sidebar-section-title:active {
     background: rgba(51,173,241,0.9);
@@ -293,6 +301,15 @@ body {
     top: 0;
     left: 100%;
     z-index: 2;
+}
+#sidebar-shadow {
+    display: none;
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: calc(100% - 20px);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
 }
 #book-container {
     width: 100%;
