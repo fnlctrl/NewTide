@@ -37,6 +37,7 @@
 <?php endif;?>
 <div id='sidebar' class='unselectable ease'>
 	<?php if ($isPhone):?>
+		<div id='sidebar-shadow'></div>
 		<div id='sidebar-dragger'></div>
 		<div id='sidebar-top'>
 			<img id='user-head' src='<?php echo get_avatar_url(get_avatar(  $user->user_email,150)); ?>'/>

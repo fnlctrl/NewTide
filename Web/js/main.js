@@ -20,7 +20,8 @@ $(function(){
 		$topbarSearchIcon = $('#topbar-search-icon'),
 		$topbarSearchReturn = $('#topbar-search-return'),
 		$loadingSpinner = $('#loading-spinner'),
-		$cover = $('.cover');
+		$cover = $('.cover'),
+		$sidebarShadow = $('#sidebar-shadow')
 
 	var $bookContainer = $('#book-container'),
 		$bookLoadingShade = $('#book-loading-shade'),
@@ -170,9 +171,9 @@ $(function(){
 				$cover.addClass('cover-active');
 				$sidebar.css({
 					transform:'translate3d(0, 0, 0)',
-					'-webkit-transform':'translate3d(0, 0, 0)',
-					'box-shadow':'0 0 20px 0 rgba(0,0,0,0.5)'
+					'-webkit-transform':'translate3d(0, 0, 0)'
 				});
+				$sidebarShadow.show();
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
 				side_ctrl.start_x = side_ctrl.boundary;
 				location.hash = 'menu';
@@ -199,9 +200,9 @@ $(function(){
 				$cover.removeClass('cover-active');
 				$sidebar.css({
 					transform:'translate3d(-100%, 0, 0)',
-					'-webkit-transform':'translate3d(-100%, 0, 0)',
-					'box-shadow':''
+					'-webkit-transform':'translate3d(-100%, 0, 0)'
 				});
+				$sidebarShadow.hide();
 				util.preventPopstate(320); // 320 is animation duration + 20ms margin
 				side_ctrl.start_x = 0;
 				if (/menu/.test(location.hash)) {
@@ -331,9 +332,13 @@ $(function(){
 			$topbarMenuIcon.addClass('notransition').css({'transform':'rotateZ(' + new_x / side_ctrl.boundary * 90 + 'deg)'});
 			$sidebar.addClass('notransition').css({
 				transform:'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
-				'-webkit-transform':'translateX(' + (new_x - side_ctrl.boundary) + 'px)',
-				'box-shadow':'0 0 20px 0 rgba(0,0,0,' + (new_x === 0 ? 0 : 0.5) + ')'
+				'-webkit-transform':'translateX(' + (new_x - side_ctrl.boundary) + 'px)'
 			});
+			if (new_x === 0) {
+				$sidebarShadow.hide();
+			} else {
+				$sidebarShadow.show();
+			}
 			if (new_x === side_ctrl.boundary) {
 				$cover.addClass('cover-active').addClass('notransition');
 			} else {
@@ -353,7 +358,12 @@ $(function(){
 				status.preventCoverClick = false;
 			}, 10);
 			side_ctrl.ticking = true;
-			var show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.5) ? false : true;
+			var show_menu = false;
+			if (event.deltaX > 0) {
+				show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.25) ? false : true;
+			} else {
+				show_menu = (side_ctrl.getNewX(event.deltaX) < side_ctrl.boundary * 0.75) ? false : true;
+			}
 			if (show_menu) {
 				status.showingMenu = true;
 				side_ctrl.new_x = side_ctrl.boundary;
@@ -406,7 +416,7 @@ $(function(){
 		onPan : function (event) {
 			if (!wp_ctrl.ticking && window._config.pageType === "single") {
 				wp_ctrl.ticking = true;
-				if (Math.abs(event.deltaX) < 20) {
+				if (Math.abs(event.deltaX) < wp_ctrl.boundary * 0.3) {
 					return;
 				}
 				if (Math.abs(event.deltaX) < wp_ctrl.boundary) {
