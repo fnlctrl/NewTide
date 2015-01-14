@@ -304,11 +304,11 @@ body {
 }
 #sidebar-shadow {
     display: none;
-    width: 20px;
+    width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
-    left: calc(100% - 20px);
+    left: 0;
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
 }
 #book-container {
