@@ -452,7 +452,7 @@ $(function(){
 		if (window.navigator.standalone) {
 			$("meta[name='apple-mobile-web-app-status-bar-style']").remove();
 		}
-		// show loading     spinner
+		// show loading spinner
 		$window.load(function() {
 			$loadingSpinner.css({opacity:0});
 		});
@@ -491,9 +491,11 @@ $(function(){
 			}
 		}
 		// show hint to swipe left or right on events page
-		if (/event/.test(location.href)) {
-			util.showNotice('小提示:左右滑动可以切换活动,轻触或拖动·····展开活动信息',10000);
-		}
+		$window.load(function() {
+			if (/event/.test(location.href)) {
+				util.showNotice('小提示:左右滑动可以切换活动,上下滑动展开/收起活动信息', 5000);
+			}
+		});
 		// set top title
 		// all pageTypes: index,front-page,single,category,author,events,search,404,message
 		if (pageType === 'author' ) {
